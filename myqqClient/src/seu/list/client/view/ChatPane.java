@@ -32,7 +32,7 @@ public class ChatPane extends JTextPane {
 	          StyleConstants.setBold(attrSet, false); 	       
 	          StyleConstants.setFontSize(attrSet, 18);   
 		}
-		append(info, attrSet);  
+		
 	}
 
 	public void append(String info, AttributeSet style) {
