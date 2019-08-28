@@ -97,7 +97,7 @@ public class MessageRoll_mainFrm extends JFrame {
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, true, false, false, false, false
+				false, false, false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
