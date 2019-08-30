@@ -105,6 +105,10 @@ public class MessageRoll_mainFrm extends JFrame {
 		});
 		tableRollMessage.setRowHeight(25);
 		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(474, 574, 97, 23);
+		contentPane.add(btnNewButton);
+		
 		
 		
 		
