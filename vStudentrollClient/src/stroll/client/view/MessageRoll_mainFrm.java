@@ -105,9 +105,7 @@ public class MessageRoll_mainFrm extends JFrame {
 		});
 		tableRollMessage.setRowHeight(25);
 		
-		JButton button_update = new JButton("\u4FEE\u6539\u5B66\u7C4D\u4FE1\u606F");
-		button_update.setBounds(732, 566, 128, 38);
-		contentPane.add(button_update);
+		
 		
 		JButton button_delete = new JButton("\u5220\u9664\u5B66\u7C4D\u4FE1\u606F");
 		button_delete.setBounds(493, 566, 128, 38);
