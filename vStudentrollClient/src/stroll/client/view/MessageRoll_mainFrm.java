@@ -107,8 +107,6 @@ public class MessageRoll_mainFrm extends JFrame {
 		
 		
 		
-		JButton button_delete = new JButton("\u5220\u9664\u5B66\u7C4D\u4FE1\u606F");
-		button_delete.setBounds(493, 566, 128, 38);
-		contentPane.add(button_delete);
+		
 	}
 }
