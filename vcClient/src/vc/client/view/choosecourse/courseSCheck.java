@@ -13,12 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
 
 
 public class courseSCheck extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	private JTable table_checkstudentcourse;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -48,33 +50,43 @@ public class courseSCheck extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		table.setBackground(Color.WHITE);
-		table.setFont(new Font("仿宋", Font.PLAIN, 18));
-		table.setForeground(Color.BLACK);
-		table.setModel(new DefaultTableModel(
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(33, 65, 363, 79);
+		contentPane.add(scrollPane);
+		
+		table_checkstudentcourse = new JTable();
+		scrollPane.setViewportView(table_checkstudentcourse);
+		table_checkstudentcourse.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		table_checkstudentcourse.setBackground(Color.WHITE);
+		table_checkstudentcourse.setFont(new Font("仿宋", Font.PLAIN, 18));
+		table_checkstudentcourse.setForeground(Color.BLACK);
+		table_checkstudentcourse.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"\u8BFE\u7A0BID", "\u8BFE\u7A0B\u540D\u79F0", "\u4EFB\u8BFE\u6559\u5E08", "\u4E0A\u8BFE\u65F6\u95F4"},
+				{"", "", "", ""},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
 				{null, null, null, null},
 				{null, null, null, null},
 				{null, null, null, null},
 			},
-			//调用数据库显示表格内容
 			new String[] {
-				"courseID", "courseName", "courseTeacher", "courseTime"
+				"\u8BFE\u7A0BID", "\u8BFE\u7A0B\u540D\u79F0", "\u4EFB\u8BFE\u6559\u5E08", "\u4E0A\u8BFE\u65F6\u95F4"
 			}
 		));
-		table.setBounds(56, 65, 300, 44);
-		contentPane.add(table);
+		table_checkstudentcourse.getColumnModel().getColumn(1).setPreferredWidth(84);
+		table_checkstudentcourse.getColumnModel().getColumn(2).setPreferredWidth(87);
+		table_checkstudentcourse.getColumnModel().getColumn(3).setPreferredWidth(89);
 		
-		JButton button = new JButton("\u9000\u51FA");
-		button.addActionListener(new ActionListener() {
+		JButton button_quit = new JButton("\u9000\u51FA");
+		button_quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		button.setBounds(273, 200, 123, 29);
-		contentPane.add(button);
+		button_quit.setBounds(273, 200, 123, 29);
+		contentPane.add(button_quit);
 	}
 }

@@ -15,10 +15,10 @@ import java.awt.event.ActionEvent;
 public class courseTADD extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textField_courseID;
+	private JTextField textField_coursename;
+	private JTextField textField_courseteacher;
+	private JTextField textField_coursetime;
 
 	/**
 	 * Launch the application.
@@ -64,25 +64,25 @@ public class courseTADD extends JFrame {
 		label_2.setBounds(52, 183, 81, 21);
 		contentPane.add(label_2);
 		
-		textField = new JTextField();
-		textField.setBounds(208, 25, 96, 27);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textField_courseID = new JTextField();
+		textField_courseID.setBounds(208, 25, 96, 27);
+		contentPane.add(textField_courseID);
+		textField_courseID.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(208, 77, 96, 27);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		textField_coursename = new JTextField();
+		textField_coursename.setBounds(208, 77, 96, 27);
+		contentPane.add(textField_coursename);
+		textField_coursename.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(208, 125, 96, 27);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		textField_courseteacher = new JTextField();
+		textField_courseteacher.setBounds(208, 125, 96, 27);
+		contentPane.add(textField_courseteacher);
+		textField_courseteacher.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(208, 180, 96, 27);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		textField_coursetime = new JTextField();
+		textField_coursetime.setBounds(208, 180, 96, 27);
+		contentPane.add(textField_coursetime);
+		textField_coursetime.setColumns(10);
 		
 		JButton button = new JButton("\u6DFB\u52A0\u8BFE\u7A0B");
 		button.addActionListener(new ActionListener() {

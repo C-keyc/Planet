@@ -24,18 +24,19 @@ import javax.swing.JScrollPane;
 public class courseTCheck extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	private JTable table_checkteachercourse;
+	private JScrollPane scrollPane;
 	
-/*	private Vector TableData;//用来存放表格数据的线性表
-    private Vector TableTitle;//表格的 列标题
+/*	private Vector TableData;//鐢ㄦ潵瀛樻斁琛ㄦ牸鏁版嵁鐨勭嚎鎬ц〃
+    private Vector TableTitle;//琛ㄦ牸鐨� 鍒楁爣棰�
     @SuppressWarnings("unchecked")
 	public void test1()
 {
  TableData = new Vector();
 TableTitle= new Vector();
-TableTitle.add("第一列");
- TableTitle.add("第二列"); 
- TableTitle.add("第三列");
+TableTitle.add("绗竴鍒�");
+ TableTitle.add("绗簩鍒�"); 
+ TableTitle.add("绗笁鍒�");
 String driverName="com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
 String dbURL="jdbc:sqlserver://localhost:1433;DatabaseName=Leading";
 String userName="sa"; 
@@ -70,22 +71,36 @@ String userPwd="123456";
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setModel(new DefaultTableModel(
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(15, 31, 398, 102);
+		contentPane.add(scrollPane);
+		
+		table_checkteachercourse = new JTable();
+		scrollPane.setViewportView(table_checkteachercourse);
+		table_checkteachercourse.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table_checkteachercourse.setModel(new DefaultTableModel(
 			new Object[][] {
-				{" \u8BFE\u7A0BID", "\u8BFE\u7A0B\u540D\u79F0", "\u4EFB\u8BFE\u6559\u5E08", "\u4E0A\u8BFE\u65F6\u95F4"},
+				{" ", "", "", ""},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
 				{null, null, null, null},
 				{null, null, null, null},
 				{null, null, null, null},
 			},
 			new String[] {
-					"courseID", "courseName", "courseTeacher", "courseTime"
+				"\u8BFE\u7A0BID", "\u8BFE\u7A0B\u540D\u79F0", "\u4EFB\u8BFE\u6559\u5E08", "\u4E0A\u8BFE\u65F6\u95F4"
 			}
 		));
-		
-		table.setBounds(15, 31, 398, 94);
-		contentPane.add(table);
+		table_checkteachercourse.getColumnModel().getColumn(1).setPreferredWidth(91);
+		table_checkteachercourse.getColumnModel().getColumn(2).setPreferredWidth(92);
+		table_checkteachercourse.getColumnModel().getColumn(3).setPreferredWidth(88);
+		table_checkteachercourse.setRowHeight(20);
 		
 		JButton button = new JButton("\u9000\u51FA");
 		button.addActionListener(new ActionListener() {

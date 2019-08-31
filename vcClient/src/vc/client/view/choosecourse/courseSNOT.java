@@ -38,9 +38,9 @@ public class courseSNOT extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLabel lblid = new JLabel("\u4E0D\u597D\u610F\u601D\uFF0C\u60A8\u8F93\u5165\u7684\u8BFE\u7A0BID\u6709\u8BEF\uFF0C\u8BF7\u91CD\u65B0\u8F93\u5165");
-			lblid.setBounds(31, 76, 369, 21);
-			contentPanel.add(lblid);
+			JLabel lblid_cinerror = new JLabel("\u4E0D\u597D\u610F\u601D\uFF0C\u60A8\u8F93\u5165\u7684\u8BFE\u7A0BID\u6709\u8BEF\uFF0C\u8BF7\u91CD\u65B0\u8F93\u5165");
+			lblid_cinerror.setBounds(31, 76, 369, 21);
+			contentPanel.add(lblid_cinerror);
 		}
 		{
 			JPanel buttonPane = new JPanel();

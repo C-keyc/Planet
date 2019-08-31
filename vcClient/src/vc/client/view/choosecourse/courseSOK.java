@@ -38,9 +38,9 @@ public class courseSOK extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLabel label = new JLabel("\u606D\u559C\u60A8\u64CD\u4F5C\u6210\u529F");
-			label.setBounds(123, 89, 223, 21);
-			contentPanel.add(label);
+			JLabel label_congratulations = new JLabel("\u606D\u559C\u60A8\u64CD\u4F5C\u6210\u529F");
+			label_congratulations.setBounds(123, 89, 223, 21);
+			contentPanel.add(label_congratulations);
 		}
 		{
 			JPanel buttonPane = new JPanel();
