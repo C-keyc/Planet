@@ -30,7 +30,7 @@ public class AccessUtil {
 			cnfex.printStackTrace();
 		}
 		try {
-			String msAccDB = "E:/eclipse-workspace/user.mdb";//这里写你的.mdb文件的位置 注意使用的是正斜杠  
+			String msAccDB = "D:/user.mdb";//这里写你的.mdb文件的位置 注意使用的是正斜杠  
 			//新版本Access保存时应该选择2002-2003数据库版本即使.mdb格式
 			String dbURL = "jdbc:ucanaccess://" + msAccDB;
 			connection = DriverManager.getConnection(dbURL);
