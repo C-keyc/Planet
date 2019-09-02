@@ -10,6 +10,8 @@ public interface MessageType {
 	String CMD_LOGOUT = "CMD_LOGOUT";
 	String CMD_REGISTER = "CMD_REGISTER";
 	
+	
+	
     String CMD_CHECK_GOODS = "CMD_CHECK_GOODS";
     String CMD_OPEN_GOODS_MAIN = "CMD_OPEN_GOODS_MAIN";
     String CMD_QUERY_GOODS = "CMD_QUERY_GOODS";

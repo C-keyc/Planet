@@ -20,10 +20,13 @@ import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import vc.list.common.Goods;
+import vc.list.common.Student;
 import vc.list.common.User;
 
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class MessageRoll_mainFrm extends JFrame {
@@ -36,7 +39,7 @@ public class MessageRoll_mainFrm extends JFrame {
 	//新增类的属性
 	
 	private User owner;
-	
+	private List<Student> stlist;
 	/**
 	 * Launch the application.
 	 */
@@ -61,9 +64,16 @@ public class MessageRoll_mainFrm extends JFrame {
 		
 		this.owner=user;
 		
+		MessageRoll_mainMgr.add(owner.getUserID(), this);
+		
+		initialize();
+		
+		
+	}
+	public void initialize() {
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u7C4D\u4FE1\u606F");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageRoll_mainFrm.class.getResource("/image/logo.jpg")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 240));
@@ -247,6 +257,5 @@ public class MessageRoll_mainFrm extends JFrame {
 	    	    break;
 	    	    }*/
 		tblMessage.setModel(tablemodel);
-		
 	}
 }
