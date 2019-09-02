@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.list.common.User;
+
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -17,27 +20,19 @@ import java.awt.event.ActionEvent;
 public class LibraryReader_searchresultFrm extends JFrame {
 
 	private JPanel contentPane;
+	private User owner;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryReader_searchresultFrm frame = new LibraryReader_searchresultFrm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public LibraryReader_searchresultFrm() {
+	public LibraryReader_searchresultFrm(User u) {
+		this.owner=u;
+		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_searchresultFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

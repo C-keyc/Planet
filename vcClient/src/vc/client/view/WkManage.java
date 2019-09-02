@@ -54,6 +54,7 @@ public class WkManage extends JFrame{
 		this.owner=user;
 		
 		WkManageMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
+		
 		queryGoods();
 		
 		initialize();

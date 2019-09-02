@@ -8,7 +8,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import vc.client.bz.impl.UserSrvImpl;
+
 import vc.client.view.library.LibraryReader_mainFrm;
+
+
+import vc.client.view.message.MessageRoll_mainFrm;
+import vc.client.view.choosecourse.courseStudent;
+import vc.client.view.choosecourse.courseTeacher;
+import vc.client.view.library.LibraryReader_mainFrm;
+import vc.client.view.library.LibraryWorker_manageFrm;
+//github.com/C-keyc/Planet.git
+
 import vc.list.common.User;
 
 import java.awt.Toolkit;
@@ -73,21 +83,50 @@ public class Menu extends JFrame {
 		});
 		btnNewButton_1.setBounds(1, 100, 97, 23);
 		contentPane.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MessageRoll_mainFrm messageRoll = new MessageRoll_mainFrm(owner);
+				messageRoll.setVisible(true);
+
+			}
+		});
+		
 		
 		JButton btnNewButton_2 = new JButton("\u9009\u8BFE\u7CFB\u7EDF");
 		btnNewButton_2.setBounds(1, 158, 97, 23);
 		contentPane.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(owner.getType()==1) {
+					courseStudent courseS = new courseStudent(owner);
+					courseS.setVisible(true);
+				}else {
+					courseTeacher frame = new courseTeacher(owner);
+					frame.setVisible(true);
+				}
+
+			}
+		});
 		
 		JButton btnNewButton_3 = new JButton("\u56FE\u4E66\u9986");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LibraryReader_mainFrm libraryReader_mainFrm = new LibraryReader_mainFrm(owner);
-				libraryReader_mainFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				libraryReader_mainFrm.setVisible(true);
+				
+				if(owner.getType()==1|owner.getType()==2) {
+				LibraryReader_mainFrm LibraryReader_mainFrm=new LibraryReader_mainFrm(owner);
+				LibraryReader_mainFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				LibraryReader_mainFrm.setVisible(true);
+				}else {
+					LibraryWorker_manageFrm libraryWorker = new LibraryWorker_manageFrm(owner);
+					libraryWorker.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					libraryWorker.setVisible(true);
+				}
+			
 			}
 		});
 		btnNewButton_3.setBounds(1, 217, 97, 23);
 		contentPane.add(btnNewButton_3);
+		
 		
 		JButton btnNewButton_4 = new JButton("\u5546\u5E97");
 		btnNewButton_4.addActionListener(new ActionListener() {

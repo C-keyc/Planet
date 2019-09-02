@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import vc.list.common.User;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JScrollPane;
@@ -25,6 +28,8 @@ public class courseStudent extends JFrame {
 	private JTextField textField_quitcourseID;
 	private JTable table;
 	private JTable table_allstudentcourse;
+	
+	private User owner;
 
 	/**
 	 * Launch the application.
@@ -33,7 +38,8 @@ public class courseStudent extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					courseStudent frame = new courseStudent();
+					User u = new User();
+					courseStudent frame = new courseStudent(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +51,11 @@ public class courseStudent extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public courseStudent() {
+	public courseStudent(User user) {
+		
+		this.owner = user;
+		
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(courseStudent.class.getResource("/image/logo.jpg")));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u9009\u8BFE\u7CFB\u7EDF");
 		getContentPane().setLayout(null);

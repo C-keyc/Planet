@@ -7,10 +7,10 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/" kind="src" path=""/>
-	<classpathentry kind="lib" path="src/diver/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="src/diver/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="src/diver/hsqldb.jar"/>
-	<classpathentry kind="lib" path="src/diver/jackcess-2.1.3.jar"/>
-	<classpathentry kind="lib" path="src/diver/ucanaccess-3.0.6.jar"/>
+	<classpathentry kind="lib" path="src/driver/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="src/driver/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="src/driver/hsqldb.jar"/>
+	<classpathentry kind="lib" path="src/driver/jackcess-2.1.3.jar"/>
+	<classpathentry kind="lib" path="src/driver/ucanaccess-3.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

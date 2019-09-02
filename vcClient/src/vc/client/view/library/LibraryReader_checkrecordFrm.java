@@ -11,12 +11,14 @@ import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+
 import vc.client.bz.impl.UserSrvImpl;
 import vc.client.view.WkManageMgr;
 import vc.list.common.Book;
 import vc.list.common.BookRecord;
 import vc.list.common.Goods;
 import vc.list.common.Message;
+
 import vc.list.common.User;
 
 import javax.swing.JLabel;
@@ -38,13 +40,31 @@ public class LibraryReader_checkrecordFrm extends JFrame {
     private BookRecord bkr;
 	private List<BookRecord> bkrlist;
 
+
+
 	/**
 	 * Launch the application.
 	 */
 
+	/*public static void main(String[] args) {
+		*EventQueue.invokeLater(new Runnable() {
+		*	public void run() {
+		*		try {
+		*			LibraryReader_checkrecordFrm frame = new LibraryReader_checkrecordFrm();
+		*			frame.setVisible(true);
+		*		} catch (Exception e) {
+		*			e.printStackTrace();
+		*		}
+		*	}
+		*});
+	*}
+	*/
+
+
 	/**
 	 * Create the frame.
 	 */
+
 	public LibraryReader_checkrecordFrm(User user)
 	{
 		this.owner=user;
@@ -56,6 +76,8 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 	}
 	
 	private void initialize() {
+
+		
 
 		setBackground(new Color(240, 255, 255));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");

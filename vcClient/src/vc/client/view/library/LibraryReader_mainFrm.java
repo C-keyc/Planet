@@ -7,7 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+
 import vc.client.view.WkManageMgr;
+
+
 import vc.list.common.User;
 
 import java.awt.Toolkit;
@@ -33,9 +36,12 @@ public class LibraryReader_mainFrm extends JFrame {
 
 
 
+
+
 	/**
 	 * Create the frame.
 	 */
+
 	
 	public LibraryReader_mainFrm(User user) {
 			
@@ -44,6 +50,9 @@ public class LibraryReader_mainFrm extends JFrame {
 		
 	}
 	private void initialize(){
+
+		
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_mainFrm.class.getResource("/image/logo.jpg")));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

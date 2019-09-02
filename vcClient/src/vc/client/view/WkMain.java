@@ -31,12 +31,14 @@ public class WkMain extends JFrame{
 	/**
 	 * Launch the application.
 	 */
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { WkMain window = new WkMain();
-	 * window.frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); }
-	 * } }); }
-	 */
+	
+	  public static void main(String[] args) { EventQueue.invokeLater(new
+	  Runnable() { public void run() { 
+		  User u = new User();
+		  try { WkMain window = new WkMain(u);
+	  window.frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); }
+	  } }); }
+	 
 
 	/**
 	 * Create the application.
@@ -68,9 +70,6 @@ public class WkMain extends JFrame{
 		btnManage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	
-
-				WkManage wk = new WkManage(owner);
-				wk.setVisible(true);
 			}
 		});
 		btnManage.setBounds(140, 400, 160, 50);

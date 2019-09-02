@@ -38,6 +38,9 @@ public class LibraryReader_searchFrm extends JFrame {
 	private JTextField searchinformation;
 	public static LibraryReader_searchbywriterFrm windoww;
 	private User owner;
+
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +49,11 @@ public class LibraryReader_searchFrm extends JFrame {
 	 * Create the frame.
 	 */
 	public LibraryReader_searchFrm(User u) {
+
 		this.owner = u;
+
+		
+
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_searchFrm.class.getResource("/image/logo.jpg")));
 		setBackground(new Color(240, 255, 255));
@@ -98,12 +105,12 @@ public class LibraryReader_searchFrm extends JFrame {
 					JOptionPane.showMessageDialog(searchinformation, "请输入文本","提示",JOptionPane.WARNING_MESSAGE );
 				}else if(namemodel.getGroup().isSelected(namemodel)||IDmodel.getGroup().isSelected(IDmodel)) {
 					//如果选中按书名或按编号查询
-					windowsr=new LibraryReader_searchresultFrm();
+					windowsr=new LibraryReader_searchresultFrm(owner);
 					windowsr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					windowsr.setVisible(true);
 				}else if(writermodel.getGroup().isSelected(writermodel)) {
 					//如果选中按作者查询
-					windoww=new LibraryReader_searchbywriterFrm();
+					windoww=new LibraryReader_searchbywriterFrm(owner);
 					windoww.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					windoww.setVisible(true);
 				}else {

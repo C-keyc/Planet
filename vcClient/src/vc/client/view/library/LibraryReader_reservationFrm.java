@@ -34,13 +34,16 @@ public class LibraryReader_reservationFrm extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	
+
 
 	/**
 	 * Create the frame.
 	 */
 	public LibraryReader_reservationFrm(User u) {
+
 		this.owner = u;
+
+		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_reservationFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
