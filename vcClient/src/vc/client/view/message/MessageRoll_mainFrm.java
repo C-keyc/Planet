@@ -19,6 +19,9 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import vc.list.common.User;
+
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -29,6 +32,11 @@ public class MessageRoll_mainFrm extends JFrame {
 	private JTable tblMessage;
 	boolean tableEditable = false;
 	private DefaultTableModel tablemodel;//表格模型
+	
+	//新增类的属性
+	
+	private User owner;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -36,7 +44,8 @@ public class MessageRoll_mainFrm extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MessageRoll_mainFrm frame = new MessageRoll_mainFrm();
+					User u = new User();
+					MessageRoll_mainFrm frame = new MessageRoll_mainFrm(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +57,10 @@ public class MessageRoll_mainFrm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MessageRoll_mainFrm() {
+	public MessageRoll_mainFrm(User user) {
+		
+		this.owner=user;
+		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u7C4D\u4FE1\u606F");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageRoll_mainFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

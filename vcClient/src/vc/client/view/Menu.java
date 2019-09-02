@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import vc.client.bz.impl.UserSrvImpl;
+import vc.client.view.message.MessageRoll_mainFrm;
 import vc.list.common.User;
 
 import java.awt.Toolkit;
@@ -72,6 +73,14 @@ public class Menu extends JFrame {
 		});
 		btnNewButton_1.setBounds(1, 100, 97, 23);
 		contentPane.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MessageRoll_mainFrm messageRoll = new MessageRoll_mainFrm(owner);
+				messageRoll.setVisible(true);
+
+			}
+		});
+		
 		
 		JButton btnNewButton_2 = new JButton("\u9009\u8BFE\u7CFB\u7EDF");
 		btnNewButton_2.setBounds(1, 158, 97, 23);
