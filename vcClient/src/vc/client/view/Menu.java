@@ -13,6 +13,7 @@ import vc.client.view.message.MessageRoll_mainFrm;
 import vc.client.view.choosecourse.courseStudent;
 import vc.client.view.choosecourse.courseTeacher;
 import vc.client.view.library.LibraryReader_mainFrm;
+import vc.client.view.library.LibraryWorker_manageFrm;
 //github.com/C-keyc/Planet.git
 import vc.list.common.User;
 
@@ -106,13 +107,21 @@ public class Menu extends JFrame {
 		JButton btnNewButton_3 = new JButton("\u56FE\u4E66\u9986");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(owner.getType()==1|owner.getType()==2) {
 				LibraryReader_mainFrm LibraryReader_mainFrm=new LibraryReader_mainFrm(owner);
 				LibraryReader_mainFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				LibraryReader_mainFrm.setVisible(true);
+				}else {
+					LibraryWorker_manageFrm libraryWorker = new LibraryWorker_manageFrm(owner);
+					libraryWorker.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					libraryWorker.setVisible(true);
+				}
+			
 			}
 		});
 		btnNewButton_3.setBounds(1, 217, 97, 23);
 		contentPane.add(btnNewButton_3);
+		
 		
 		JButton btnNewButton_4 = new JButton("\u5546\u5E97");
 		btnNewButton_4.addActionListener(new ActionListener() {
