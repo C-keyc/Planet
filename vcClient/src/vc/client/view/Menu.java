@@ -85,6 +85,13 @@ public class Menu extends JFrame {
 		JButton btnNewButton_2 = new JButton("\u9009\u8BFE\u7CFB\u7EDF");
 		btnNewButton_2.setBounds(1, 158, 97, 23);
 		contentPane.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MessageRoll_mainFrm messageRoll = new MessageRoll_mainFrm(owner);
+				messageRoll.setVisible(true);
+
+			}
+		});
 		
 		JButton btnNewButton_3 = new JButton("\u56FE\u4E66\u9986");
 		btnNewButton_3.setBounds(1, 217, 97, 23);

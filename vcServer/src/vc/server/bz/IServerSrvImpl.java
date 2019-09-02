@@ -57,7 +57,7 @@ public class IServerSrvImpl implements IServerSrv {
 				
 				String msgType = msg.getType();
 				User u = msg.getSender();
-				System.out.println("客户端发来消息:"+u.getUname()+"请求登陆:");
+				System.out.println("客户端发来消息:"+u.getUserID()+"请求登陆:");
 				
 			
 				ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
@@ -74,7 +74,7 @@ public class IServerSrvImpl implements IServerSrv {
 						oos.flush();
 						// 关闭连接
 					} else {
-						System.out.println(u.getUname() + "验证成功！");
+						System.out.println(u.getUserID() + "验证成功！");
 						// 更新服务器状态
 						//user.setStatus(UserStatus.ONLINE);
 						//iud.updUser(user);
