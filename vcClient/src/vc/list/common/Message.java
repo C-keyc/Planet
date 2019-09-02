@@ -25,6 +25,15 @@ public class Message implements java.io.Serializable {
 	private List<Goods> gdlist;
 
 	private Object data;
+	
+	private Book bk;
+	
+	private List<Book> bklist;
+	
+	private BookRecord bkr;
+	
+	private List<BookRecord> bkrlist;
+
 
 	public Message() {
 		this.sendTime = new Date().toString();
@@ -100,4 +109,38 @@ public class Message implements java.io.Serializable {
 	public void setGdlist(List<Goods> gdlist) {
 		this.gdlist = gdlist;
 	}
+
+	public Book getBk() {
+		return bk;
+	}
+
+	public void setBk(Book bk) {
+		this.bk = bk;
+	}
+
+	public List<Book> getBklist() {
+		return bklist;
+	}
+
+	public void setBklist(List<Book> bklist) {
+		this.bklist = bklist;
+	}
+
+	public BookRecord getBkr() {
+		return bkr;
+	}
+
+	public void setBkr(BookRecord bkr) {
+		this.bkr = bkr;
+	}
+
+	public List<BookRecord> getBkrlist() {
+		return bkrlist;
+	}
+
+	public void setBkrlist(List<BookRecord> bkrlist) {
+		this.bkrlist = bkrlist;
+	}
+	
+	
 }

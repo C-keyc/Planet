@@ -13,6 +13,8 @@ public interface MessageType {
     String CMD_CHECK_GOODS = "CMD_CHECK_GOODS";
     String CMD_OPEN_GOODS_MAIN = "CMD_OPEN_GOODS_MAIN";
     String CMD_QUERY_GOODS = "CMD_QUERY_GOODS";
+    
+    String CMD_CHECK_BOOK = "CMD_CHECK_BOOK";//²éÑ¯½èÔÄ¼ÇÂ¼
     //--------Data------------//
 	String DAT_LOGOUT = "DAT_LOGOUT";
 	String DAT_LOGIN = "DAT_LOGIN";

@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.list.common.User;
+
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
@@ -34,27 +37,16 @@ public class LibraryReader_searchFrm extends JFrame {
 	public static LibraryReader_searchresultFrm windowsr;
 	private JTextField searchinformation;
 	public static LibraryReader_searchbywriterFrm windoww;
-
+	private User owner;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryReader_searchFrm frame = new LibraryReader_searchFrm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public LibraryReader_searchFrm() {
+	public LibraryReader_searchFrm(User u) {
+		this.owner = u;
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_searchFrm.class.getResource("/image/logo.jpg")));
 		setBackground(new Color(240, 255, 255));

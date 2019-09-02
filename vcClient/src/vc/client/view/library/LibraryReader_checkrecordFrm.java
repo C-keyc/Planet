@@ -10,11 +10,22 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import vc.client.bz.impl.UserSrvImpl;
+import vc.client.view.WkManageMgr;
+import vc.list.common.Book;
+import vc.list.common.BookRecord;
+import vc.list.common.Goods;
+import vc.list.common.Message;
+import vc.list.common.User;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class LibraryReader_checkrecordFrm extends JFrame {
@@ -22,27 +33,30 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTable recordtable;
+	private UserSrvImpl usrv = new UserSrvImpl();
+	private User owner;
+    private BookRecord bkr;
+	private List<BookRecord> bkrlist;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryReader_checkrecordFrm frame = new LibraryReader_checkrecordFrm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public LibraryReader_checkrecordFrm() {
+	public LibraryReader_checkrecordFrm(User user)
+	{
+		this.owner=user;
+				
+		LibraryReaderMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
+		CheckBook();
+		
+		initialize();
+	}
+	
+	private void initialize() {
+
 		setBackground(new Color(240, 255, 255));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_checkrecordFrm.class.getResource("/image/logo.jpg")));
@@ -63,7 +77,7 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		scrollPane.setViewportView(recordtable);
 		recordtable.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
+				{bkrlist.get(0).getBookRecordID(), bkrlist.get(1).getBookRecordName(), bkrlist.get(2).getBookRecordDate(), bkrlist.get(3).getBookRecordState(), bkrlist.get(4).getBookRecordLeftTime()},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
@@ -107,4 +121,36 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		
 
 	}
+	
+	
+	public void refresh(List<Goods> gdlist) {	
+			
+		}
+	
+	public void CheckBook() {
+		
+		Message msg = new Message();
+		msg.setType("CMD_CHECK_BOOK");
+		msg.setSender(owner);
+		
+		
+		try {
+			usrv.sendMessage(msg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	public List<BookRecord> getBkrlist() {
+		return bkrlist;
+	}
+
+	public void setBkrlist(List<BookRecord> bkrlist) {
+		this.bkrlist = bkrlist;
+	}
+
+
 }

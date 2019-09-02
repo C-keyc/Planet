@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import vc.client.bz.impl.UserSrvImpl;
+import vc.client.view.library.LibraryReader_mainFrm;
 import vc.list.common.User;
 
 import java.awt.Toolkit;
@@ -78,6 +79,13 @@ public class Menu extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("\u56FE\u4E66\u9986");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LibraryReader_mainFrm libraryReader_mainFrm = new LibraryReader_mainFrm(owner);
+				libraryReader_mainFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				libraryReader_mainFrm.setVisible(true);
+			}
+		});
 		btnNewButton_3.setBounds(1, 217, 97, 23);
 		contentPane.add(btnNewButton_3);
 		
@@ -85,6 +93,7 @@ public class Menu extends JFrame {
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WkManage wk_manage = new WkManage(owner);
+				wk_manage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				wk_manage.frame.setVisible(true);
 
 			}

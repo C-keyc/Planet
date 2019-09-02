@@ -79,8 +79,16 @@ public class ServerClientThread extends Thread {
 					
 					this.SendToClient(m);
 				}
-				else {					
-					throw new Exception("未知的消息類型！");
+				else if(type.equals(MessageType.CMD_CHECK_BOOK)){					
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					
+					//m.setBklist(brdao.get);
+					
+					this.SendToClient(m);
+				}else {
+					throw new Exception("未知相应类型！");
 				}
 			} catch (SocketException se) {				
 				this.isClosed = true;
