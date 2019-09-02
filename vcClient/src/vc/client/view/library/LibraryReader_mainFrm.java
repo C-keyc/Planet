@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.list.common.User;
+
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -21,27 +24,18 @@ public class LibraryReader_mainFrm extends JFrame {
 	public static LibraryReader_checkrecordFrm windowc;
 	public static LibraryReader_reservationFrm windowr;
 	public static LibraryReader_searchFrm windows;
+	private User owner;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryReader_mainFrm frame = new LibraryReader_mainFrm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public LibraryReader_mainFrm() {
+	public LibraryReader_mainFrm(User u) {
+		this.owner=u;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_mainFrm.class.getResource("/image/logo.jpg")));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +56,7 @@ public class LibraryReader_mainFrm extends JFrame {
 		JButton tocheck = new JButton("\u67E5\u8BE2\u501F\u9605\u8BB0\u5F55");
 		tocheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				windowc=new LibraryReader_checkrecordFrm();
+				windowc=new LibraryReader_checkrecordFrm(owner);
 				windowc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				windowc.setVisible(true);
 			}
@@ -74,7 +68,7 @@ public class LibraryReader_mainFrm extends JFrame {
 		JButton toreservation = new JButton("\u9884\u7EA6\u5EA7\u4F4D");
 		toreservation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				windowr=new LibraryReader_reservationFrm();
+				windowr=new LibraryReader_reservationFrm(owner);
 				windowr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				windowr.setVisible(true);
 			}
@@ -86,7 +80,7 @@ public class LibraryReader_mainFrm extends JFrame {
 		JButton tosearch = new JButton("\u67E5\u8BE2\u4E66\u7C4D");
 		tosearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				windows=new LibraryReader_searchFrm();
+				windows=new LibraryReader_searchFrm(owner);
 				windows.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				windows.setVisible(true);
 			}

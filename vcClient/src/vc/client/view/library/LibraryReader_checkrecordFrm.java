@@ -10,6 +10,9 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import vc.list.common.User;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JScrollPane;
@@ -22,27 +25,32 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTable recordtable;
+	private User owner;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryReader_checkrecordFrm frame = new LibraryReader_checkrecordFrm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*public static void main(String[] args) {
+		*EventQueue.invokeLater(new Runnable() {
+		*	public void run() {
+		*		try {
+		*			LibraryReader_checkrecordFrm frame = new LibraryReader_checkrecordFrm();
+		*			frame.setVisible(true);
+		*		} catch (Exception e) {
+		*			e.printStackTrace();
+		*		}
+		*	}
+		*});
+	*}
+	*/
 
 	/**
 	 * Create the frame.
 	 */
-	public LibraryReader_checkrecordFrm() {
+	public LibraryReader_checkrecordFrm(User user) {
+		
+		this.owner=user;
+		
 		setBackground(new Color(240, 255, 255));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_checkrecordFrm.class.getResource("/image/logo.jpg")));

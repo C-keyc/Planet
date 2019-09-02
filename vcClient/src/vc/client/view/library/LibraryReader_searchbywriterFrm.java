@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import vc.list.common.User;
+
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -21,27 +23,19 @@ public class LibraryReader_searchbywriterFrm extends JFrame {
 
 	private JPanel contentPane;
 	private JTable searchresult;
+	private User owner;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibraryReader_searchbywriterFrm frame = new LibraryReader_searchbywriterFrm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public LibraryReader_searchbywriterFrm() {
+	public LibraryReader_searchbywriterFrm(User u) {
+		this.owner=u;
+		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_searchbywriterFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
