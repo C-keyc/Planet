@@ -10,7 +10,8 @@ import javax.swing.border.EmptyBorder;
 import vc.client.bz.impl.UserSrvImpl;
 
 import vc.client.view.message.MessageRoll_mainFrm;
-
+import vc.client.view.choosecourse.courseStudent;
+import vc.client.view.choosecourse.courseTeacher;
 import vc.client.view.library.LibraryReader_mainFrm;
 //github.com/C-keyc/Planet.git
 import vc.list.common.User;
@@ -91,8 +92,13 @@ public class Menu extends JFrame {
 		contentPane.add(btnNewButton_2);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MessageRoll_mainFrm messageRoll = new MessageRoll_mainFrm(owner);
-				messageRoll.setVisible(true);
+				if(owner.getType()==1) {
+					courseStudent courseS = new courseStudent(owner);
+					courseS.setVisible(true);
+				}else {
+					courseTeacher frame = new courseTeacher(owner);
+					frame.setVisible(true);
+				}
 
 			}
 		});

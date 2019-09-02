@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import vc.list.common.User;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -17,6 +20,8 @@ public class courseTeacher extends JFrame {
 
 	private JPanel contentPane;
 
+	
+	private User owner;
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +29,8 @@ public class courseTeacher extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					courseTeacher frame = new courseTeacher();
+					User u = new User();
+					courseTeacher frame = new courseTeacher(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +42,10 @@ public class courseTeacher extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public courseTeacher() {
+	public courseTeacher(User user) {
+		
+		this.owner = user;
+		
 		setTitle("\u6B22\u8FCE\u6765\u5230\u9009\u8BFE\u7CFB\u7EDF");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 699, 485);
