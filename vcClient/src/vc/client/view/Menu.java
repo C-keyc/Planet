@@ -78,6 +78,11 @@ public class Menu extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("\u56FE\u4E66\u9986");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LibraryReader_mainFrm
+			}
+		});
 		btnNewButton_3.setBounds(1, 217, 97, 23);
 		contentPane.add(btnNewButton_3);
 		
