@@ -81,6 +81,7 @@ public class Menu extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MessageRoll_mainFrm messageRoll = new MessageRoll_mainFrm(owner);
+				messageRoll.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				messageRoll.setVisible(true);
 
 			}
