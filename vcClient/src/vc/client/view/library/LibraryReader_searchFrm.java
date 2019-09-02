@@ -39,6 +39,8 @@ public class LibraryReader_searchFrm extends JFrame {
 	public static LibraryReader_searchbywriterFrm windoww;
 	private User owner;
 
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -47,8 +49,11 @@ public class LibraryReader_searchFrm extends JFrame {
 	 * Create the frame.
 	 */
 	public LibraryReader_searchFrm(User u) {
-		this.owner=u;
+
+		this.owner = u;
+
 		
+
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_searchFrm.class.getResource("/image/logo.jpg")));
 		setBackground(new Color(240, 255, 255));

@@ -10,6 +10,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import vc.list.common.User;
+
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -27,6 +30,7 @@ public class LibraryWorker_manageFrm extends JFrame {
 	private JButton todelete;
 	private DefaultTableModel tablemodel;//表格模型
 
+	private User owner;
 	/**
 	 * Launch the application.
 	 */
@@ -34,7 +38,8 @@ public class LibraryWorker_manageFrm extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LibraryWorker_manageFrm frame = new LibraryWorker_manageFrm();
+					User u = new User();
+					LibraryWorker_manageFrm frame = new LibraryWorker_manageFrm(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +51,10 @@ public class LibraryWorker_manageFrm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LibraryWorker_manageFrm() {
+	public LibraryWorker_manageFrm(User user) {
+		
+		this.owner = user;
+		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryWorker_manageFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

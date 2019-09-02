@@ -13,6 +13,7 @@ import vc.list.common.User;
 import vc.client.view.WkCheckRpd;
 import vc.client.view.*;
 import vc.client.view.WkManageMgr;
+import vc.client.view.library.*;
 import vc.list.common.*;
 import vc.list.common.Message;
 
@@ -75,6 +76,11 @@ public class ClientThreadSrv extends Thread {
 			WkManage wk = WkManageMgr.get(sender.getUserID());
 			
 			wk.setGdlist(msg.getGdlist());
+			
+		}else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
+			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
+			
+			lbr.setBkrlist(msg.getBkrlist());
 			
 		}
 		else {
