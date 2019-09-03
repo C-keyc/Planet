@@ -6,26 +6,31 @@ public class Student implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = -5558932995063507810L;
 	
+	private String StudentName;//姓名
 	private String StudentID;//key 一卡通号
 	private String StudentNum;//学号 例如：09017001
-	private int StudentGrade;//入学年份 例如：2017
+	private String StudentGrade;//入学年份 例如：2017
 	private String StudentDepartment;//学生院系
 	private String StudentMajor;//学生专业
 	private String StudentClass;//学生班级 例如：09173
-	private int StudentLength;//学生学制 例如：4
+	private String StudentLength;//学生学制 例如：4
 	private String StudentRe;//学生是否在籍 例如：是
 	private String StudentinSchool;//学生是否在校 例如：否
 	
 	
+	public Student() {
+		super();
+	}
 	
 	public Student(String studentID) {
 		super();
 		StudentID = studentID;
 	}
 
-	public Student(String studentID, String studentNum, int studentGrade, String studentDepartment, String studentMajor,
-			String studentClass, int studentLength, String studentRe, String studentinSchool) {
+	public Student(String studentName,String studentID, String studentNum, String studentGrade, String studentDepartment, String studentMajor,
+			String studentClass, String studentLength, String studentRe, String studentinSchool) {
 		super();
+		StudentName =studentName;
 		StudentID = studentID;
 		StudentNum = studentNum;
 		StudentGrade = studentGrade;
@@ -37,6 +42,14 @@ public class Student implements java.io.Serializable{
 		StudentinSchool = studentinSchool;
 	}
 
+	public String getStudentName() {
+		return StudentName;
+	}
+	
+	public void steStudentName(String studentName) {
+		StudentName = studentName;
+	}
+	
 	public String getStudentID() {
 		return StudentID;
 	}
@@ -53,11 +66,11 @@ public class Student implements java.io.Serializable{
 		StudentNum = studentNum;
 	}
 	
-	public int getStudentGrade() {
+	public String getStudentGrade() {
 		return StudentGrade;
 	}
 	
-	public void setStudentGrade(int studentGrade) {
+	public void setStudentGrade(String studentGrade) {
 		StudentGrade = studentGrade;
 	}
 	
@@ -85,11 +98,11 @@ public class Student implements java.io.Serializable{
 		StudentClass = studentClass;
 	}
 	
-	public int getStudentLength() {
+	public String getStudentLength() {
 		return StudentLength;
 	}
 	
-	public void setStudentLength(int studentLength) {
+	public void setStudentLength(String studentLength) {
 		StudentLength = studentLength;
 	}
 	
@@ -114,7 +127,7 @@ public class Student implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Student [StudentID=" + StudentID + ", StudentNum=" + StudentNum + ", StudentGrade=" + StudentGrade
+		return "Student [StudetName=" +StudentName + ",StudentID=" + StudentID + ", StudentNum=" + StudentNum + ", StudentGrade=" + StudentGrade
 				+ ", StudentDepartment=" + StudentDepartment + ", StudentMajor=" + StudentMajor + ", StudentClass="
 				+ StudentClass + ", StudentLength=" + StudentLength + ", StudentRe=" + StudentRe + ", StudentinSchool="
 				+ StudentinSchool + "]";

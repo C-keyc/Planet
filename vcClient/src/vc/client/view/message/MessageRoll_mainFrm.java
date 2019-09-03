@@ -147,7 +147,7 @@ public class MessageRoll_mainFrm extends JFrame {
 		
 		
 		
-		/*if(UserType="Student"){
+		if(owner.getType() == 1){
 		btnSearch.setVisible(false);
 		btnSearch.setEnabled(false);
 		btnAdd.setVisible(false);
@@ -158,7 +158,7 @@ public class MessageRoll_mainFrm extends JFrame {
 		btnUpdate.setEnabled(false);
 		}//学生界面所有按钮不可见不可使用
 		
-		if(UserType="Teacher"){
+		if(owner.getType() == 2){
 		btnAdd.setVisible(false);
 		btnAdd.setEnabled(false);
 		btnDelete.setVisible(false);
@@ -166,7 +166,7 @@ public class MessageRoll_mainFrm extends JFrame {
 		btnUpdate.setVisible(false);
 		btnUpdate.setEnabled(false);
 		}//教师界面仅可查询，其他按钮不可见不可用
-		*/
+		
 		
 		JLabel lblName = new JLabel("\u59D3\u540D\uFF1A");
 		lblName.setFont(new Font("宋体", Font.PLAIN, 16));
@@ -218,8 +218,8 @@ public class MessageRoll_mainFrm extends JFrame {
 					{null, null, null, null, null, null, null, null, null, null},
 				},
 				new String[] {
-					"\u59D3\u540D", "\u4E00\u5361\u901A\u53F7", "\u5B66\u53F7", "\u9662\u7CFB", "\u4E13\u4E1A", "\u73ED\u7EA7", "\u5165\u5B66\u5E74\u4EFD", "\u5B66\u5236", "\u662F\u5426\u5728\u7C4D", "\u662F\u5426\u5728\u6821"
-				}
+						"\u59D3\u540D", "\u4E00\u5361\u901A\u53F7", "\u5B66\u53F7", "\u5165\u5B66\u5E74\u4EFD", "\u9662\u7CFB", "\u4E13\u4E1A", "\u73ED\u7EA7", "\u5B66\u5236", "\u662F\u5426\u5728\u7C4D", "\u662F\u5426\u5728\u6821"
+					}
 			) 
 		{
 				Class[] columnTypes = new Class[] {
