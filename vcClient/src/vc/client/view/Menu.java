@@ -25,6 +25,8 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -45,6 +47,7 @@ public class Menu extends JFrame {
 	 * Create the frame.
 	 */
 	public Menu(User user) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/image/logo.jpg")));
 		
 		this.owner = user;
 		
@@ -58,32 +61,47 @@ public class Menu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel("\u6B22\u8FCE\u60A8\uFF0C");
-		label.setFont(new Font("宋体", Font.PLAIN, 15));
-		label.setBounds(27, 22, 67, 23);
-		contentPane.add(label);
+		JLabel lblWelcome = new JLabel("\u6B22\u8FCE\u60A8\uFF0C");
+		lblWelcome.setForeground(Color.WHITE);
+		lblWelcome.setFont(new Font("宋体", Font.PLAIN, 16));
+		lblWelcome.setBounds(30, 20, 70, 30);
+		contentPane.add(lblWelcome);
 		
-		JLabel lblNewLabel = new JLabel("\u59D3\u540D\uFF08\u5F85\u8FD4\u56DE\uFF09");
-		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 15));
-		lblNewLabel.setBounds(83, 23, 152, 23);
-		contentPane.add(lblNewLabel);
+		JLabel lblName = new JLabel("\u59D3\u540DXX");
+		lblName.setForeground(Color.WHITE);
+		lblName.setFont(new Font("宋体", Font.PLAIN, 16));
+		lblName.setBounds(100, 20, 100, 30);
+		contentPane.add(lblName);
 		
-		JButton button = new JButton("\u4FEE\u6539\u5BC6\u7801");
-		button.setBounds(560, 25, 97, 23);
-		contentPane.add(button);
+		JLabel lblIdentity = new JLabel("\u8EAB\u4EFD\uFF1A");
+		lblIdentity.setForeground(Color.WHITE);
+		lblIdentity.setFont(new Font("宋体", Font.PLAIN, 16));
+		lblIdentity.setBounds(200, 20, 50, 30);
+		contentPane.add(lblIdentity);
 		
-		JButton btnNewButton = new JButton("\u9000\u51FA\u767B\u5F55");
-		btnNewButton.setBounds(676, 25, 97, 23);
-		contentPane.add(btnNewButton);
+		JLabel lblIdentityXX = new JLabel("\u8EAB\u4EFDXX");
+		lblIdentityXX.setForeground(Color.WHITE);
+		lblIdentityXX.setFont(new Font("宋体", Font.PLAIN, 16));
+		lblIdentityXX.setBounds(250, 20, 50, 30);
+		contentPane.add(lblIdentityXX);
 		
-		JButton btnNewButton_1 = new JButton("\u5B66\u7C4D\u7BA1\u7406");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		
+		JButton btnChangePassword = new JButton("\u4FEE\u6539\u5BC6\u7801");
+		btnChangePassword.setBounds(560, 25, 97, 23);
+		contentPane.add(btnChangePassword);
+		
+		JButton btnExit = new JButton("\u9000\u51FA\u767B\u5F55");
+		btnExit.setBounds(676, 25, 97, 23);
+		contentPane.add(btnExit);
+		
+		JButton btnMessageRoll = new JButton("\u5B66\u7C4D\u7BA1\u7406");
+		btnMessageRoll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.setBounds(1, 100, 97, 23);
-		contentPane.add(btnNewButton_1);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnMessageRoll.setBounds(46, 125, 108, 30);
+		contentPane.add(btnMessageRoll);
+		btnMessageRoll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MessageRoll_mainFrm messageRoll = new MessageRoll_mainFrm(owner);
 				messageRoll.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -93,10 +111,10 @@ public class Menu extends JFrame {
 		});
 		
 		
-		JButton btnNewButton_2 = new JButton("\u9009\u8BFE\u7CFB\u7EDF");
-		btnNewButton_2.setBounds(1, 158, 97, 23);
-		contentPane.add(btnNewButton_2);
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnChooseCourse = new JButton("\u9009\u8BFE\u7CFB\u7EDF");
+		btnChooseCourse.setBounds(607, 153, 108, 30);
+		contentPane.add(btnChooseCourse);
+		btnChooseCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(owner.getType()==1) {
 					courseStudent courseS = new courseStudent(owner);
@@ -109,8 +127,8 @@ public class Menu extends JFrame {
 			}
 		});
 		
-		JButton btnNewButton_3 = new JButton("\u56FE\u4E66\u9986");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton btnLibrary = new JButton("\u56FE\u4E66\u9986");
+		btnLibrary.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(owner.getType()==1|owner.getType()==2) {
@@ -125,12 +143,12 @@ public class Menu extends JFrame {
 			
 			}
 		});
-		btnNewButton_3.setBounds(1, 217, 97, 23);
-		contentPane.add(btnNewButton_3);
+		btnLibrary.setBounds(105, 414, 108, 30);
+		contentPane.add(btnLibrary);
 		
 		
-		JButton btnNewButton_4 = new JButton("\u5546\u5E97");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton btnShop = new JButton("\u5546\u5E97");
+		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WkManage wk_manage = new WkManage(owner);
 				wk_manage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -138,8 +156,14 @@ public class Menu extends JFrame {
 
 			}
 		});
-		btnNewButton_4.setBounds(2, 276, 97, 23);
-		contentPane.add(btnNewButton_4);
+		btnShop.setBounds(547, 473, 108, 30);
+		contentPane.add(btnShop);
+		
+		JLabel lblBackground = new JLabel("New label");
+		lblBackground.setBackground(Color.LIGHT_GRAY);
+		lblBackground.setIcon(new ImageIcon(Menu.class.getResource("/image/MuneBG.jpg")));
+		lblBackground.setBounds(0, 0, 800, 600);
+		contentPane.add(lblBackground);
+		
 	}
-
 }

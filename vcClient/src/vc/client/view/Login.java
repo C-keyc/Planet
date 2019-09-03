@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class Login extends JFrame implements ActionListener{
 
@@ -30,8 +31,8 @@ public class Login extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1062638932603106181L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textId;
+	private JTextField textPassword;
 
 	/**
 	 * Launch the application.
@@ -53,6 +54,7 @@ public class Login extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/image/logo.jpg")));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED");
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,28 +65,28 @@ public class Login extends JFrame implements ActionListener{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel("\u7528\u6237\u540D\uFF1A");
-		label.setBounds(60, 100, 60, 20);
-		label.setFont(new Font("ºÚÌå", Font.PLAIN, 14));
-		contentPane.add(label);
+		JLabel lblId = new JLabel("\u7528\u6237\u540D\uFF1A");
+		lblId.setBounds(62, 100, 70, 20);
+		lblId.setFont(new Font("Ó×Ô²", Font.BOLD, 16));
+		contentPane.add(lblId);
 		
-		JLabel label_1 = new JLabel("\u5BC6\u7801\uFF1A");
-		label_1.setBounds(60, 140, 60, 20);
-		label_1.setFont(new Font("ºÚÌå", Font.PLAIN, 14));
-		contentPane.add(label_1);
+		JLabel lblPassword = new JLabel("\u5BC6\u7801\uFF1A");
+		lblPassword.setBounds(77, 139, 60, 20);
+		lblPassword.setFont(new Font("Ó×Ô²", Font.BOLD, 16));
+		contentPane.add(lblPassword);
 		
-		textField = new JTextField();
-		textField.setBounds(130, 100, 180, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textId = new JTextField();
+		textId.setBounds(130, 100, 180, 20);
+		contentPane.add(textId);
+		textId.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(130, 140, 180, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		textPassword = new JTextField();
+		textPassword.setBounds(130, 140, 180, 20);
+		contentPane.add(textPassword);
+		textPassword.setColumns(10);
 		
-		JButton button = new JButton("\u767B\u5F55");
-		button.addActionListener(this);
+		JButton btnLogin = new JButton("\u767B\u5F55");
+		btnLogin.addActionListener(this);
 		
 		/*
 		button.addActionListener(new ActionListener() {
@@ -121,21 +123,23 @@ public class Login extends JFrame implements ActionListener{
 
 		});
 		*/
-		button.setBounds(130, 180, 180, 20);
-		button.setFont(new Font("ËÎÌå", Font.PLAIN, 14));
-		contentPane.add(button);
+		btnLogin.setBounds(130, 180, 180, 20);
+		btnLogin.setFont(new Font("ºÚÌå", Font.PLAIN, 15));
+		contentPane.add(btnLogin);
 		
-		JButton btnNewButton = new JButton("\u5FD8\u8BB0\u5BC6\u7801\uFF1F");
-		btnNewButton.setBounds(266, 230, 110, 23);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnForget = new JButton("\u5FD8\u8BB0\u5BC6\u7801");
+		btnForget.setFont(new Font("ºÚÌå", Font.PLAIN, 12));
+		btnForget.setBounds(289, 230, 87, 23);
+		btnForget.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		contentPane.add(btnNewButton);
+		contentPane.add(btnForget);
 		
-		JLabel lblNewLabel = new JLabel("picture");
-		lblNewLabel.setBounds(0, 0, 400, 90);
-		contentPane.add(lblNewLabel);
+		JLabel lblBackground = new JLabel("picture");
+		lblBackground.setIcon(new ImageIcon(Login.class.getResource("/image/LoginBG.jpg")));
+		lblBackground.setBounds(-189, 0, 642, 373);
+		contentPane.add(lblBackground);
 	}
 
 	@Override
@@ -144,8 +148,8 @@ public class Login extends JFrame implements ActionListener{
 		UserSrvImpl us = new UserSrvImpl();
 
 		
-		String UserID = textField.getText().trim();
-		String UserPass =textField_1.getText().trim();
+		String UserID = textId.getText().trim();
+		String UserPass =textPassword.getText().trim();
 		User user = new User(UserID,UserPass);
 		User retUser = null;
 		try {
