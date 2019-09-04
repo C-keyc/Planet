@@ -7,7 +7,7 @@ public class Student implements java.io.Serializable{
 	private static final long serialVersionUID = -5558932995063507810L;
 	
 	private String StudentName;//姓名
-	private String StudentID;//key 一卡通号
+	private String StudentID;// 一卡通号
 	private String StudentNum;//学号 例如：09017001
 	private String StudentGrade;//入学年份 例如：2017
 	private String StudentDepartment;//学生院系
@@ -46,7 +46,7 @@ public class Student implements java.io.Serializable{
 		return StudentName;
 	}
 	
-	public void steStudentName(String studentName) {
+	public void setStudentName(String studentName) {
 		StudentName = studentName;
 	}
 	
@@ -121,6 +121,8 @@ public class Student implements java.io.Serializable{
 	public void setStudentinSchool(String studentinSchool) {
 		StudentinSchool = studentinSchool;
 	}
+	
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

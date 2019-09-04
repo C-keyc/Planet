@@ -15,6 +15,7 @@ public interface StudentDao {
 	
 	boolean InsertStudent(Student student);//添加学生学籍信息
 	boolean Deletestudent(Student student);//删除学生学籍信息
+	
 	boolean UpdateStudentName(Student student);//修改学生姓名
 	boolean UpdateStudentNum(Student student);//修改学生学号
 	boolean UpdateStudentYear(Student student);//修改学生入学年份

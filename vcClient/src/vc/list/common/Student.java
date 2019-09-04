@@ -16,7 +16,7 @@ public class Student implements java.io.Serializable{
 	private String StudentLength;//学生学制 例如：4
 	private String StudentRe;//学生是否在籍 例如：是
 	private String StudentinSchool;//学生是否在校 例如：否
-	
+
 	
 	public Student() {
 		super();
@@ -46,7 +46,7 @@ public class Student implements java.io.Serializable{
 		return StudentName;
 	}
 	
-	public void steStudentName(String studentName) {
+	public void setStudentName(String studentName) {
 		StudentName = studentName;
 	}
 	
@@ -121,6 +121,8 @@ public class Student implements java.io.Serializable{
 	public void setStudentinSchool(String studentinSchool) {
 		StudentinSchool = studentinSchool;
 	}
+	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

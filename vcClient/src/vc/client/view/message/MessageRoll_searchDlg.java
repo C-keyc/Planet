@@ -128,7 +128,7 @@ public class MessageRoll_searchDlg extends JDialog {
 						dispose();
 					}
 				});
-				cancelButton.setActionCommand("Cancel");
+				//cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
