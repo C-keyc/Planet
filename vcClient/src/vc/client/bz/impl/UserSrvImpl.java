@@ -1,6 +1,6 @@
 package vc.client.bz.impl;
 
-//ÓÃÀ´Ìá¹©¶ÔÓÃ»§µÄ·şÎñ£¬¸ø·şÎñ¶Ë·¢ËÍÏûÏ¢
+//ç”¨æ¥æä¾›å¯¹ç”¨æˆ·çš„æœåŠ¡ï¼Œç»™æœåŠ¡ç«¯å‘é€æ¶ˆæ¯
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,9 +8,11 @@ import java.io.ObjectOutputStream;
 
 import vc.client.bz.thread.ClientThreadSrvMgr;
 import vc.client.bz.thread.ClientThreadSrv;
+import vc.list.common.Book;
 import vc.list.common.Goods;
 import vc.list.common.Message;
 import vc.list.common.MessageType;
+import vc.list.common.Seat;
 import vc.list.common.Student;
 import vc.list.common.User;
 
@@ -22,22 +24,22 @@ public class UserSrvImpl {
 	public User login(User user) throws IOException, ClassNotFoundException {
 	
 		Message msg = new Message();
-		msg.setSender(user);//ÔÚÏûÏ¢Àï¸üĞÂµÇÂ¼ÓÃ»§
+		msg.setSender(user);//åœ¨æ¶ˆæ¯é‡Œæ›´æ–°ç™»å½•ç”¨æˆ·
 		msg.setType(MessageType.CMD_LOGIN);
 		User u = null;
 		
 
-		csi.send(msg);  //csi ÀïÊ×ÏÈ²éÕÒÓÃ»§µÄÏß³Ì£¬È»ºó·¢ËÍĞÅÏ¢
-		msg=csi.receive(user.getUserID()); //½ÓÊÕµÇÂ½·´À¡ĞÅÏ¢
+		csi.send(msg);  //csi é‡Œé¦–å…ˆæŸ¥æ‰¾ç”¨æˆ·çš„çº¿ç¨‹ï¼Œç„¶åå‘é€ä¿¡æ¯
+		msg=csi.receive(user.getUserID()); //æ¥æ”¶ç™»é™†åé¦ˆä¿¡æ¯
 		
 		
 		if (msg.getType().equals(MessageType.RST_SUCCESS)) {
-			// ¸ù¾İÓÃ»§idÈ¥Ïß³Ì±íÀïÆô¶¯¶ÔÓ¦µÄÏß³Ì
+			// æ ¹æ®ç”¨æˆ·idå»çº¿ç¨‹è¡¨é‡Œå¯åŠ¨å¯¹åº”çš„çº¿ç¨‹
 			ClientThreadSrv cts = ClientThreadSrvMgr.get(user.getUserID());
-			cts.start(); //ÔÚ´ËÏß³ÌÀïÓ¦´ğ·şÎñ¶ËµÄÏûÏ¢
+			cts.start(); //åœ¨æ­¤çº¿ç¨‹é‡Œåº”ç­”æœåŠ¡ç«¯çš„æ¶ˆæ¯
 			u = msg.getReceiver();
 			cts.setOwner(u);
-		}else if(msg.getType().equals(MessageType.RST_FAILURE)) {//µÇÂ½Ê§°Ü£¬°ÑËû´ÓÏß³Ì±íÀïÌŞ³ı
+		}else if(msg.getType().equals(MessageType.RST_FAILURE)) {//ç™»é™†å¤±è´¥ï¼ŒæŠŠä»–ä»çº¿ç¨‹è¡¨é‡Œå‰”é™¤
 			ClientThreadSrv cts = ClientThreadSrvMgr.remove(user.getUserID());
 			cts.dispose();
 		}
@@ -50,14 +52,14 @@ public class UserSrvImpl {
 		csi.send(msg);	
 	}
 	
-	public void ShopCheck(User sender ,Goods gd) throws IOException { //¹¦ÄÜº¯ÊıµÄ²ÎÊıÓÃuser ºÍÒª·¢ËÍµÄĞÅÏ¢
+	public void ShopCheck(User sender ,Goods gd) throws IOException { //åŠŸèƒ½å‡½æ•°çš„å‚æ•°ç”¨user å’Œè¦å‘é€çš„ä¿¡æ¯
 
 		
 		Message m = new Message();
 		m.setSender(sender);
 		m.setType(MessageType.CMD_CHECK_GOODS);
-		m.setGd(gd);  //¸üĞÂÏûÏ¢
-		this.sendMessage(m); // µ÷ÓÃ·¢ËÍ·½·¨£¬°ÑÏûÏ¢·¢ËÍ¼´¿É
+		m.setGd(gd);  //æ›´æ–°æ¶ˆæ¯
+		this.sendMessage(m); // è°ƒç”¨å‘é€æ–¹æ³•ï¼ŒæŠŠæ¶ˆæ¯å‘é€å³å¯
 
 	}
 	
@@ -160,6 +162,108 @@ public class UserSrvImpl {
 		
 		m.setStudent(st);
 		this.sendMessage(m); 
+	}
+	public void queryBookName(User owner ,String str) {
+		Message msg = new Message();
+		msg.setType("CMD_QUERY_BOOKNAME");
+		msg.setSender(owner);
+		Book bk = new Book();
+		bk.setBookName(str);
+		msg.setBk(bk);
+		System.out.println("LibraryReader_searchresultFrm:ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½É¹ï¿½ï¿½ï¿½\"CMD_QUERY_BOOKNAME\"");
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public void queryBookID(User owner ,String str) {
+
+		Message msg = new Message();
+		msg.setType("CMD_QUERY_BOOKID");
+		msg.setSender(owner);
+		Book bk = new Book();
+		bk.setBookID(str);
+		msg.setBk(bk);
+		
+		System.out.println("LibraryReader_searchresultFrm:ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½É¹ï¿½ï¿½ï¿½\"CMD_QUERY_BOOKID\"");
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		}
+
+
+	public void queryBookWriter(User owner, String str) {
+		Message msg = new Message();
+		msg.setType("CMD_QUERY_BOOKWRITER");
+		msg.setSender(owner);
+		Book bk = new Book();
+		bk.setBookWriter(str);
+		msg.setBk(bk);
+		
+		System.out.println("LibraryReader_searchresultFrm:ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½É¹ï¿½ï¿½ï¿½\"CMD_QUERY_BOOKID\"");
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+	}
+	
+	public void querySeat(User owner, Seat t) {
+		Message msg = new Message();
+		msg.setType("CMD_QUERY_SEAT");
+		msg.setSender(owner);
+		msg.setSeat(t);
+		
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public void checkAllBook(User owner) {
+		Message msg = new Message();
+		msg.setType("CMD_CHECK_ALLBOOK");
+		msg.setSender(owner);
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		}
+
+
+	public void addBook(User owner,Book bk) {
+		Message msg = new Message();
+		msg.setType("CMD_ADD_BOOK");
+		msg.setSender(owner);
+		msg.setBk(bk);
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		}
+
+
+	public void deleteBook(User owner,String id) {
+		Message msg = new Message();
+		msg.setType("CMD_DELETE_BOOK");
+		msg.setSender(owner);
+		Book bk = new Book(id);
+		msg.setBk(bk);
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

@@ -16,6 +16,14 @@ public class User implements Serializable{
 	private String UserPassword;
 	private int UserType;
 	private String UserName;
+	private double account;
+	public double getAccount() {
+		return account;
+	}
+
+	public void setAccount(double account) {
+		this.account = account;
+	}
 	
 	public User() {
 		super();
@@ -33,7 +41,15 @@ public class User implements Serializable{
 		this.UserPassword = upass;
 		this.UserType = type;
 	}
-
+	
+	public User(String uid, String upass,String uname, int type,double uaccount) {
+		super();
+		this.UserID = uid;
+		this.UserPassword = upass;
+		this.UserType = type;
+		this.account=uaccount;
+		this.UserName = uname;
+	}
 	
 	public String getUserID() {
 		return UserID;

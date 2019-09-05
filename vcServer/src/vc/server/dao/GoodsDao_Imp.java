@@ -13,7 +13,7 @@ public class GoodsDao_Imp implements GoodsDao {
 	private static final String SQL_GOODS_QUERYNAME = "SELECT * FROM Goods WHERE GoodsName=?";
 	private static final String SQL_GOODS_QUERYID ="SELECT * FROM Goods WHERE GoodsID=?";
 	private static final String SQL_GOODS_INSERT = "INSERT INTO Goods VALUES(?,?,?)";
-	private static final String SQL_GOODS_DELETE = "DELETE FROM Goods WHERE GoodsName=?";
+	private static final String SQL_GOODS_DELETE = "DELETE FROM Goods WHERE GoodsID=?";
 	private static final String SQL_GOODS_UPDATE = "UPDATE FROM Goods SET GoodsPrice=? WHERE GoodsName=?" ;
 	private static final String SQL_GOODS_GETALLGOODS = "select * from Goods";
 
@@ -130,7 +130,7 @@ public class GoodsDao_Imp implements GoodsDao {
 
 			prepareStatement = conn.prepareStatement(SQL_GOODS_DELETE);
 			// 执行sql语句 Query8 /，得到结果用result记录
-			prepareStatement.setString(1, goods.getGoodsName());
+			prepareStatement.setString(1, goods.getGoodsID());
 			// 执行语句
 			result = prepareStatement.executeUpdate();
 			return result>0?true:false;

@@ -66,7 +66,7 @@ public class MessageRoll_mainFrm extends JFrame {
 	 * Create the frame.
 	 */
 	public MessageRoll_mainFrm(User user) {
-		
+		setResizable(false);
 		this.owner=user;
 		setVisible(false);
 		MessageRoll_mainMgr.add(owner.getUserID(), this);

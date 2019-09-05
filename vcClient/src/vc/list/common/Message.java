@@ -38,6 +38,8 @@ public class Message implements java.io.Serializable {
 	
 	private List<BookRecord> bkrlist;
 
+	private Seat seat;
+	private boolean opState;
 
 	public Message() {
 		this.sendTime = new Date().toString();
@@ -169,4 +171,21 @@ public class Message implements java.io.Serializable {
 	public void setCMDsuc(boolean CMDsuc) {
 		this.CMDsuc = CMDsuc;
 	}
+
+	public Seat getSeat() {
+		return seat;
+	}
+
+	public void setSeat(Seat seat) {
+		this.seat = seat;
+	}
+
+	public boolean isOpState() {
+		return opState;
+	}
+
+	public void setOpState(boolean opState) {
+		this.opState = opState;
+	}
+	
 }

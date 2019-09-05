@@ -10,6 +10,11 @@ public class BookRecord implements java.io.Serializable {
 	private String BookRecordDate;
 	private String BookRecordState;
 	private String BookRecordLeftTime;
+	
+	
+	public BookRecord() {
+		super();
+	}
 	public BookRecord(String bookRecordID, String bookRecordName, String bookRecordDate, String bookRecordState,
 			String bookRecordLeftTime) {
 		super();

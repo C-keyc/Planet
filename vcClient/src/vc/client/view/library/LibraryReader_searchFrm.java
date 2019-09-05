@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import vc.client.bz.impl.UserSrvImpl;
+import vc.list.common.Book;
+import vc.list.common.Message;
 import vc.list.common.User;
 
 import java.awt.Color;
@@ -17,6 +20,7 @@ import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
@@ -33,12 +37,17 @@ import java.awt.event.FocusAdapter;
 
 public class LibraryReader_searchFrm extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4057832693570791840L;
 	private JPanel contentPane;
 	public static LibraryReader_searchresultFrm windowsr;
 	private JTextField searchinformation;
 	public static LibraryReader_searchbywriterFrm windoww;
+	private UserSrvImpl usrv = new UserSrvImpl();
 	private User owner;
-
+	private String str;
 
 
 	/**
@@ -99,20 +108,23 @@ public class LibraryReader_searchFrm extends JFrame {
 				DefaultButtonModel namemodel=(DefaultButtonModel)byname.getModel();
 				DefaultButtonModel IDmodel=(DefaultButtonModel)byID.getModel();
 				DefaultButtonModel writermodel=(DefaultButtonModel)bywriter.getModel();
-				
+				str = searchinformation.getText().trim();
 				if(searchinformation.getText().length()==0||searchinformation.getText().equals("")) {
 					//如果没有输入，提示
 					JOptionPane.showMessageDialog(searchinformation, "请输入文本","提示",JOptionPane.WARNING_MESSAGE );
-				}else if(namemodel.getGroup().isSelected(namemodel)||IDmodel.getGroup().isSelected(IDmodel)) {
+				}else if(namemodel.getGroup().isSelected(namemodel)) {
+					
+					usrv.queryBookName(owner,str);
+					searchinformation.setText("");
 					//如果选中按书名或按编号查询
-					windowsr=new LibraryReader_searchresultFrm(owner);
-					windowsr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					windowsr.setVisible(true);
-				}else if(writermodel.getGroup().isSelected(writermodel)) {
+				}else if(IDmodel.getGroup().isSelected(IDmodel)){
+					usrv.queryBookID(owner,str);
+					searchinformation.setText("");
+				}
+				else if(writermodel.getGroup().isSelected(writermodel)) {
 					//如果选中按作者查询
-					windoww=new LibraryReader_searchbywriterFrm(owner);
-					windoww.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					windoww.setVisible(true);
+					usrv.queryBookWriter(owner,str);
+					searchinformation.setText("");
 				}else {
 					//如果什么都没选，提示
 					JOptionPane.showMessageDialog(contentPane, "请选择查询方式！","提示",JOptionPane.WARNING_MESSAGE);
@@ -123,4 +135,6 @@ public class LibraryReader_searchFrm extends JFrame {
 		btnNewButton.setBounds(106, 165, 129, 39);
 		contentPane.add(btnNewButton);
 	}
+	
+
 }

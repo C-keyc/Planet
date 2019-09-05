@@ -55,6 +55,7 @@ public class MessageRoll_addDlg extends JDialog {
 	 * Create the dialog.
 	 */
 	public MessageRoll_addDlg(User user) {
+		setResizable(false);
 		this.owner = user;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageRoll_addDlg.class.getResource("/image/logo.jpg")));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u7C4D\u7BA1\u7406");

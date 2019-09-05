@@ -32,12 +32,14 @@ import java.awt.event.ActionEvent;
 
 public class LibraryReader_checkrecordFrm extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -558541361441249042L;
 	private JPanel contentPane;
-	private JTable table;
 	private JTable recordtable;
 	private UserSrvImpl usrv = new UserSrvImpl();
 	private User owner;
-    private BookRecord bkr;
 	private List<BookRecord> bkrlist;
 
 
@@ -46,19 +48,6 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 	 * Launch the application.
 	 */
 
-	/*public static void main(String[] args) {
-		*EventQueue.invokeLater(new Runnable() {
-		*	public void run() {
-		*		try {
-		*			LibraryReader_checkrecordFrm frame = new LibraryReader_checkrecordFrm();
-		*			frame.setVisible(true);
-		*		} catch (Exception e) {
-		*			e.printStackTrace();
-		*		}
-		*	}
-		*});
-	*}
-	*/
 
 
 	/**
@@ -67,11 +56,9 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 
 	public LibraryReader_checkrecordFrm(User user)
 	{
-		this.owner=user;
-				
+		this.owner=user;		
 		LibraryReaderMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
 		CheckBook();
-		
 		initialize();
 	}
 	
@@ -90,29 +77,16 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+        JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(55, 70, 465, 209);
 		contentPane.add(scrollPane);
 		
-		recordtable = new JTable();
+		JTable recordtable = new JTable();
 		recordtable.setBackground(new Color(255, 255, 240));
 		scrollPane.setViewportView(recordtable);
+		Object[][] data = getTableData(bkrlist);
 		recordtable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{bkrlist.get(0).getBookRecordID(), bkrlist.get(1).getBookRecordName(), bkrlist.get(2).getBookRecordDate(), bkrlist.get(3).getBookRecordState(), bkrlist.get(4).getBookRecordLeftTime()},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
+			data,
 			new String[] {
 				"\u4E66\u7C4D\u7F16\u53F7", "\u4E66\u7C4D\u540D\u79F0", "\u501F\u9605\u65F6\u95F4", "\u5F52\u8FD8\u72B6\u6001", "\u5269\u4F59\u65F6\u95F4"
 			}
@@ -124,7 +98,7 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		lblNewLabel.setBounds(14, 13, 106, 44);
 		contentPane.add(lblNewLabel);
 		
-		JLabel eID = new JLabel("");
+		JLabel eID = new JLabel(owner.getUserID());
 		eID.setFont(new Font("宋体", Font.PLAIN, 18));
 		eID.setBounds(108, 21, 177, 33);
 		contentPane.add(eID);
@@ -143,23 +117,51 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		
 
 	}
-	
-	
-	public void refresh(List<Goods> gdlist) {	
-			
+	public Object[][] getTableData(List<BookRecord> bkrlist)
+	{
+		int Num = bkrlist.size();
+		Object[][]data = new Object[Num][5];
+		for(int i = 0;i<Num;i++)
+		{
+			for(int j = 0;j<5;j++)
+			{
+				switch(j)
+				{
+					case 0:
+						data[i][j]=bkrlist.get(i).getBookRecordID();
+						break;
+					case 1:
+						data[i][j]=bkrlist.get(i).getBookRecordName();
+						break;
+					case 2:
+						data[i][j]=bkrlist.get(i).getBookRecordDate();
+						break;
+					case 3:
+						data[i][j]=bkrlist.get(i).getBookRecordState();
+						break;
+					case 4:
+						data[i][j]=bkrlist.get(i).getBookRecordLeftTime();
+						break;
+					 default:
+						break;
+					
+				}
+			}
 		}
+		return data;
+	}
+	
 	
 	public void CheckBook() {
 		
 		Message msg = new Message();
 		msg.setType("CMD_CHECK_BOOK");
 		msg.setSender(owner);
-		
+		System.out.println("LibararyReader:客户端发送信息成功！");
 		
 		try {
 			usrv.sendMessage(msg);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

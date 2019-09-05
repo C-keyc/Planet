@@ -2,6 +2,7 @@ package vc.client.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -16,11 +17,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import vc.client.view.ShopComsumer_welcomeFrm;
+import vc.list.common.User;
 
 public class ShopComsumer_checkremainingFrm extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2684507566552175175L;
+	
 	private JPanel contentPane;
 	private JTable table;
 	private JButton ok;
@@ -28,11 +36,14 @@ public class ShopComsumer_checkremainingFrm extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	private User owner ; 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ShopComsumer_checkremainingFrm frame= new ShopComsumer_checkremainingFrm();
+					User u =new User();
+					ShopComsumer_checkremainingFrm frame= new ShopComsumer_checkremainingFrm(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +55,11 @@ public class ShopComsumer_checkremainingFrm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShopComsumer_checkremainingFrm() {
+	public ShopComsumer_checkremainingFrm(User user) {
+		setResizable(false);
+		this.owner = user;
+		
+		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopComsumer_checkremainingFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,37 +75,27 @@ public class ShopComsumer_checkremainingFrm extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
-		table.setBackground(SystemColor.inactiveCaptionBorder);
-		table.setForeground(SystemColor.inactiveCaptionBorder);
+		table.setBackground(new Color(255, 255, 224));
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
+				{owner.getUname(), owner.getUserID(), owner.getAccount()},
 			},
 			new String[] {
 				"\u59D3\u540D", "\u4E00\u5361\u901A", "\u4F59\u989D"
 			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Integer.class, Double.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		) );
 		table.setRowHeight(30);
-		
-		ok = new JButton("\u786E  \u5B9A");
-		ok.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ShopComsumer_welcomeFrm.windowc.setVisible(false);
-			}
-		});
-		ok.setForeground(new Color(0, 0, 139));
-		ok.setBackground(new Color(176, 196, 222));
-		ok.setFont(new Font("ËÎÌו", Font.PLAIN, 28));
-		ok.setBounds(208, 261, 161, 59);
-		contentPane.add(ok);
+		JTableHeader tableHeader = table.getTableHeader();
+		tableHeader.setPreferredSize(new Dimension(tableHeader.getWidth(),(30)));
+		/*
+		 * ok = new JButton("\u786E  \u5B9A"); ok.addActionListener(new ActionListener()
+		 * { public void actionPerformed(ActionEvent e) {
+		 * 
+		 * } }); ok.setForeground(new Color(0, 0, 139)); ok.setBackground(new Color(176,
+		 * 196, 222)); ok.setFont(new Font("ËÎÌו", Font.PLAIN, 28)); ok.setBounds(208,
+		 * 261, 161, 59); contentPane.add(ok);
+		 */
 	}
 
 }

@@ -2,12 +2,18 @@ package vc.client.view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -19,6 +25,7 @@ import javax.swing.table.JTableHeader;
 import vc.client.bz.impl.UserSrvImpl;
 import vc.list.common.Goods;
 import vc.list.common.Message;
+import vc.list.common.MessageType;
 import vc.list.common.User;
 
 import javax.swing.JScrollPane;
@@ -35,22 +42,28 @@ public class WkManage extends JFrame{
 	private Goods gd;
 	private UserSrvImpl usrv = new UserSrvImpl();
 	private User owner;
-	private List<Goods> gdlist;
+	private List<Goods> gdlist=null;
+	private Object[][] data;
 	/**
 	 * Launch the application.
 	 */
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { WkManage window = new WkManage();
-	 * window.frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); }
-	 * } }); }
-	 */
+	
+	  public static void main(String[] args) { 
+		  EventQueue.invokeLater(new
+	  Runnable() { public void run() { 
+		  try { 
+			  User u = new User();
+			  WkManage window = new WkManage(u);
+	  window.frame.setVisible(true);
+	  } catch (Exception e) { e.printStackTrace(); }
+	  } }); }
+	 
 
 	/**
 	 * Create the application.
 	 */
 	public WkManage(User user) {
-		
+		setResizable(false);
 		this.owner=user;
 		
 		WkManageMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
@@ -58,6 +71,7 @@ public class WkManage extends JFrame{
 		queryGoods();
 		
 		initialize();
+
 		
 	}
 
@@ -65,12 +79,14 @@ public class WkManage extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+	
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(240, 255, 240));
 		frame.setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
 		//frame.setIconImage(Toolkit.getDefaultToolkit().getImage(WkManage.class.getResource("/image/logo.jpg")));
-		frame.setBounds(100, 100, 800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 800, 600);		
 		
 		JButton btnManage = new JButton("\u67E5\u8BE2\u5546\u54C1");
 		btnManage.setBounds(80, 400, 160, 50);
@@ -93,9 +109,9 @@ public class WkManage extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				WkCheck wk_Check = new WkCheck(owner);
-				wk_Check.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				wk_Check .setVisible(true);
+				WkAdd wk_Add = new WkAdd(owner);
+				wk_Add.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				wk_Add.setVisible(true);
 			}
 			
 		});
@@ -105,6 +121,35 @@ public class WkManage extends JFrame{
 		btnDelete.setFont(new Font("宋体", Font.PLAIN, 26));
 		frame.getContentPane().add(btnDelete);
 		
+		btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				int row = table.getSelectedRow();
+				String id = data[row][0].toString();				
+				if (row != -1) {
+					Goods gd = new Goods();
+					gd.setGoodsID(id);
+					Message m = new Message();
+					m.setSender(owner);
+					m.setGd(gd);
+					m.setType(MessageType.CMD_DELETE_GOODS);
+					try {
+						usrv.sendMessage(m);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(null, "请选择一行数据", "删除结果", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+			
+		});
+		
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(80, 72, 640, 185);
 		frame.getContentPane().add(scrollPane);
@@ -113,24 +158,59 @@ public class WkManage extends JFrame{
 		table.setBackground(new Color(255, 255, 224));
 		scrollPane.setViewportView(table);
 		
+		
+		//初始化列表里的二维数组
+		data = getTableData(gdlist);
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{gdlist.get(0).getGoodsID(), gdlist.get(0).getGoodsName(), gdlist.get(0).getGoodsPrice()},
-	
-			},
+			data,
 			new String[] {
 				"\u5546\u54C1\u7801", "\u5546\u54C1", "\u4EF7\u683C"
 			}
-		));
+			
+		)	);
 		table.setRowHeight(30);
 		JTableHeader tableHeader = table.getTableHeader();
-		tableHeader.setPreferredSize(new Dimension(tableHeader.getWidth(),(100)));
-	}
-	
-	
-	public void refresh(List<Goods> gdlist) {
+		tableHeader.setPreferredSize(new Dimension(tableHeader.getWidth(),(30)));
+
+
 		
 	}
+	
+	public Object[][] getTableData(List<Goods> gdlist){
+		int GdNum = gdlist.size();
+		Object[][] data= new Object[GdNum][3];
+		for(int i =0;i<GdNum;i++) 
+		{
+			for(int j=0;j<3;j++ ) 
+			{
+				switch(j)
+				{
+					case 0:
+						data[i][j]=gdlist.get(i).getGoodsID();
+						break;
+					case 1:
+						data[i][j]=gdlist.get(i).getGoodsName();
+						break;
+					case 2:
+						data[i][j]=gdlist.get(i).getGoodsPrice();
+						break;
+				}
+			}
+		}
+		return data;
+		}
+	
+	public void refresh() {
+		data = this.getTableData(gdlist);
+		table.setModel(new DefaultTableModel(
+				data,
+				new String[] {
+					"\u5546\u54C1\u7801", "\u5546\u54C1", "\u4EF7\u683C"
+				}
+			));
+	}
+	
+	
 	
 	public void queryGoods() {
 		

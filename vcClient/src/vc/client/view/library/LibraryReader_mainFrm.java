@@ -24,6 +24,10 @@ import java.awt.event.ActionEvent;
 
 public class LibraryReader_mainFrm extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6211772624915478793L;
 	private JPanel contentPane;
 	public static LibraryReader_checkrecordFrm windowc;
 	public static LibraryReader_reservationFrm windowr;
@@ -73,9 +77,13 @@ public class LibraryReader_mainFrm extends JFrame {
 		JButton tocheck = new JButton("\u67E5\u8BE2\u501F\u9605\u8BB0\u5F55");
 		tocheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(LibraryReaderMgr.get(owner.getUserID())==null) {
 				windowc=new LibraryReader_checkrecordFrm(owner);
 				windowc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				windowc.setVisible(true);
+				}else {
+					LibraryReaderMgr.get(owner.getUserID()).setVisible(true);
+				}
 			}
 		});
 		tocheck.setFont(new Font("ËÎÌו", Font.PLAIN, 18));

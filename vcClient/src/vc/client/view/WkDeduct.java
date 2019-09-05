@@ -46,6 +46,7 @@ public class WkDeduct extends JFrame {
 	 */
 	public WkDeduct() {
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
+		setResizable(false);
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(WkDeduct.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);

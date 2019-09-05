@@ -14,6 +14,11 @@ public class WkManageMgr {
 	}
 
 	public static void add(String userID, WkManage mainFrm) {
+		if (WkManagePool.get(userID)!=null) {
+			
+			System.out.println("已经存在一个窗口");
+			WkManagePool.remove(userID);
+		}
 		WkManagePool.put(userID, mainFrm);
 	}
 

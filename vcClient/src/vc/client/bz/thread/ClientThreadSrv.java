@@ -6,7 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import vc.client.bz.thread.ClientThreadSrvMgr;
@@ -63,7 +65,7 @@ public class ClientThreadSrv extends Thread {
 		}	
 	}
 	
-	public void process(Message msg) {
+	public void process(Message msg) throws IOException {
 		//处理服务端传来的消息
 		String msgType = msg.getType();
 		User sender = msg.getSender();
@@ -76,24 +78,48 @@ public class ClientThreadSrv extends Thread {
 			System.out.println("从服务端得到的信息:"+gd.getGoodsName()+gd.getGoodsPrice());
 		
 		}else if(msgType.equals(MessageType.CMD_QUERY_GOODS)) {
+			WkManage wk = WkManageMgr.get(sender.getUserID());			
+			wk.setGdlist(msg.getGdlist());			
+		}else if(msgType.equals(MessageType.CMD_CHECK_ACCOUNT)){
+			ShopComsumer_checkremainingFrm consumerCheck= new ShopComsumer_checkremainingFrm(sender);
+			consumerCheck.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			consumerCheck.setVisible(true);
+		}else if(msgType.equals(MessageType.CMD_ADD_GOODS)) {
 			WkManage wk = WkManageMgr.get(sender.getUserID());
-			
 			wk.setGdlist(msg.getGdlist());
+			wk.refresh();
+		}else if(msgType.equals(MessageType.CMD_DEPOSIT)) {
+			if(msg.isOpState())
+				JOptionPane.showMessageDialog(null, "充值成功", "充值",JOptionPane.PLAIN_MESSAGE);  
+			else
+				JOptionPane.showMessageDialog(null, "充值失败", "充值",JOptionPane.ERROR_MESSAGE);
+		}else if(msgType.equals(MessageType.CMD_DELETE_GOODS)) {
+			if(msg.isOpState()) {
+				WkManage wk = WkManageMgr.get(sender.getUserID());
+				wk.setGdlist(msg.getGdlist());
+				wk.refresh();
+				JOptionPane.showMessageDialog(null, "删除成功", "删除商品",JOptionPane.PLAIN_MESSAGE);  
+			}
+			else
+				JOptionPane.showMessageDialog(null, "删除失败", "删除商品",JOptionPane.ERROR_MESSAGE);
+		} else if (msgType.equals(MessageType.DAT_LOGOUT)) {
 			
-		}else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
-			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
-			
-			lbr.setBkrlist(msg.getBkrlist());
-			
+				isOffline = true;					
+				// 从管理池中移除
+				ClientThreadSrvMgr.remove(this.owner.getUserID());
+				// 释放Socket资源
+				socket.close();
 		}
-		
+		else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
+			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());			
+			lbr.setBkrlist(msg.getBkrlist());			
+		}		
 		else if(msgType.equals(MessageType.CMD_GETALLSTUDENT)) {
 			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
 			MR_mF.setStList(msg.getStudentList());
 			MR_mF.initialize();
 			if(!MR_mF.isVisible())
-				MR_mF.setVisible(true);
-			
+				MR_mF.setVisible(true);			
 		}
 		else if(msgType.equals(MessageType.CMD_QUERY_STUDENTID)||
 				msgType.equals(MessageType.CMD_QUERY_STUDENTNAME)||
@@ -146,6 +172,42 @@ public class ClientThreadSrv extends Thread {
 					if(!MR_mF.isVisible())
 				MR_mF.setVisible(true);}
 			
+		}else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
+			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
+			lbr.setBkrlist(msg.getBkrlist());
+			
+		}else if(msgType.equals(MessageType.CMD_QUERY_BOOKID)) {
+			
+			Book bk = msg.getBk();
+
+			LibraryReader_searchresultFrm windowsr = new LibraryReader_searchresultFrm(owner,bk);
+			windowsr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			windowsr.setVisible(true);
+
+		}else if(msgType.equals(MessageType.CMD_QUERY_BOOKNAME)) {
+			
+			Book bk = msg.getBk();
+			
+			LibraryReader_searchresultFrm windowsr = new LibraryReader_searchresultFrm(owner,bk);
+			windowsr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			windowsr.setVisible(true);
+			
+		}else if(msgType.equals(MessageType.CMD_QUERY_BOOKWRITER)) {
+			List<Book> bklist = msg.getBklist();
+			LibraryReader_searchbywriterFrm windowsr = new LibraryReader_searchbywriterFrm(owner,bklist);
+			windowsr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			windowsr.setVisible(true);
+		}else if(msgType.equals(MessageType.CMD_CHECK_ALLBOOK)) {
+			LibraryWorker_manageFrm libraryWorker_manageFrm = LibraryWorkerMgr.get(sender.getUserID());
+			libraryWorker_manageFrm.setBklist(msg.getBklist());
+		}else if(msgType.equals(MessageType.CMD_NOTFIND_BOOK)) {
+			LibraryReader_searchNotresultFrm libraryReader_searchNotresultFrm = new LibraryReader_searchNotresultFrm(owner);
+			libraryReader_searchNotresultFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			libraryReader_searchNotresultFrm.setVisible(true);
+		}else if(msgType.equals(MessageType.CMD_QUERY_SEAT)) {
+			LibraryReader_reservationFrm libraryReader_reservationFrm = LibraryReaderReservationMgr.get(sender.getUserID());
+			String num = msg.getSeat().getSeatNum();
+			libraryReader_reservationFrm.setNum(num);
 		}
 		
 		else {

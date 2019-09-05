@@ -54,6 +54,7 @@ public class Login extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Login() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/image/logo.jpg")));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED");
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/image/logo.jpg")));
@@ -87,42 +88,7 @@ public class Login extends JFrame implements ActionListener{
 		
 		JButton btnLogin = new JButton("\u767B\u5F55");
 		btnLogin.addActionListener(this);
-		
-		/*
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UserSrvImpl us = new UserSrvImpl();
-
-				
-				String UserID = textField.getText().trim();
-				String UserPass =textField_1.getText().trim();
-				User user = new User(UserID,UserPass);
-				User retUser = null;
-				try {
-					retUser = us.login(user);
-					if (retUser != null) {
-						System.out.println(user.getUname() + ":" + "验证成功");
-
-						Menu menu =new Menu();
-						menu.setVisible(true);
-						// 同时关闭掉登陆界面
-						this.setVisible(false);
-					} else {				
-						
-						System.out.println("用户名或密码错误");
-					}
-				} catch (ClassNotFoundException e1) {
-					
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					//JOptionPane.showMessageDialog(this, "网络连接异常，请检查相关配置！", "警告",
-							//JOptionPane.WARNING_MESSAGE);
-				}
-			}
-
-
-		});
-		*/
+		this.getRootPane().setDefaultButton(btnLogin);
 		btnLogin.setBounds(130, 180, 180, 20);
 		btnLogin.setFont(new Font("黑体", Font.PLAIN, 15));
 		contentPane.add(btnLogin);
@@ -160,17 +126,17 @@ public class Login extends JFrame implements ActionListener{
 				Menu menu =new Menu(retUser);
 				menu.setVisible(true);
 				// 同时关闭掉登陆界面
-				this.dispose();;
+				this.dispose();
 			} else {				
-				
-				System.out.println("用户名或密码错误,请重新登录");
+				JOptionPane.showMessageDialog(this, "用户名或密码错误", "警告",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		} catch (ClassNotFoundException e1) {
 			
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			//JOptionPane.showMessageDialog(this, "网络连接异常，请检查相关配置！", "警告",
-					//JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "网络连接异常，请检查相关配置！", "警告",
+					JOptionPane.WARNING_MESSAGE);
 		}
 	}
 }

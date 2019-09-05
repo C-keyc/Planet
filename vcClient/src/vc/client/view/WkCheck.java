@@ -46,12 +46,12 @@ public class WkCheck extends JFrame {
 	 * Create the frame.
 	 */
 	public WkCheck(User user) {
-		
+		setResizable(false);
 		this.owner=user;
 		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		//setIconImage(Toolkit.getDefaultToolkit().getImage(WkCheck.class.getResource("/image/logo.jpg")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(WkCheck.class.getResource("/image/logo.jpg")));
+		
 		setBounds(100, 100, 390, 264);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 240));
@@ -91,6 +91,7 @@ public class WkCheck extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+                dispose();
 			}
 			
 		});

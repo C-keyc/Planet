@@ -28,8 +28,9 @@ public class WkCheckRpd extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//WkCheckRpd frame = new WkCheckRpd();
-					//frame.setVisible(true);
+					Goods gd =new Goods();
+					WkCheckRpd frame = new WkCheckRpd(gd);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,8 +43,8 @@ public class WkCheckRpd extends JFrame {
 	 */
 	public WkCheckRpd(Goods gd ) {
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		//setIconImage(Toolkit.getDefaultToolkit().getImage(WkCheckRpd.class.getResource("/image/logo.jpg")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(WkCheckRpd.class.getResource("/image/logo.jpg")));
+		setResizable(false);
 		setBounds(100, 100, 390, 264);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 240));

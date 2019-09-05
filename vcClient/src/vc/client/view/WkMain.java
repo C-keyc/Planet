@@ -44,7 +44,7 @@ public class WkMain extends JFrame{
 	 * Create the application.
 	 */
 	public WkMain(User user) {
-		
+		setResizable(false);
 		this.owner = user;
 		initialize();
 	}

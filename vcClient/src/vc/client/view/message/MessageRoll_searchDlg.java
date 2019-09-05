@@ -50,6 +50,7 @@ public class MessageRoll_searchDlg extends JDialog {
 	 * Create the dialog.
 	 */
 	public MessageRoll_searchDlg(User user) {
+		setResizable(false);
 		this.owner = user;
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u7C4D\u4FE1\u606F");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageRoll_searchDlg.class.getResource("/image/logo.jpg")));

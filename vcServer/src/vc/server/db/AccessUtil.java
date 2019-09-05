@@ -5,6 +5,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import vc.list.common.Book;
+import vc.list.common.BookRecord;
 import vc.list.common.Goods;
  
 /**
@@ -99,12 +101,43 @@ public class AccessUtil {
 			}
 		return goods;
 	}
+	public static List<BookRecord> BookRecordResultSet2List(ResultSet result) {
+		List<BookRecord> bookrecord = new ArrayList<BookRecord>();
+		
+		try {
+			while(result.next())
+			{
+			BookRecord b = new BookRecord();
+			b.setBookRecordID(result.getString(1));
+			b.setBookRecordName(result.getString(2));
+			b.setBookRecordDate(result.getString(3));
+			b.setBookRecordState(result.getString(4));
+			b.setBookRecordLeftTime(result.getString(5));
+			
+			bookrecord.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bookrecord;
+	}
+
+	public static List<Book> BookResultSet2List(ResultSet result) {
+		List<Book> booklist = new ArrayList<Book>();
+		try {
+			while(result.next())
+			{
+			Book b = new Book();
+			b.setBookID(result.getString(1));
+			b.setBookName(result.getString(2));
+			b.setBookWriter(result.getString(3));
+			b.setBookPublish(result.getString(4));
+			b.setBookNum(result.getString(5));
+			booklist.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return booklist;
+	}
 }
-/*
- * public static void main(String[] args) {
- * 
- * try { Connection con=getConnection(); Statement sta = con.createStatement();
- * ResultSet res = sta.executeQuery("select * from user");
- * 
- * } catch (SQLException e) { e.printStackTrace(); } } }
- */

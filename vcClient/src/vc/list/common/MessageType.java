@@ -1,6 +1,6 @@
 package vc.list.common;
 /**
- * ��Ϣ���ͷ�Ϊ���ࣺ����CMD---����DAT---���RST
+ * 消息类型分为三类：命令CMD---数据DAT---结果RST
  * @author Aodong Shen
  *
  */
@@ -32,14 +32,26 @@ public interface MessageType {
     String CMD_CHECK_GOODS = "CMD_CHECK_GOODS";
     String CMD_OPEN_GOODS_MAIN = "CMD_OPEN_GOODS_MAIN";
     String CMD_QUERY_GOODS = "CMD_QUERY_GOODS";
+    String CMD_CHECK_ACCOUNT = "CMD_CHECK_ACCOUNT";
+    String CMD_ADD_GOODS = "CMD_ADD_GOODS";
+    String CMD_DEPOSIT = "CMD_DEPOSIT";
+    String CMD_DELETE_GOODS = "CMD_DELETE_GOODS";
     
-    String CMD_CHECK_BOOK = "CMD_CHECK_BOOK";//��ѯ���ļ�¼
+    String CMD_CHECK_BOOK = "CMD_CHECK_BOOK";//查询借阅记录
+    String CMD_QUERY_BOOKID = "CMD_QUERY_BOOKID";
+    String CMD_QUERY_BOOKNAME = "CMD_QUERY_BOOKNAME";
+    String CMD_QUERY_BOOKWRITER = "CMD_QUERY_BOOKWRITER";
+    String CMD_QUERY_SEAT = "CMD_QUERY_SEAT";
+    String CMD_ADD_BOOK = "CMD_ADD_BOOK";
+    String CMD_DELETE_BOOK = "CMD_DELETE_BOOK";
+    String CMD_CHECK_ALLBOOK = "CMD_CHECK_ALLBOOK";//��ѯ�����鼮
+    String CMD_NOTFIND_BOOK = "CMD_NOTFIND_BOOK";
     //--------Data------------//
 	String DAT_LOGOUT = "DAT_LOGOUT";
 	String DAT_LOGIN = "DAT_LOGIN";
 	
-	String DAT_TEXT = "DAT_TEXT";//��ͨ��Ϣ��
-	String DAT_ACTION = "DAT_ACTION"; // ������
+	String DAT_TEXT = "DAT_TEXT";//普通信息包
+	String DAT_ACTION = "DAT_ACTION"; // 动作包
 	
 
 	
@@ -49,8 +61,8 @@ public interface MessageType {
 	String DAT_QUY_FRIEND = "DAT_QUY_FRIEND";
 	
 	//--------Result----------//
-	String RST_SUCCESS = "Success";//�����Ƿ�ɹ�
-	String RST_FAILURE = "Failure";//����ʧ��	
+	String RST_SUCCESS = "Success";//表明是否成功
+	String RST_FAILURE = "Failure";//表明失败	
 
 	
 }

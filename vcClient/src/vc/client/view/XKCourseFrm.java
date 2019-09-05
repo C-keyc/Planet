@@ -46,7 +46,7 @@ public class XKCourseFrm extends JFrame {
 	 * Create the frame.
 	 */
 	public XKCourseFrm() {
-		
+		setResizable(false);
 		course = new Course();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

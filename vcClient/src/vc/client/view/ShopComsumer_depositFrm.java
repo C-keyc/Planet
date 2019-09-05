@@ -6,6 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.client.bz.impl.UserSrvImpl;
+import vc.list.common.Message;
+import vc.list.common.MessageType;
+import vc.list.common.User;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -15,21 +21,26 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class ShopComsumer_depositFrm extends JFrame {
 	private JTextField depositmoney;
-	public static ShopComsumer_depositfailFrm windowf;
-	public static ShopComsumer_depositsuccessFrm windows;
+
 
 	/**
 	 * Launch the application.
 	 */
+	
+	private User owner;
+	private UserSrvImpl usrv = new UserSrvImpl();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ShopComsumer_depositFrm frame = new ShopComsumer_depositFrm();
+					User u = new User();
+					ShopComsumer_depositFrm frame = new ShopComsumer_depositFrm(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +52,10 @@ public class ShopComsumer_depositFrm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShopComsumer_depositFrm() {
+	public ShopComsumer_depositFrm(User user) {
+		setResizable(false);
+		this.owner = user;
+		
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		getContentPane().setLayout(null);
 		
@@ -63,10 +77,10 @@ public class ShopComsumer_depositFrm extends JFrame {
 		ecard.setBounds(10, 115, 85, 30);
 		getContentPane().add(ecard);
 		
-		JLabel count = new JLabel("账户余额：");
-		count.setFont(new Font("楷体", Font.BOLD, 18));
-		count.setBounds(10, 150, 113, 30);
-		getContentPane().add(count);
+		
+		  JLabel count = new JLabel("账户余额："); count.setFont(new Font("楷体", Font.BOLD,
+		  18)); count.setBounds(10, 150, 113, 30); getContentPane().add(count);
+		 
 		
 		JLabel demon = new JLabel("充值金额：");
 		demon.setFont(new Font("楷体", Font.BOLD, 18));
@@ -78,32 +92,41 @@ public class ShopComsumer_depositFrm extends JFrame {
 		getContentPane().add(depositmoney);
 		depositmoney.setColumns(10);
 		
-		JLabel name = new JLabel("");
+		JLabel name = new JLabel(owner.getUname());
 		name.setBounds(150, 80, 113, 30);
 		getContentPane().add(name);
 		
-		JLabel eID = new JLabel("");
+		JLabel eID = new JLabel(owner.getUserID());
 		eID.setBounds(150, 115, 113, 30);
 		getContentPane().add(eID);
 		
-		JLabel remaining = new JLabel("");
-		remaining.setBounds(150, 150, 113, 30);
-		getContentPane().add(remaining);
+		
+		  JLabel remaining = new JLabel(""+owner.getAccount());
+		  remaining.setBounds(150, 150, 113, 30); getContentPane().add(remaining);
+		 
 		
 		JButton Deps = new JButton("\u5145\u503C");
 		Deps.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(true) {
-				windows=new ShopComsumer_depositsuccessFrm();
-				windows.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				windows.setVisible(true);
-				}else {
-					windowf=new ShopComsumer_depositfailFrm();
-					windowf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					windowf.setVisible(true);
+				String add = depositmoney.getText().trim();
+				double Add = Double.parseDouble(add);
+				double account = Add + owner.getAccount();
+				owner.setAccount(account);
+				
+				remaining.setText(""+account);
+				
+				Message m = new Message();
+				m.setType(MessageType.CMD_DEPOSIT);
+				m.setSender(owner);
+				try {
+					usrv.sendMessage(m);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
+		
 		Deps.setBackground(new Color(176, 196, 222));
 		Deps.setForeground(new Color(0, 0, 128));
 		Deps.setFont(new Font("宋体", Font.PLAIN, 28));

@@ -5,11 +5,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.client.bz.impl.UserSrvImpl;
+import vc.list.common.Goods;
+import vc.list.common.Message;
+import vc.list.common.MessageType;
+import vc.list.common.User;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.JButton;
 
 public class WkAdd extends JFrame {
@@ -22,11 +33,16 @@ public class WkAdd extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	private UserSrvImpl usrv = new UserSrvImpl();
+	private User owner;
+	private Goods gd=new Goods();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					WkAdd frame = new WkAdd();
+					User u = new User();
+					WkAdd frame = new WkAdd(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,10 +54,13 @@ public class WkAdd extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public WkAdd() {
+	public WkAdd(User user) {
+		setResizable(false);
+		this.owner = user;
+		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		//setIconImage(Toolkit.getDefaultToolkit().getImage(WkAdd.class.getResource("/image/logo.jpg")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(WkAdd.class.getResource("/image/logo.jpg")));
+		
 		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 240));
@@ -86,5 +105,34 @@ public class WkAdd extends JFrame {
 		btnAdd.setFont(new Font("ËÎÌו", Font.PLAIN, 23));
 		btnAdd.setBounds(200, 296, 80, 40);
 		contentPane.add(btnAdd);
+		
+		btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				String id = textItemId.getText().trim();
+				String  name = textItemName.getText().trim();
+				String price = textPrice.getText().trim();
+				double p = Double.parseDouble(price);
+				
+                gd.setGoodsID(id);
+                gd.setGoodsName(name);
+                gd.setGoodsPrice(p);
+                try {
+					Message m = new Message();
+					m.setSender(owner);
+					m.setGd(gd);
+					m.setType(MessageType.CMD_ADD_GOODS);
+					usrv.sendMessage(m);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                
+                dispose();
+			}
+			
+		});
 	}
 }

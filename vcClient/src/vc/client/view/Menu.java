@@ -48,7 +48,7 @@ public class Menu extends JFrame {
 	 */
 	public Menu(User user) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/image/logo.jpg")));
-		
+		setResizable(false);
 		this.owner = user;
 		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED");
@@ -67,7 +67,7 @@ public class Menu extends JFrame {
 		lblWelcome.setBounds(30, 20, 70, 30);
 		contentPane.add(lblWelcome);
 		
-		JLabel lblName = new JLabel("\u59D3\u540DXX");
+		JLabel lblName = new JLabel(owner.getUname());
 		lblName.setForeground(Color.WHITE);
 		lblName.setFont(new Font("宋体", Font.PLAIN, 16));
 		lblName.setBounds(100, 20, 100, 30);
@@ -79,7 +79,7 @@ public class Menu extends JFrame {
 		lblIdentity.setBounds(200, 20, 50, 30);
 		contentPane.add(lblIdentity);
 		
-		JLabel lblIdentityXX = new JLabel("\u8EAB\u4EFDXX");
+		JLabel lblIdentityXX = new JLabel(getIdentity(owner.getType()));
 		lblIdentityXX.setForeground(Color.WHITE);
 		lblIdentityXX.setFont(new Font("宋体", Font.PLAIN, 16));
 		lblIdentityXX.setBounds(250, 20, 50, 30);
@@ -150,9 +150,19 @@ public class Menu extends JFrame {
 		JButton btnShop = new JButton("\u5546\u5E97");
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WkManage wk_manage = new WkManage(owner);
+				if(owner.getType()==1|owner.getType()==2) {
+					ShopComsumer_welcomeFrm Consumer = new ShopComsumer_welcomeFrm(owner);
+					Consumer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					Consumer.setVisible(true);
+				}else {
+					if(WkManageMgr.get(owner.getUserID())!=null) {
+						WkManageMgr.get(owner.getUserID()).frame.setVisible(true);
+					}else {
+				WkManage wk_manage = new WkManage(owner);				
 				wk_manage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				wk_manage.frame.setVisible(true);
+					}
+				}
 
 			}
 		});
@@ -165,5 +175,17 @@ public class Menu extends JFrame {
 		lblBackground.setBounds(0, 0, 800, 600);
 		contentPane.add(lblBackground);
 		
+	}
+	
+	public String getIdentity(int type) {
+		switch(type) {
+		case 1:
+			return "学生";
+		case 2:
+			return "教师";
+		case 3:
+			return "管理员";
+		}
+		return null;
 	}
 }

@@ -7,24 +7,38 @@ public class Book implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = -1759296936532479153L;
 	
-	private int BookID;//key 书号（加入新书籍时会自动升序排序
+	private String BookID;//key 书号（加入新书籍时会自动升序排序
 	private String BookName;//书籍名称
 	private String BookWriter;//书籍作者
 	private String BookPublish;//书籍出版社
+	private String BookNum;//书籍剩余数量
 	
 	
-	public Book(int bookID) {
+	public Book(String bookID) {
 		super();
 		BookID = bookID;
 	}
 
 	
-	public Book(String bookName) {
+
+	public Book() {
 		super();
-		BookName = bookName;
 	}
 
-	public Book(int bookID, String bookName, String bookWriter, String bookPublish) {
+
+
+	public Book(String bookID, String bookName, String bookWriter, String bookPublish, String bookNum) {
+		super();
+		BookID = bookID;
+		BookName = bookName;
+		BookWriter = bookWriter;
+		BookPublish = bookPublish;
+		BookNum = bookNum;
+	}
+
+
+
+	public Book(String bookID, String bookName, String bookWriter, String bookPublish) {
 		super();
 		BookID = bookID;
 		BookName = bookName;
@@ -32,11 +46,23 @@ public class Book implements java.io.Serializable{
 		BookPublish = bookPublish;
 	}
 
-	public int getBookID() {
+	public String getBookNum() {
+		return BookNum;
+	}
+
+
+
+	public void setBookNum(String bookNum) {
+		BookNum = bookNum;
+	}
+
+
+
+	public String getBookID() {
 		return BookID;
 	}
 	
-	public void setBookID(int bookID) {
+	public void setBookID(String bookID) {
 		BookID = bookID;
 	}
 	
@@ -64,12 +90,15 @@ public class Book implements java.io.Serializable{
 		BookPublish = bookPublish;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Book [BookID=" + BookID + ", BookName=" + BookName + ", BookWriter=" + BookWriter + ", BookPublish="
-				+ BookPublish + "]";
+				+ BookPublish + ", BookNum=" + BookNum + "]";
 	}
-	
+
+
 	
 
 }

@@ -1,6 +1,6 @@
 package vc.list.common;
 /**
- * ��Ϣ���ͷ�Ϊ���ࣺ����CMD---����DAT---���RST
+ * 娑堟伅绫诲瀷鍒嗕负涓夌被锛氬懡浠MD---鏁版嵁DAT---缁撴灉RST
  * @author Aodong Shen
  *
  */
@@ -32,14 +32,27 @@ public interface MessageType {
     String CMD_CHECK_GOODS = "CMD_CHECK_GOODS";
     String CMD_OPEN_GOODS_MAIN = "CMD_OPEN_GOODS_MAIN";
     String CMD_QUERY_GOODS = "CMD_QUERY_GOODS";
+    String CMD_CHECK_ACCOUNT = "CMD_CHECK_ACCOUNT";
+    String CMD_ADD_GOODS = "CMD_ADD_GOODS";
+    String CMD_DEPOSIT = "CMD_DEPOSIT";
+    String CMD_DELETE_GOODS = "CMD_DELETE_GOODS";
     
-    String CMD_CHECK_BOOK = "CMD_CHECK_BOOK";//��ѯ���ļ�¼
+    
+    String CMD_CHECK_BOOK = "CMD_CHECK_BOOK";//鏌ヨ鍊熼槄璁板綍
+    String CMD_QUERY_BOOKID = "CMD_QUERY_BOOKID";
+    String CMD_QUERY_BOOKNAME = "CMD_QUERY_BOOKNAME";
+    String CMD_QUERY_BOOKWRITER = "CMD_QUERY_BOOKWRITER";
+    String CMD_QUERY_SEAT = "CMD_QUERY_SEAT";
+    String CMD_ADD_BOOK = "CMD_ADD_BOOK";
+    String CMD_DELETE_BOOK = "CMD_DELETE_BOOK";
+    String CMD_CHECK_ALLBOOK = "CMD_CHECK_ALLBOOK";//锟斤拷询锟斤拷锟斤拷锟介籍
+    String CMD_NOTFIND_BOOK = "CMD_NOTFIND_BOOK";
     //--------Data------------//
 	String DAT_LOGOUT = "DAT_LOGOUT";
 	String DAT_LOGIN = "DAT_LOGIN";
 	
-	String DAT_TEXT = "DAT_TEXT";//��ͨ��Ϣ��
-	String DAT_ACTION = "DAT_ACTION"; // ������
+	String DAT_TEXT = "DAT_TEXT";//鏅�氫俊鎭寘
+	String DAT_ACTION = "DAT_ACTION"; // 鍔ㄤ綔鍖�
 	
 
 	
@@ -49,8 +62,8 @@ public interface MessageType {
 	String DAT_QUY_FRIEND = "DAT_QUY_FRIEND";
 	
 	//--------Result----------//
-	String RST_SUCCESS = "Success";//�����Ƿ�ɹ�
-	String RST_FAILURE = "Failure";//����ʧ��	
+	String RST_SUCCESS = "Success";//琛ㄦ槑鏄惁鎴愬姛
+	String RST_FAILURE = "Failure";//琛ㄦ槑澶辫触	
 
 	
 }

@@ -9,13 +9,15 @@ import java.net.SocketException;
 import java.util.List;
 
 import vc.list.common.*;
+import vc.server.dao.BookDao_Imp;
 import vc.server.dao.GoodsDao_Imp;
 import vc.server.dao.StudentDao_Imp;
+import vc.server.dao.UserDao_Imp;
 
 
 /**
- *  ·şÎñÆ÷¶ËÏûÏ¢´¦ÀíÏß³Ì
- * @author Aodong Shen
+ *  æœåŠ¡å™¨ç«¯æ¶ˆæ¯å¤„ç†çº¿ç¨‹
+ * 
  *
  */
 public class ServerClientThread extends Thread {
@@ -26,9 +28,11 @@ public class ServerClientThread extends Thread {
 	private boolean isClosed;
 	private GoodsDao_Imp gdao = new GoodsDao_Imp();
 	private StudentDao_Imp stdao =new StudentDao_Imp();
-
+	private BookDao_Imp bdao = new BookDao_Imp();
+	private UserDao_Imp udi=new UserDao_Imp();
+	
 	public ServerClientThread(Socket s, User user) {
-		this.client = s;  //½ÓÊÕÏûÏ¢Ê±»ñµÃµÄ·¢ËÍÏûÏ¢µÄ¿Í»§¶Ë
+		this.client = s;  //æ¥æ”¶æ¶ˆæ¯æ—¶è·å¾—çš„å‘é€æ¶ˆæ¯çš„å®¢æˆ·ç«¯
 		this.owner = user;
 		this.isClosed = false;		
 	}
@@ -37,7 +41,7 @@ public class ServerClientThread extends Thread {
 	public void run() {
 
 		while (!isClosed) {
-			// ÕâÀï¸ÃÏß³Ì¾Í¿ÉÒÔ½ÓÊÕ¿Í»§¶ËµÄĞÅÏ¢
+			// è¿™é‡Œè¯¥çº¿ç¨‹å°±å¯ä»¥æ¥æ”¶å®¢æˆ·ç«¯çš„ä¿¡æ¯
 			try {
 
 				ObjectInputStream ois = new ObjectInputStream(
@@ -50,40 +54,56 @@ public class ServerClientThread extends Thread {
          		
          		
 
-				// ¶Ô´Ó¿Í»§¶ËÈ¡µÃµÄÏûÏ¢½øĞĞÀàĞÍÅĞ¶Ï£¬ÈÃºó×öÏàÓ¦µÄ´¦Àí
+				// å¯¹ä»å®¢æˆ·ç«¯å–å¾—çš„æ¶ˆæ¯è¿›è¡Œç±»å‹åˆ¤æ–­ï¼Œè®©ååšç›¸åº”çš„å¤„ç†
 				if (type.equals(MessageType.CMD_CHECK_GOODS)) { 
-					// ---´ÓÊı¾İ¿â²éÑ¯ÉÌÆ·
-					Goods gd = msg.getGd();
-					System.out.println("ÒÑ¾­½ÓÊÕµ½¿Í»§¶ËµÄ²éÑ¯ÉêÇë"+gd.getGoodsID());
-			
-					gd = gdao.QueryID(gd.getGoodsID());
-					
-					// ---´´½¨ÏûÏ¢
+					Goods gd = msg.getGd();			
+					gd = gdao.QueryID(gd.getGoodsID());					
 					Message m = new Message();
 					m.setSender(sender);
 					m.setGd(gd);
 					m.setReceiver(sender);
 					m.setType(MessageType.CMD_CHECK_GOODS);
-					// --·¢ËÍÖÁ²éÑ¯ÓÃ»§
-					ObjectOutputStream oos = new ObjectOutputStream(getClient()
-							.getOutputStream());
-					oos.writeObject(m);
-					oos.flush();
+					// --å‘é€è‡³æŸ¥è¯¢ç”¨æˆ·
+                    this.SendToClient(m);
 
 				} else if(type.equals(MessageType.CMD_QUERY_GOODS)){
 					
 					Message m = new Message();
 					m.setSender(sender);
-					m.setType(type);
-					
-					
-					m.setGdlist(gdao.getAllGoods());
-					
+					m.setType(type);									
+					m.setGdlist(gdao.getAllGoods());					
 					this.SendToClient(m);
+				}else if(type.equals(MessageType.CMD_CHECK_ACCOUNT)) {
+					msg.setSender(udi.Login(sender));
+					this.SendToClient(msg);
+				}else if(type.equals(MessageType.CMD_ADD_GOODS)) {
+					Goods gd = msg.getGd();					
+					if(gdao.InsertGoods(gd))
+						msg.setGdlist(gdao.getAllGoods());
+					else 
+						System.out.println("æ’å…¥æ•°æ®å¤±è´¥");
+					this.SendToClient(msg);	
+				}else if(type.equals(MessageType.CMD_DEPOSIT)) {
+					boolean result = udi.UpdateAccount(sender);
+					msg.setOpState(result);
+					this.SendToClient(msg);
+				}else if(type.equals(MessageType.CMD_DELETE_GOODS)) {
+					Goods gd = msg.getGd();
+					if(gdao.DeleteGoods(gd)) {
+						msg.setGdlist(gdao.getAllGoods());
+						msg.setOpState(true);
+					}else 
+						System.out.println("æ’å…¥æ•°æ®å¤±è´¥");
+					this.SendToClient(msg);
+				}else if(type.equals(MessageType.CMD_DELETE_GOODS)) {
+					isClosed = true;
+					ServerClientThreadMgr.remove(this.owner.getUserID());
+					break;
 				}
+
 				
-				else if(type.equals(MessageType.CMD_QUERY_STUDENTNAME)){
-					
+				
+				else if(type.equals(MessageType.CMD_QUERY_STUDENTNAME)){				
 					Message m = new Message();
 					m.setSender(sender);
 					m.setType(type);
@@ -216,23 +236,94 @@ public class ServerClientThread extends Thread {
 					Message m = new Message();
 					m.setSender(sender);
 					m.setType(type);
+					List<BookRecord> bkrlist = bdao.getAllBook(sender.getUserID());
+					m.setBkrlist(bkrlist);
+					this.SendToClient(m);
 					
-					//m.setBklist(brdao.get);
-					
+				}else if(type.equals(MessageType.CMD_QUERY_BOOKID)) {
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					Book bk = msg.getBk();
+					bk = bdao.QueryBookID(bk.getBookID());
+					if(bk!=null) {
+						m.setBk(bk);
+						this.SendToClient(m);
+					}else {
+						m.setType("CMD_NOTFIND_BOOK");
+						this.SendToClient(m);
+					}
+								
+				}else if(type.equals(MessageType.CMD_QUERY_BOOKNAME)) {
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					Book bk = msg.getBk();
+					bk = bdao.QueryBookName(bk.getBookName());
+					if(bk!=null) {
+					m.setBk(bk);
+					this.SendToClient(m);
+					}else {
+						m.setType("CMD_NOTFIND_BOOK");
+						this.SendToClient(m);
+					}
+				}else if(type.equals(MessageType.CMD_QUERY_BOOKWRITER)) {
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					Book bk = msg.getBk();
+					List<Book> queryBookWriter = bdao.QueryBookWriter(bk.getBookWriter());
+					if(queryBookWriter!=null)
+					{m.setBklist(queryBookWriter);
+					this.SendToClient(m);}
+					else {
+						m.setType("CMD_NOTFIND_BOOK");
+						this.SendToClient(m);
+					}
+
+				}else if(type.equals(MessageType.CMD_CHECK_ALLBOOK))
+				{
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					List<Book> queryallBook = bdao.CheckAllBook();
+					m.setBklist(queryallBook);
+					this.SendToClient(m);
+				}else if(type.equals(MessageType.CMD_ADD_BOOK)) {
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					Book bk= msg.getBk();
+					bdao.AddBook(bk);
+					this.SendToClient(m);
+				}else if(type.equals(MessageType.CMD_DELETE_BOOK)) {
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					Book bk= msg.getBk();
+					bdao.DeleteBook(bk);
+					this.SendToClient(m);
+				}else if(type.equals(MessageType.CMD_QUERY_SEAT)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					Seat seat = msg.getSeat();
+					Seat s= bdao.QuerySeat(seat);
+					m.setSeat(s);
 					this.SendToClient(m);
 				}else {
-					throw new Exception("Î´ÖªÏàÓ¦ÀàĞÍ£¡");
+					throw new Exception("æœªçŸ¥ç›¸åº”ç±»å‹ï¼");
 				}
 			} catch (SocketException se) {				
 				this.isClosed = true;
-				//QQLogger.serverLogger().info(this.owner.getQqNo() + " Ïß³Ì±»½áÊø!" + se);				
+				//QQLogger.serverLogger().info(this.owner.getQqNo() + " çº¿ç¨‹è¢«ç»“æŸ!" + se);				
 			} catch (EOFException e) {
 				this.isClosed = true;				
-				//QQLogger.serverLogger().info(this.owner.getQqNo() + " Ïß³Ì±»½áÊø!" + e);				
+				//QQLogger.serverLogger().info(this.owner.getQqNo() + " çº¿ç¨‹è¢«ç»“æŸ!" + e);				
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-				//QQLogger.serverLogger().info(this.owner.getQqNo() + " Ïß³Ì±»½áÊø!" + e);
+				//QQLogger.serverLogger().info(this.owner.getQqNo() + " çº¿ç¨‹è¢«ç»“æŸ!" + e);
 			}
 		}		
 	}
@@ -256,15 +347,15 @@ public class ServerClientThread extends Thread {
 	}
 	public void close() {
 
-		// Ç¿ÖÆ¿Í»§¶ËÍË³ö
-		//QQLogger.serverLogger().info("¹Ø±ÕÓë¿Í»§¶ËÏß³Ì" + owner.getQqNo());
-		// ¸üĞÂ·şÎñÆ÷
+		// å¼ºåˆ¶å®¢æˆ·ç«¯é€€å‡º
+		//QQLogger.serverLogger().info("å…³é—­ä¸å®¢æˆ·ç«¯çº¿ç¨‹" + owner.getQqNo());
+		// æ›´æ–°æœåŠ¡å™¨
 		//owner.setStatus(UserStatus.OFFLINE);
 		//iud.updUser(owner);
 	
-		// Ïú»ÙÏß³Ì		
+		// é”€æ¯çº¿ç¨‹		
 		isClosed = true;	
-		// ÖĞ¶ÏÏß³Ì£ºÏß³Ì×èÈûÊ±	[¶ÔIOÎŞĞ§]
+		// ä¸­æ–­çº¿ç¨‹ï¼šçº¿ç¨‹é˜»å¡æ—¶	[å¯¹IOæ— æ•ˆ]
 		//this.interrupt();
 	}
 

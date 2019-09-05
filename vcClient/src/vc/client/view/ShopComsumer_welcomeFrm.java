@@ -6,6 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.client.bz.impl.UserSrvImpl;
+import vc.list.common.Message;
+import vc.list.common.MessageType;
+import vc.list.common.User;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -14,6 +20,7 @@ import java.awt.Toolkit;
 import java.awt.SystemColor;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
@@ -26,11 +33,16 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	private User owner;
+	private UserSrvImpl usrv = new UserSrvImpl();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ShopComsumer_welcomeFrm frame = new ShopComsumer_welcomeFrm();
+					User u = new User();
+					ShopComsumer_welcomeFrm frame = new ShopComsumer_welcomeFrm(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +54,10 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShopComsumer_welcomeFrm() {
+	public ShopComsumer_welcomeFrm( User user) {
+		setResizable(false);
+		this.owner = user;
+		
 		setBackground(SystemColor.activeCaption);
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopComsumer_welcomeFrm.class.getResource("/image/logo.jpg")));
@@ -65,9 +80,17 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 		toCheck.setIcon(null);
 		toCheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				windowc=new ShopComsumer_checkremainingFrm();
-				windowc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				windowc.setVisible(true);
+				
+				Message m = new Message();
+				m.setSender(owner);
+				m.setType(MessageType.CMD_CHECK_ACCOUNT);
+				try {
+					usrv.sendMessage(m);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 		});
 		toCheck.setForeground(new Color(0, 0, 139));
@@ -79,7 +102,7 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 		JButton toDeposit = new JButton("\u5145   \u503C");
 		toDeposit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				windowd=new ShopComsumer_depositFrm();
+				windowd=new ShopComsumer_depositFrm(owner);
 				windowd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				windowd.setVisible(true);
 			}
