@@ -1,6 +1,7 @@
 
 package vc.server.db;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class AccessUtil {
 			cnfex.printStackTrace();
 		}
 		try {
-			String msAccDB = "C:/Users/Key/Desktop/user.mdb";//这里写你的.mdb文件的位置 注意使用的是正斜杠  
+			String msAccDB = new File("").getAbsolutePath().replace('\\', '/') + "/user.mdb";//相对文件获取mdb文件的位置 文件放在工程根目录  
 			//新版本Access保存时应该选择2002-2003数据库版本即使.mdb格式
 			String dbURL = "jdbc:ucanaccess://" + msAccDB;
 			connection = DriverManager.getConnection(dbURL);
