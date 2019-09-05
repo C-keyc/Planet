@@ -12,6 +12,8 @@ import vc.client.bz.impl.UserSrvImpl;
 import vc.list.common.User;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -106,6 +108,10 @@ public class Login extends JFrame implements ActionListener{
 		lblBackground.setIcon(new ImageIcon(Login.class.getResource("/image/LoginBG.jpg")));
 		lblBackground.setBounds(-189, 0, 642, 373);
 		contentPane.add(lblBackground);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 
 	@Override

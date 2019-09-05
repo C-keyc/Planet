@@ -14,6 +14,8 @@ import vc.list.common.User;
 
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -235,5 +237,9 @@ public class MessageRoll_addDlg extends JDialog {
 			label_2.setFont(new Font("宋体", Font.PLAIN, 14));
 			label_2.setBounds(141, 68, 105, 15);
 			contentPanel.add(label_2);
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+			Dimension frameSize = this.getSize();// 获取当前窗口大小
+			this.setLocation((screenSize.width - frameSize.width) / 2,
+					(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 }

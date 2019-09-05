@@ -13,6 +13,8 @@ import javax.swing.JDialog;
 
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -136,7 +138,8 @@ public class MessageRoll_mainFrm extends JFrame {
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u7C4D\u4FE1\u606F");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageRoll_mainFrm.class.getResource("/image/logo.jpg")));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		//setBounds(100, 100, 800, 600);
+		this.setSize(800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 240));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -322,7 +325,10 @@ public class MessageRoll_mainFrm extends JFrame {
 		scrollPane.setBounds(36, 88, 717, 246);
 		scrollPane.setViewportView(tblMessage);
 		contentPane.add(scrollPane);
-
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 	public JPanel getPanel() {
 		return contentPane;

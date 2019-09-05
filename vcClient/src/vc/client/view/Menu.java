@@ -23,6 +23,8 @@ import vc.list.common.User;
 
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 
@@ -174,7 +176,10 @@ public class Menu extends JFrame {
 		lblBackground.setIcon(new ImageIcon(Menu.class.getResource("/image/MuneBG.jpg")));
 		lblBackground.setBounds(0, 0, 800, 600);
 		contentPane.add(lblBackground);
-		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 	
 	public String getIdentity(int type) {
