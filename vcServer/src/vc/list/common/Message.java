@@ -20,6 +20,10 @@ public class Message implements java.io.Serializable {
 	private String content;
 	private String sendTime;
 	
+	private Student st;
+	private List<Student> stlist;
+	private boolean CMDsuc;
+	
 	private Goods gd;
 
 	private List<Goods> gdlist;
@@ -121,5 +125,28 @@ public class Message implements java.io.Serializable {
 		this.bklist = bklist;
 	}
 	
+	public Student getStudent() {
+		return st;
+	}
+	
+	public void setStudent(Student st) {
+		this.st=st;
+	}
+	
+	public List<Student> getStudentList(){
+		return stlist;
+	}
+	
+	public void setStudentList(List<Student> stlist) {
+		this.stlist = stlist;
+	}
+	
+	public boolean getCMDsuc() {
+		return CMDsuc;
+	}
+
+	public void setCMDsuc(boolean CMDsuc) {
+		this.CMDsuc = CMDsuc;
+	}
 	
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import vc.list.common.*;
 import vc.server.dao.GoodsDao_Imp;
+import vc.server.dao.StudentDao_Imp;
 
 
 /**
@@ -24,6 +25,7 @@ public class ServerClientThread extends Thread {
 	private User owner;
 	private boolean isClosed;
 	private GoodsDao_Imp gdao = new GoodsDao_Imp();
+	private StudentDao_Imp stdao =new StudentDao_Imp();
 
 	public ServerClientThread(Socket s, User user) {
 		this.client = s;  //接收消息时获得的发送消息的客户端
@@ -79,6 +81,137 @@ public class ServerClientThread extends Thread {
 					
 					this.SendToClient(m);
 				}
+				
+				else if(type.equals(MessageType.CMD_QUERY_STUDENTNAME)){
+					
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setStudentList(stdao.QueryName(msg.getStudent().getStudentName()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_QUERY_STUDENTID)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setStudentList(stdao.QueryID(msg.getStudent().getStudentID()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_QUERY_STUDENTNUM)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setStudentList(stdao.QueryNum(msg.getStudent().getStudentNum()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_QUERY_STUDENTDEPARTMENT)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setStudentList(stdao.QueryDepartment(msg.getStudent().getStudentDepartment()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_QUERY_STUDENTMAJOR)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setStudentList(stdao.QueryMajor(msg.getStudent().getStudentMajor()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_QUERY_STUDENTGRADE)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setStudentList(stdao.QueryGrade(msg.getStudent().getStudentGrade()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_GETALLSTUDENT)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setStudentList(stdao.getAllStudents());
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_INSERT_STUDENT)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.InsertStudent(msg.getStudent()));
+					m.setStudentList(stdao.getAllStudents());
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_DELETE_STUDENT)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.DeleteStudent(msg.getStudent()));
+					m.setStudentList(stdao.getAllStudents());
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTNAME)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentName(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTNUM)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentNum(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTGRADE)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentGrade(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTDEPARTMENT)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentDepartment(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTMAJOR)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentMajor(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTCLASS)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentClass(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTLENGTH)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentLength(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTRE)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentRe(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				else if(type.equals(MessageType.CMD_UPDATE_STUDENTINSCHOOL)){
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCMDsuc(stdao.UpdateStudentinSchool(msg.getStudent()));
+					this.SendToClient(m);
+				}
+				
 				else if(type.equals(MessageType.CMD_CHECK_BOOK)){					
 					Message m = new Message();
 					m.setSender(sender);

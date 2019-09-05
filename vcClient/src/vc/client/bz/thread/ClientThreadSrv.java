@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 import vc.client.bz.thread.ClientThreadSrvMgr;
 import vc.list.common.MessageType;
 import vc.list.common.User;
@@ -14,6 +16,7 @@ import vc.client.view.WkCheckRpd;
 import vc.client.view.*;
 import vc.client.view.WkManageMgr;
 import vc.client.view.library.*;
+import vc.client.view.message.*;
 import vc.list.common.*;
 import vc.list.common.Message;
 
@@ -83,6 +86,68 @@ public class ClientThreadSrv extends Thread {
 			lbr.setBkrlist(msg.getBkrlist());
 			
 		}
+		
+		else if(msgType.equals(MessageType.CMD_GETALLSTUDENT)) {
+			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
+			MR_mF.setStList(msg.getStudentList());
+			MR_mF.initialize();
+			if(!MR_mF.isVisible())
+				MR_mF.setVisible(true);
+			
+		}
+		else if(msgType.equals(MessageType.CMD_QUERY_STUDENTID)||
+				msgType.equals(MessageType.CMD_QUERY_STUDENTNAME)||
+				msgType.equals(MessageType.CMD_QUERY_STUDENTNUM)||
+				msgType.equals(MessageType.CMD_QUERY_STUDENTDEPARTMENT)||
+				msgType.equals(MessageType.CMD_QUERY_STUDENTMAJOR)||
+				msgType.equals(MessageType.CMD_QUERY_STUDENTGRADE)) {
+			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
+			MR_mF.setStList(msg.getStudentList());
+			MR_mF.initialize();
+			if(!MR_mF.isVisible())
+				MR_mF.setVisible(true);
+		}
+		else if(msgType.equals(MessageType.CMD_INSERT_STUDENT)) {
+			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
+			if(msg.getCMDsuc())
+				JOptionPane.showMessageDialog(MR_mF.getPanel(), "Ìí¼Ó³É¹¦", "", JOptionPane.INFORMATION_MESSAGE);
+			else 
+				JOptionPane.showMessageDialog(MR_mF.getPanel(), "Ìí¼ÓÊ§°Ü", "", JOptionPane.WARNING_MESSAGE);
+			MR_mF.setStList(msg.getStudentList());
+			MR_mF.initialize();
+			if(!MR_mF.isVisible())
+				MR_mF.setVisible(true);
+		}
+		else if(msgType.equals(MessageType.CMD_DELETE_STUDENT)) {
+			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
+			if(msg.getCMDsuc())
+				JOptionPane.showMessageDialog(MR_mF.getPanel(), "É¾³ý³É¹¦", "", JOptionPane.INFORMATION_MESSAGE);
+			else 
+				JOptionPane.showMessageDialog(MR_mF.getPanel(), "É¾³ýÊ§°Ü", "", JOptionPane.WARNING_MESSAGE);
+			MR_mF.setStList(msg.getStudentList());
+			MR_mF.initialize();
+			if(!MR_mF.isVisible())
+				MR_mF.setVisible(true);
+		}
+		else if(msgType.equals(MessageType.CMD_UPDATE_STUDENTNAME)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTNUM)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTGRADE)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTDEPARTMENT)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTMAJOR)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTCLASS)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTLENGTH)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTRE)||
+				msgType.equals(MessageType.CMD_UPDATE_STUDENTINSCHOOL)) {
+			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
+			if(!msg.getCMDsuc()) {
+				JOptionPane.showMessageDialog(MR_mF.getPanel(), "ÐÞ¸ÄÊ§°Ü", "", JOptionPane.WARNING_MESSAGE);
+			/*MR_mF.setStList(msg.getStudentList());*/
+				MR_mF.initialize();
+					if(!MR_mF.isVisible())
+				MR_mF.setVisible(true);}
+			
+		}
+		
 		else {
 			
 		}

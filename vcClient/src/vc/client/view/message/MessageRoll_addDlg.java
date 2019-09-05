@@ -7,6 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.client.bz.impl.UserSrvImpl;
+import vc.list.common.Student;
+import vc.list.common.User;
+
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -15,6 +20,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class MessageRoll_addDlg extends JDialog {
@@ -30,11 +36,12 @@ public class MessageRoll_addDlg extends JDialog {
 	private JTextField textLength;
 	private JTextField textInRoll;
 	private JTextField textInSchool;
-
+	private User owner;
+	private UserSrvImpl usrv = new UserSrvImpl();
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			MessageRoll_addDlg dialog = new MessageRoll_addDlg();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -42,12 +49,13 @@ public class MessageRoll_addDlg extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public MessageRoll_addDlg() {
+	public MessageRoll_addDlg(User user) {
+		this.owner = user;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageRoll_addDlg.class.getResource("/image/logo.jpg")));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u7C4D\u7BA1\u7406");
 		setBounds(100, 100, 400, 550);
@@ -172,6 +180,23 @@ public class MessageRoll_addDlg extends JDialog {
 						   textInSchool.getText().length()==0)
 							JOptionPane.showMessageDialog(contentPanel, "请填写所有必填项", "警告", JOptionPane.WARNING_MESSAGE);
 						else {
+							Student st =new Student(
+							textName.getText(),
+						    textECardId.getText(),
+						    textNum.getText(),
+						    textGrade.getText(),
+						    textDepartment.getText(),
+						    textMajor.getText(),
+						    textClass.getText(),
+						    textLength.getText(),
+						    textInRoll.getText(),
+						    textInSchool.getText());
+							try {
+								usrv.insertStudent(owner, st);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							dispose();
 						}
 					}

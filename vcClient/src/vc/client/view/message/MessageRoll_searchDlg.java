@@ -7,6 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import vc.client.bz.impl.UserSrvImpl;
+import vc.list.common.Student;
+import vc.list.common.User;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -18,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class MessageRoll_searchDlg extends JDialog {
@@ -25,11 +31,12 @@ public class MessageRoll_searchDlg extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textInput;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-
+	private User owner;
+	private UserSrvImpl usrv = new UserSrvImpl();
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			MessageRoll_searchDlg dialog = new MessageRoll_searchDlg();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -37,12 +44,13 @@ public class MessageRoll_searchDlg extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public MessageRoll_searchDlg() {
+	public MessageRoll_searchDlg(User user) {
+		this.owner = user;
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u7C4D\u4FE1\u606F");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageRoll_searchDlg.class.getResource("/image/logo.jpg")));
 		setBounds(100, 100, 400, 300);
@@ -112,9 +120,35 @@ public class MessageRoll_searchDlg extends JDialog {
 						if( textInput.getText().length()==0)
 							JOptionPane.showMessageDialog(contentPanel, "请输入信息", "警告", JOptionPane.WARNING_MESSAGE);
 						else {
-							dispose();
+							String str =textInput.getText();
+							Student st =new Student();
+							try{
+								if(radioButton_name.isSelected()) 
+									{st.setStudentName(str);
+									usrv.queryStudentName(owner, st);}
+								if(radioButton_ID.isSelected()) 
+									{st.setStudentNum(str);
+									usrv.queryStudentNum(owner, st);}
+								if(radioButton_cardID.isSelected()) 
+									{st.setStudentID(str);
+									usrv.queryStudentID(owner, st);}
+								if(radioButton_college.isSelected()) 
+									{st.setStudentDepartment(str);
+									usrv.queryStudentDepartment(owner, st);}
+								if(radioButton_major.isSelected()) 
+									{st.setStudentMajor(str);
+									usrv.queryStudentMajor(owner, st);}
+								if(radioButton_year.isSelected()) 
+									{st.setStudentGrade(str);
+									usrv.queryStudentGrade(owner, st);}
+								dispose();
+									
+							} catch (IOException eIO) {
+								eIO.printStackTrace();
+							  }
+							
+						    }
 						}
-					}
 				});
 				okButton.setSelectedIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\\u56FE\u72472.png"));
 				okButton.setActionCommand("OK");
