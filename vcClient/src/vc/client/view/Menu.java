@@ -107,7 +107,6 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				MessageRoll_mainFrm messageRoll = new MessageRoll_mainFrm(owner);
 				messageRoll.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				messageRoll.setVisible(true);
 
 			}
 		});

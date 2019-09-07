@@ -11,12 +11,21 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import vc.client.bz.impl.UserSrvImpl;
 import vc.client.bz.thread.ClientThreadSrvMgr;
 import vc.list.common.MessageType;
 import vc.list.common.User;
 import vc.client.view.WkCheckRpd;
 import vc.client.view.*;
 import vc.client.view.WkManageMgr;
+import vc.client.view.choosecourse.courseNOT;
+import vc.client.view.choosecourse.courseOK;
+import vc.client.view.choosecourse.courseSCheck;
+import vc.client.view.choosecourse.courseSCheckMgr;
+import vc.client.view.choosecourse.courseStudent;
+import vc.client.view.choosecourse.courseStudentMgr;
+import vc.client.view.choosecourse.courseTCheck;
+import vc.client.view.choosecourse.courseTCheckMgr;
 import vc.client.view.library.*;
 import vc.client.view.message.*;
 import vc.list.common.*;
@@ -29,6 +38,8 @@ public class ClientThreadSrv extends Thread {
 	
 	private User owner;
 	private String ownerID;
+	private Course course;
+	private UserSrvImpl usrv = new UserSrvImpl();
 	
 	public ClientThreadSrv(String userID) throws IOException {
 		InetAddress addr = InetAddress.getLocalHost();
@@ -110,6 +121,119 @@ public class ClientThreadSrv extends Thread {
 				// 释放Socket资源
 				socket.close();
 		}
+		
+		else  if(msgType.equals(MessageType.CMD_QUERY_COURSEID)){
+			Course course=msg.getCourse();
+			owner=msg.getSender();
+			int typee=msg.getTypee();
+			CourseOwner courseowner =msg.getCourseowner();
+			if (course!=null) {
+				System.out.println("课程ID输入正确");
+				if(typee==0)
+				{
+				try {
+					usrv.CourseChoose(owner, courseowner);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				   }
+				}
+				if(typee==1)
+				{
+					try {
+						usrv.QuitChoose(owner, courseowner);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					   }
+				}
+				if(typee==2)
+				{
+					try {
+						usrv.CourseDelete(owner, course);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					   }
+				}
+			}
+			else
+			{
+				System.out.println("课程ID输入错误");
+				courseNOT not=new courseNOT();
+				not.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				not.setVisible(true);
+			}
+		}
+			
+			else  if(msgType.equals(MessageType.CMD_CHOOSE_COURSE)){
+				
+					courseOK ok=new courseOK();
+					ok.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					ok.setVisible(true);
+		}
+		
+		else  if(msgType.equals(MessageType.CMD_ADD_COURSE))
+		{
+			Course course=msg.getCourse();
+			if (course!=null) {
+				System.out.println("课程添加成功");
+				courseOK ok=new courseOK();
+				ok.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				ok.setVisible(true);
+			} else {		
+				System.out.println("课程添加失败");
+                 courseNOT not=new courseNOT();
+                 not.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				  not.setVisible(true);
+			}
+		}
+		
+		else  if(msgType.equals(MessageType.CMD_QUIT_COURSE))
+		{
+
+				System.out.println("课程选退成功");
+				courseOK ok=new courseOK();
+				ok.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				ok.setVisible(true);
+	}
+		
+		else  if(msgType.equals(MessageType.CMD_DELETE_COURSE))
+		{
+
+				System.out.println("课程删除成功");
+				courseOK ok=new courseOK();
+				ok.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				ok.setVisible(true);
+	}
+		
+		else  if(msgType.equals(MessageType.CMD_SHOW_COURSE))
+		{
+          List<Course> cslist=msg.getCslist();
+          courseStudent student = courseStudentMgr.get(sender.getUserID());
+	     student.passcslist(cslist);
+	     student.refresh();
+	     //student.initialize();
+	     //student.repaint();
+	}
+		
+		else  if(msgType.equals(MessageType.CMD_SHOWSTUDENT_COURSE))
+		{
+          List<Course> cslist=msg.getCslist();
+          courseSCheck check = courseSCheckMgr.get(sender.getUserID());
+          check.passcslist(cslist);
+	     
+	     check.initialize();
+	}
+		else  if(msgType.equals(MessageType.CMD_SHOWTEACHER_COURSE))
+		{
+          List<Course> cslist=msg.getCslist();
+          courseTCheck check = courseTCheckMgr.get(sender.getUserID());
+          check.passcslist(cslist);
+	     
+	     check.initialize();
+	}
+		
 		else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
 			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());			
 			lbr.setBkrlist(msg.getBkrlist());			

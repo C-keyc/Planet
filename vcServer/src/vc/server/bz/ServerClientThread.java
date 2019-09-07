@@ -10,6 +10,7 @@ import java.util.List;
 
 import vc.list.common.*;
 import vc.server.dao.BookDao_Imp;
+import vc.server.dao.CourseDao_lmp;
 import vc.server.dao.GoodsDao_Imp;
 import vc.server.dao.StudentDao_Imp;
 import vc.server.dao.UserDao_Imp;
@@ -30,6 +31,7 @@ public class ServerClientThread extends Thread {
 	private StudentDao_Imp stdao =new StudentDao_Imp();
 	private BookDao_Imp bdao = new BookDao_Imp();
 	private UserDao_Imp udi=new UserDao_Imp();
+	private CourseDao_lmp cdao = new CourseDao_lmp();
 	
 	public ServerClientThread(Socket s, User user) {
 		this.client = s;  //接收消息时获得的发送消息的客户端
@@ -311,7 +313,169 @@ public class ServerClientThread extends Thread {
 					Seat s= bdao.QuerySeat(seat);
 					m.setSeat(s);
 					this.SendToClient(m);
-				}else {
+				}
+				
+				else if(type.equals(MessageType.CMD_QUERY_COURSEID))
+				{
+					Course course = msg.getCourse();
+					System.out.println("已经接收到客户端的查询申请"+course.getCourseID());
+
+					course = cdao.QueryID(course.getCourseID());
+					String courseid=course.getCourseID();
+					User userr=msg.getSender();
+					CourseOwner courseowner=new CourseOwner();
+					courseowner.setCourseID(courseid);
+					courseowner.setOwnerID(userr.getUserID());
+					int typee=msg.getTypee();
+					// ---创建消息
+					Message m = new Message();
+					m.setSender(sender);
+					m.setCourse(course);
+					m.setReceiver(sender);
+					m.setCourseowner(courseowner);
+					m.setTypee(typee);
+					m.setType(MessageType.CMD_QUERY_COURSEID);
+					// --发送至查询用户
+					ObjectOutputStream oos = new ObjectOutputStream(getClient()
+							.getOutputStream());
+					oos.writeObject(m);
+					oos.flush();
+				} 
+				
+				else if(type.equals(MessageType.CMD_ADD_COURSE))
+				{
+					Course course = msg.getCourse();
+					System.out.println("已经接收到客户端的添加课程申请，添加的课程ID为："+course.getCourseID());
+
+					if(cdao.InsertCourse(course)){
+					
+					// ---创建消息
+					Message m = new Message();
+					m.setSender(sender);
+					m.setCourse(course);
+					m.setReceiver(sender);
+					m.setType(MessageType.CMD_ADD_COURSE);
+					// --发送至查询用户
+					ObjectOutputStream oos = new ObjectOutputStream(getClient()
+							.getOutputStream());
+					oos.writeObject(m);
+					oos.flush();
+					}
+					else
+					{
+						System.out.println("添加课程失败"+course.getCourseID());
+					}
+				}
+				
+				else if(type.equals(MessageType.CMD_DELETE_COURSE))
+				{
+					Course course = msg.getCourse();
+					System.out.println("已经接收到客户端的删除课程申请，删除的课程ID为："+course.getCourseID());
+
+					if(cdao.DeleteCourse(course)){
+					
+					// ---创建消息
+					Message m = new Message();
+					m.setSender(sender);
+					m.setCourse(course);
+					m.setReceiver(sender);
+					m.setType(MessageType.CMD_DELETE_COURSE);
+					// --发送至查询用户
+					ObjectOutputStream oos = new ObjectOutputStream(getClient()
+							.getOutputStream());
+					oos.writeObject(m);
+					oos.flush();
+					}
+					else
+					{
+						System.out.println("删除课程失败"+course.getCourseID());
+					}
+				}
+				
+				else if(type.equals(MessageType.CMD_CHOOSE_COURSE))
+				{
+					CourseOwner courseowner = msg.getCourseowner();
+					System.out.println("已经接收到客户端的选择课程申请，选择的课程ID为："+courseowner.getCourseID());
+
+					if(cdao.ChooseCourse(courseowner)){
+					
+					// ---创建消息
+					Message mm = new Message();
+					mm.setSender(sender);
+					mm.setCourseowner(courseowner);
+					mm.setReceiver(sender);
+					mm.setType(MessageType.CMD_CHOOSE_COURSE);
+					// --发送至查询用户
+					ObjectOutputStream oos = new ObjectOutputStream(getClient()
+							.getOutputStream());
+					oos.writeObject(mm);
+					oos.flush();
+					}
+					else
+					{
+						System.out.println("选择课程失败"+courseowner.getCourseID());
+					}
+				}
+				
+				else if(type.equals(MessageType.CMD_SHOW_COURSE))
+				{
+					System.out.println("已经接收到客户端的显示课程申请");
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					m.setCslist(cdao.getAllCourse());
+					this.SendToClient(m);
+				}
+			
+				else if(type.equals(MessageType.CMD_SHOWSTUDENT_COURSE))
+				{
+					System.out.println("已经接收到客户端的显示课程申请");
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					String id=sender.getUserID();
+					m.setCslist(cdao.getStudentCourse(id));
+					this.SendToClient(m);
+				}
+				
+				else if(type.equals(MessageType.CMD_SHOWTEACHER_COURSE))
+				{
+					System.out.println("已经接收到客户端的显示课程申请");
+					Message m = new Message();
+					m.setSender(sender);
+					m.setType(type);
+					String name=sender.getUname();
+					m.setCslist(cdao.getTeacherCourse(name));
+					this.SendToClient(m);
+				}
+				
+				else if(type.equals(MessageType.CMD_QUIT_COURSE))
+				{
+					CourseOwner courseowner = msg.getCourseowner();
+					System.out.println("已经接收到客户端的选退课程申请，选择的课程ID为："+courseowner.getCourseID());
+
+					if(cdao.QuitCourse(courseowner)){
+					
+					// ---创建消息
+					Message mm = new Message();
+					mm.setSender(sender);
+					mm.setCourseowner(courseowner);
+					mm.setReceiver(sender);
+					mm.setType(MessageType.CMD_QUIT_COURSE);
+					// --发送至查询用户
+					ObjectOutputStream oos = new ObjectOutputStream(getClient()
+							.getOutputStream());
+					oos.writeObject(mm);
+					oos.flush();
+					} 
+					else
+					{
+						System.out.println("选退课程失败"+courseowner.getCourseID());
+					}
+				}
+				
+				
+				else {
 					throw new Exception("未知相应类型！");
 				}
 			} catch (SocketException se) {				

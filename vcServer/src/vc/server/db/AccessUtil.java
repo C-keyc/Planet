@@ -8,6 +8,7 @@ import java.util.List;
 
 import vc.list.common.Book;
 import vc.list.common.BookRecord;
+import vc.list.common.Course;
 import vc.list.common.Goods;
  
 /**
@@ -121,6 +122,25 @@ public class AccessUtil {
 			e.printStackTrace();
 		}
 		return bookrecord;
+	}
+	
+	public static List<Course> CourseResultSet2List(ResultSet result) {
+		List<Course> course = new ArrayList<Course>();
+				
+			try {
+				while(result.next())
+				{
+			    Course g = new Course();
+				g.setCourseID(result.getString(1));
+				g.setCourseName(result.getString(2));
+				g.setCourseTeacher(result.getString(3));
+				g.setCourseTime(result.getString(4));
+                course.add(g);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return course;
 	}
 
 	public static List<Book> BookResultSet2List(ResultSet result) {

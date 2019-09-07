@@ -14,6 +14,7 @@ public class Message implements java.io.Serializable {
 
 	private String id;
 	private String type;
+	private int typee;
 	private User sender;
 	private User receiver;
 	
@@ -40,6 +41,42 @@ public class Message implements java.io.Serializable {
 
 	private Seat seat;
 	private boolean opState;
+	
+	private Course course;
+	private List<Course> cslist;
+	private CourseOwner courseowner;
+
+	public int getTypee() {
+		return typee;
+	}
+
+	public void setTypee(int typee) {
+		this.typee = typee;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public List<Course> getCslist() {
+		return cslist;
+	}
+
+	public void setCslist(List<Course> cslist) {
+		this.cslist = cslist;
+	}
+
+	public CourseOwner getCourseowner() {
+		return courseowner;
+	}
+
+	public void setCourseowner(CourseOwner courseowner) {
+		this.courseowner = courseowner;
+	}
 
 	public Message() {
 		this.sendTime = new Date().toString();

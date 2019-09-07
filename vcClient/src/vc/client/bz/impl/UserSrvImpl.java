@@ -5,10 +5,13 @@ package vc.client.bz.impl;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 import vc.client.bz.thread.ClientThreadSrvMgr;
 import vc.client.bz.thread.ClientThreadSrv;
 import vc.list.common.Book;
+import vc.list.common.Course;
+import vc.list.common.CourseOwner;
 import vc.list.common.Goods;
 import vc.list.common.Message;
 import vc.list.common.MessageType;
@@ -62,7 +65,86 @@ public class UserSrvImpl {
 		this.sendMessage(m); // 调用发送方法，把消息发送即可
 
 	}
+public void CourseCheck(User sender ,Course course,int typee) throws IOException { //功能函数的参数用user 和要发送的信息
+
+		
+		Message m = new Message();
+		m.setSender(sender);
+		m.setType(MessageType.CMD_QUERY_COURSEID);
+		m.setCourse(course);
+		m.setTypee(typee);//更新消息
+		this.sendMessage(m); // 调用发送方法，把消息发送即可
+
+	}
+
+public void CourseADD(User sender ,Course course) throws IOException { //功能函数的参数用user 和要发送的信息
+
 	
+	Message m = new Message();
+	m.setSender(sender);
+	m.setType(MessageType.CMD_ADD_COURSE);
+	m.setCourse(course);  //更新消息
+	this.sendMessage(m); // 调用发送方法，把消息发送即可
+
+}
+
+
+public void CourseChoose(User sender ,CourseOwner courseowner) throws IOException { //功能函数的参数用user 和要发送的信息
+
+	
+	Message m = new Message();
+	m.setSender(sender);
+	m.setType(MessageType.CMD_CHOOSE_COURSE);
+	m.setCourseowner(courseowner);  //更新消息
+	this.sendMessage(m); // 调用发送方法，把消息发送即可
+}
+
+public void QuitChoose(User sender ,CourseOwner courseowner) throws IOException { //功能函数的参数用user 和要发送的信息
+
+	
+	Message m = new Message();
+	m.setSender(sender);
+	m.setType(MessageType.CMD_QUIT_COURSE);
+	m.setCourseowner(courseowner);  //更新消息
+	this.sendMessage(m); // 调用发送方法，把消息发送即可
+}
+
+public void CourseDelete(User sender ,Course course) throws IOException { //功能函数的参数用user 和要发送的信息
+
+	
+	Message m = new Message();
+	m.setSender(sender);
+	m.setType(MessageType.CMD_DELETE_COURSE);
+	m.setCourse(course);  //更新消息
+	this.sendMessage(m); // 调用发送方法，把消息发送即可
+}
+
+public void CourseAllShow(User sender ,List<Course> ccsList) throws IOException { //功能函数的参数用user 和要发送的信息
+	
+	Message m = new Message();
+	m.setSender(sender);
+	m.setType(MessageType.CMD_SHOW_COURSE);
+	m.setCslist(ccsList); //更新消息
+	this.sendMessage(m); // 调用发送方法，把消息发送即可
+}
+
+public void CourseStudentShow(User sender ,List<Course> ccsList) throws IOException { //功能函数的参数用user 和要发送的信息
+	
+	Message m = new Message();
+	m.setSender(sender);
+	m.setType(MessageType.CMD_SHOWSTUDENT_COURSE);
+	m.setCslist(ccsList); //更新消息
+	this.sendMessage(m); // 调用发送方法，把消息发送即可
+}
+
+public void CourseTeacherShow(User sender ,List<Course> ccsList) throws IOException { //功能函数的参数用user 和要发送的信息
+	
+	Message m = new Message();
+	m.setSender(sender);
+	m.setType(MessageType.CMD_SHOWTEACHER_COURSE);
+	m.setCslist(ccsList); //更新消息
+	this.sendMessage(m); // 调用发送方法，把消息发送即可
+}
 	public void getAllStudents(User sender) throws IOException {
 		Message m = new Message();
 		m.setSender(sender);

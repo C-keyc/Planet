@@ -329,6 +329,7 @@ public class MessageRoll_mainFrm extends JFrame {
 		Dimension frameSize = this.getSize();// 获取当前窗口大小
 		this.setLocation((screenSize.width - frameSize.width) / 2,
 				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
+		repaint();
 	}
 	public JPanel getPanel() {
 		return contentPane;
