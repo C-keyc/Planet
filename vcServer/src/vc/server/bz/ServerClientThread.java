@@ -53,37 +53,28 @@ public class ServerClientThread extends Thread {
 
          		String type = msg.getType();
          		
-         		
-         		
-
-				// 对从客户端取得的消息进行类型判断，让后做相应的处理
 				if (type.equals(MessageType.CMD_CHECK_GOODS)) { 
-					Goods gd = msg.getGd();			
-					gd = gdao.QueryID(gd.getGoodsID());					
-					Message m = new Message();
-					m.setSender(sender);
-					m.setGd(gd);
-					m.setReceiver(sender);
-					m.setType(MessageType.CMD_CHECK_GOODS);
-					// --发送至查询用户
-                    this.SendToClient(m);
-
-				} else if(type.equals(MessageType.CMD_QUERY_GOODS)){
-					
-					Message m = new Message();
-					m.setSender(sender);
-					m.setType(type);									
-					m.setGdlist(gdao.getAllGoods());					
-					this.SendToClient(m);
+					if(gdao.QueryID(msg.getGd())!=null) {
+					msg.setGd(gdao.QueryID(msg.getGd()));
+					msg.setOpState(true);}
+					else
+						msg.setOpState(false);
+                    this.SendToClient(msg);
+				} else if(type.equals(MessageType.CMD_QUERY_GOODS)){														
+					msg.setGdlist(gdao.getAllGoods());					
+					this.SendToClient(msg);
 				}else if(type.equals(MessageType.CMD_CHECK_ACCOUNT)) {
 					msg.setSender(udi.Login(sender));
 					this.SendToClient(msg);
 				}else if(type.equals(MessageType.CMD_ADD_GOODS)) {
-					Goods gd = msg.getGd();					
-					if(gdao.InsertGoods(gd))
-						msg.setGdlist(gdao.getAllGoods());
-					else 
-						System.out.println("插入数据失败");
+					if(msg.isOpState()) {
+						Goods gd_add = msg.getGd();
+						Goods gd_exit = gdao.QueryID(msg.getGd());
+						gd_exit.setRepertory(gd_exit.getRepertory()+gd_add.getRepertory());
+						gdao.UpdateRepertory(gd_exit);
+					}else
+						gdao.InsertGoods(msg.getGd());		
+					msg.setGdlist(gdao.getAllGoods());
 					this.SendToClient(msg);	
 				}else if(type.equals(MessageType.CMD_DEPOSIT)) {
 					boolean result = udi.UpdateAccount(sender);
@@ -97,9 +88,38 @@ public class ServerClientThread extends Thread {
 					}else 
 						System.out.println("插入数据失败");
 					this.SendToClient(msg);
-				}else if(type.equals(MessageType.CMD_DELETE_GOODS)) {
+				}else if(type.equals(MessageType.CMD_SCAN_GOODS)) {				 			
+					msg.setGd(gdao.QueryID(msg.getGd())	);
+					this.SendToClient(msg);
+				}else if(type.equals(MessageType.CMD_DEDUCT)) {	
+					User consumer = msg.getConsumer();
+					double cost = consumer.getConsumer();
+					consumer = udi.Login(consumer);
+					if(consumer==null) {
+						msg.setCMDsuc(false);
+					}else {
+						msg.setCMDsuc(true);
+					consumer.setConsumer(cost);
+					if(consumer.getAccount()>=cost) {
+						msg.setOpState(true);
+						consumer.setAccount(consumer.getAccount()-cost);
+						udi.UpdateAccount(consumer);
+						msg.setConsumer(consumer);
+						List<Goods> gdlist = msg.getGdlist();
+						for(int i=0;i<gdlist.size();i++) {  //更新库存
+							Goods gd=gdlist.get(i);
+							gd.setRepertory(gd.getRepertory()-gd.getConsumerNum());
+							gdao.UpdateRepertory(gd);
+						}
+						msg.setGdlist(gdao.getAllGoods());
+					}else {msg.setOpState(false);}
+					}				
+					this.SendToClient(msg);
+				}
+				else if(type.equals(MessageType.CMD_LOGOUT)) {
 					isClosed = true;
-					ServerClientThreadMgr.remove(this.owner.getUserID());
+					this.SendToClient(msg);
+					ServerClientThreadMgr.remove(this.owner.getUserID());					
 					break;
 				}
 
@@ -158,9 +178,17 @@ public class ServerClientThread extends Thread {
 					Message m = new Message();
 					m.setSender(sender);
 					m.setType(type);
-					m.setCMDsuc(stdao.InsertStudent(msg.getStudent()));
+					if(stdao.InsertStudent(msg.getStudent())>0)m.setCMDsuc(true);
+					else if(stdao.InsertStudent(msg.getStudent())==-2)m.setIDsuc(false);
+					else if(stdao.InsertStudent(msg.getStudent())==-1)m.setCMDsuc(false);
 					m.setStudentList(stdao.getAllStudents());
 					this.SendToClient(m);
+					//Message m = new Message();
+					//m.setSender(sender);
+					//m.setType(type);
+					//m.setCMDsuc(stdao.InsertStudent(msg.getStudent()));
+					//m.setStudentList(stdao.getAllStudents());
+					//this.SendToClient(m);
 				}
 				else if(type.equals(MessageType.CMD_DELETE_STUDENT)){
 					Message m = new Message();
@@ -261,9 +289,9 @@ public class ServerClientThread extends Thread {
 					m.setSender(sender);
 					m.setType(type);
 					Book bk = msg.getBk();
-					bk = bdao.QueryBookName(bk.getBookName());
-					if(bk!=null) {
-					m.setBk(bk);
+					List<Book> bklist = bdao.QueryBookName(bk.getBookName());
+					if(bklist.size()!=0) {
+					m.setBklist(bklist);
 					this.SendToClient(m);
 					}else {
 						m.setType("CMD_NOTFIND_BOOK");
@@ -296,7 +324,13 @@ public class ServerClientThread extends Thread {
 					m.setSender(sender);
 					m.setType(type);
 					Book bk= msg.getBk();
-					bdao.AddBook(bk);
+					int x = bdao.AddBook(bk);
+					if(x==-1)
+					{m.setCMDsuc(false);}
+					if(x==-2)
+					{m.setIDsuc(false);}
+					List<Book> checkAllBook = bdao.CheckAllBook();
+					m.setBklist(checkAllBook);
 					this.SendToClient(m);
 				}else if(type.equals(MessageType.CMD_DELETE_BOOK)) {
 					Message m = new Message();
@@ -467,10 +501,34 @@ public class ServerClientThread extends Thread {
 							.getOutputStream());
 					oos.writeObject(mm);
 					oos.flush();
+					}else if(type.equals(MessageType.CMD_CHANGE_PASSWORD)) {
+						Message m = new Message();
+						m.setSender(sender);
+						String pw = msg.getContent();
+						sender.setUpass(pw);
+						boolean revisePassWord = udi.RevisePassWord(sender);
+						if(revisePassWord) {
+							
+							m.setType(type);
+						}else {
+							m.setType(MessageType.CMD_CHANGE_PASSWORDFAILED);
+						}
 					} 
 					else
 					{
 						System.out.println("选退课程失败"+courseowner.getCourseID());
+					}
+				}else if(type.equals(MessageType.CMD_CHANGE_PASSWORD)) {
+					Message m = new Message();
+					m.setSender(sender);
+					String pw = msg.getContent();
+					sender.setUpass(pw);
+					boolean revisePassWord = udi.RevisePassWord(sender);
+					if(revisePassWord) {
+						
+						m.setType(type);
+					}else {
+						m.setType(MessageType.CMD_CHANGE_PASSWORDFAILED);
 					}
 				}
 				

@@ -18,13 +18,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
-public class WkMain extends JFrame{
+public class ShopWorker_mainFrm extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6446703475391040662L;
-	private JFrame frame;
+	JFrame frame;
 	private User owner;
 	private UserSrvImpl usrv = new UserSrvImpl();
 
@@ -35,7 +35,7 @@ public class WkMain extends JFrame{
 	  public static void main(String[] args) { EventQueue.invokeLater(new
 	  Runnable() { public void run() { 
 		  User u = new User();
-		  try { WkMain window = new WkMain(u);
+		  try { ShopWorker_mainFrm window = new ShopWorker_mainFrm(u);
 	  window.frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); }
 	  } }); }
 	 
@@ -43,7 +43,7 @@ public class WkMain extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public WkMain(User user) {
+	public ShopWorker_mainFrm(User user) {
 		setResizable(false);
 		this.owner = user;
 		initialize();
@@ -55,7 +55,7 @@ public class WkMain extends JFrame{
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED");
-		//frame.setIconImage(Toolkit.getDefaultToolkit().getImage(WkMain.class.getResource("/image/logo.jpg")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(ShopWorker_mainFrm.class.getResource("/image/logo.jpg")));
 		frame.getContentPane().setBackground(new Color(240, 255, 240));
 		frame.getContentPane().setLayout(null);
 		
@@ -70,22 +70,31 @@ public class WkMain extends JFrame{
 		btnManage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	
+				if(ShopWorker_manageMgr.get(owner.getUserID())!=null) {
+					ShopWorker_manageMgr.get(owner.getUserID()).frame.setVisible(true);
+				}else {
+			ShopWorker_manageFrm wk_manage = new ShopWorker_manageFrm(owner);				
+			wk_manage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			wk_manage.frame.setVisible(true);
+				}
 			}
 		});
 		btnManage.setBounds(140, 400, 160, 50);
 		frame.getContentPane().add(btnManage);
 		
-		JButton btnDeduct = new JButton("\u6263\u6B3E");
-		btnDeduct.setFont(new Font("ËÎÌו", Font.PLAIN, 26));
-		btnDeduct.addActionListener(new ActionListener() {
+		JButton deduct = new JButton("\u6263\u6B3E");
+		deduct.setFont(new Font("ËÎÌו", Font.PLAIN, 26));
+		deduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				ShopWorker_deductFrm wk_deduct = new ShopWorker_deductFrm(owner);				
+				wk_deduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				wk_deduct.setVisible(true);				
 			}
 		});
-		btnDeduct.setBounds(500, 400, 160, 50);
-		frame.getContentPane().add(btnDeduct);
+		
+		deduct.setBounds(500, 400, 160, 50);
+		frame.getContentPane().add(deduct);
 		frame.setBounds(100, 100, 800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 }

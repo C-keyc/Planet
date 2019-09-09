@@ -49,7 +49,17 @@ public class UserSrvImpl {
 		
 		return u;
 	}
-	
+	public void logout(User sender) {
+		Message msg = new Message();
+		msg.setSender(sender);
+		msg.setType(MessageType.CMD_LOGOUT);
+		try {
+			this.sendMessage(msg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void sendMessage(Message msg) throws IOException {	
 		csi.send(msg);	
@@ -252,7 +262,6 @@ public void CourseTeacherShow(User sender ,List<Course> ccsList) throws IOExcept
 		Book bk = new Book();
 		bk.setBookName(str);
 		msg.setBk(bk);
-		System.out.println("LibraryReader_searchresultFrm:�ͻ��˷�����Ϣ�ɹ���\"CMD_QUERY_BOOKNAME\"");
 		try {
 			sendMessage(msg);
 		} catch (IOException e) {
@@ -268,8 +277,6 @@ public void CourseTeacherShow(User sender ,List<Course> ccsList) throws IOExcept
 		Book bk = new Book();
 		bk.setBookID(str);
 		msg.setBk(bk);
-		
-		System.out.println("LibraryReader_searchresultFrm:�ͻ��˷�����Ϣ�ɹ���\"CMD_QUERY_BOOKID\"");
 		try {
 			sendMessage(msg);
 		} catch (IOException e) {
@@ -285,8 +292,6 @@ public void CourseTeacherShow(User sender ,List<Course> ccsList) throws IOExcept
 		Book bk = new Book();
 		bk.setBookWriter(str);
 		msg.setBk(bk);
-		
-		System.out.println("LibraryReader_searchresultFrm:�ͻ��˷�����Ϣ�ɹ���\"CMD_QUERY_BOOKID\"");
 		try {
 			sendMessage(msg);
 		} catch (IOException e) {
@@ -340,6 +345,18 @@ public void CourseTeacherShow(User sender ,List<Course> ccsList) throws IOExcept
 		msg.setSender(owner);
 		Book bk = new Book(id);
 		msg.setBk(bk);
+		try {
+			sendMessage(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public void changePassword(User owner,String pw) {
+		Message msg = new Message();
+		msg.setType("CMD_CHANGE_PASSWORD");
+		msg.setSender(owner);
+		msg.setContent(pw);
 		try {
 			sendMessage(msg);
 		} catch (IOException e) {

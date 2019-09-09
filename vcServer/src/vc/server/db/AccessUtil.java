@@ -96,6 +96,7 @@ public class AccessUtil {
 				g.setGoodsID(result.getString(1));
 				g.setGoodsName(result.getString(2));
 				g.setGoodsPrice(result.getDouble(3));
+				g.setRepertory(result.getInt(4));
 				goods.add(g);
 				}
 			} catch (SQLException e) {

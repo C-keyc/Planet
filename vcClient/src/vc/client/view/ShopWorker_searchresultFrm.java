@@ -14,12 +14,16 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class WkCheckRpd extends JFrame {
+public class ShopWorker_searchresultFrm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textPrice;
 	private JTextField textItemId;
+	private JTextField repertory;
 
 	/**
 	 * Launch the application.
@@ -29,7 +33,7 @@ public class WkCheckRpd extends JFrame {
 			public void run() {
 				try {
 					Goods gd =new Goods();
-					WkCheckRpd frame = new WkCheckRpd(gd);
+					ShopWorker_searchresultFrm frame = new ShopWorker_searchresultFrm(gd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,11 +45,11 @@ public class WkCheckRpd extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public WkCheckRpd(Goods gd ) {
+	public ShopWorker_searchresultFrm(Goods gd ) {
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(WkCheckRpd.class.getResource("/image/logo.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopWorker_searchresultFrm.class.getResource("/image/logo.jpg")));
 		setResizable(false);
-		setBounds(100, 100, 390, 264);
+		setBounds(100, 100, 392, 318);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 240));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,11 +62,11 @@ public class WkCheckRpd extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textPrice = new JTextField();
+		textPrice.setEditable(false);
 		textPrice.setBackground(new Color(255, 255, 240));
 		textPrice.setBounds(160, 110, 128, 43);
 		contentPane.add(textPrice);
-		textPrice.setColumns(10);
-		
+		textPrice.setColumns(10);		
 		textPrice.setText(""+gd.getGoodsPrice());
 		
 		JLabel label = new JLabel("\u4EF7\u683C\uFF1A");
@@ -71,6 +75,7 @@ public class WkCheckRpd extends JFrame {
 		contentPane.add(label);
 		
 		textItemId = new JTextField();
+		textItemId.setEditable(false);
 		textItemId.setColumns(10);
 		textItemId.setBackground(new Color(255, 255, 240));
 		textItemId.setBounds(160, 40, 128, 43);
@@ -80,12 +85,32 @@ public class WkCheckRpd extends JFrame {
 		
 		JButton btnOk = new JButton("\u786E\u5B9A");
 		btnOk.setFont(new Font("ËÎÌו", Font.PLAIN, 20));
-		btnOk.setBounds(162, 181, 75, 31);
+		btnOk.setBounds(155, 240, 75, 31);
 		contentPane.add(btnOk);
 		
+		JLabel label_1 = new JLabel("\u5E93\u5B58\uFF1A");
+		label_1.setFont(new Font("ËÎÌו", Font.PLAIN, 20));
+		label_1.setBounds(67, 177, 61, 40);
+		contentPane.add(label_1);
+		
+		repertory = new JTextField();
+		repertory.setEditable(false);
+		repertory.setText("0.0");
+		repertory.setColumns(10);
+		repertory.setBackground(new Color(255, 255, 240));
+		repertory.setBounds(160, 174, 128, 43);
+		contentPane.add(repertory);
+		repertory.setText(""+gd.getRepertory());
+		btnOk.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+                dispose();
+			}
+			
+		});
 		
 		
 		
 	}
-
 }

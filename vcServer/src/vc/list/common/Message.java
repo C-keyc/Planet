@@ -17,14 +17,15 @@ public class Message implements java.io.Serializable {
 	private int typee;
 	private User sender;
 	private User receiver;
+	private User consumer;
 	
 	private String content;
 	private String sendTime;
 	
 	private Student st;
 	private List<Student> stlist;
-	private boolean CMDsuc;
-	
+	private boolean CMDsuc = true;
+	private boolean IDsuc = true;
 	private Goods gd;
 
 	private List<Goods> gdlist;
@@ -45,6 +46,14 @@ public class Message implements java.io.Serializable {
 	private Course course;
 	private List<Course> cslist;
 	private CourseOwner courseowner;
+
+	public boolean isIDsuc() {
+		return IDsuc;
+	}
+
+	public void setIDsuc(boolean iDsuc) {
+		IDsuc = iDsuc;
+	}
 
 	public int getTypee() {
 		return typee;
@@ -223,6 +232,14 @@ public class Message implements java.io.Serializable {
 
 	public void setOpState(boolean opState) {
 		this.opState = opState;
+	}
+
+	public User getConsumer() {
+		return consumer;
+	}
+
+	public void setConsumer(User consumer) {
+		this.consumer = consumer;
 	}
 	
 }

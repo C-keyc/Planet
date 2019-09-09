@@ -47,14 +47,14 @@ public class LibraryWorker_manageFrm extends JFrame {
 		this.owner = user;
 		LibraryWorkerMgr.add(user.getUserID(), this);
 		usrv.checkAllBook(owner);
-		initialize();
+		//initialize();
 
 	}
 
 	/**
 	 * 
 	 */
-	private void initialize() {
+	public void initialize() {
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(LibraryWorker_manageFrm.class.getResource("/image/logo.jpg")));
@@ -96,17 +96,19 @@ public class LibraryWorker_manageFrm extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int row = bookmanage.getSelectedRow();
 				DefaultTableModel model = (DefaultTableModel) bookmanage.getModel();
-				String id = data[row][0].toString();
-				System.out.print(id);
-				if (row != -1) {
+				
+				//System.out.print(id);
+				
+				if (row !=-1) {
+					String id = data[row][0].toString();
 					model.removeRow(row);
 					usrv.deleteBook(owner, id);
 					JOptionPane.showMessageDialog(contentPane, "删除成功！", "删除结果", JOptionPane.PLAIN_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(contentPane, "请选择一行数据", "删除结果", JOptionPane.WARNING_MESSAGE);
 				}
+				else {
+				JOptionPane.showMessageDialog(contentPane, "请选择一行数据", "删除结果", JOptionPane.WARNING_MESSAGE);}}
 
-			}
+			
 		});
 		todelete.setBackground(new Color(245, 255, 250));
 		todelete.setFont(new Font("宋体", Font.PLAIN, 28));
@@ -115,18 +117,19 @@ public class LibraryWorker_manageFrm extends JFrame {
 
 		JButton btnSearch = new JButton("\u67E5\u8BE2\u4E66\u7C4D");
 		
-		// btnSearch.addActionListener(new ActionListener() { 
-			// public void actionPerformed(ActionEvent e) { 
-				// LibraryReader_searchFrm windows=new LibraryReader_searchFrm(owner);
-				 //windows.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				// windows.setVisible(true); 
-				//}
-		//});
+		 btnSearch.addActionListener(new ActionListener() { 
+			 public void actionPerformed(ActionEvent e) { 
+				 LibraryReader_searchFrm windows=new LibraryReader_searchFrm(owner);
+				 windows.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				 windows.setVisible(true); 
+				}
+		});
 		 
 		btnSearch.setFont(new Font("宋体", Font.PLAIN, 28));
 		btnSearch.setBackground(new Color(245, 255, 250));
 		btnSearch.setBounds(547, 446, 179, 68);
 		contentPane.add(btnSearch);
+		repaint();
 	}
 
 	public Object[][] getTableData(List<Book> bklist) {

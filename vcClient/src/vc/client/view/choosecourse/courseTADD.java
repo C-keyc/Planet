@@ -2,13 +2,13 @@ package vc.client.view.choosecourse;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import vc.client.bz.impl.UserSrvImpl;
-import vc.client.view.WkManageMgr;
 import vc.list.common.Course;
 import vc.list.common.Message;
 import vc.list.common.User;
@@ -67,20 +67,24 @@ public courseTADD(User user) {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setFont(new Font("仿宋", Font.PLAIN, 18));
 		JLabel lblid_courseID = new JLabel("\u8BFE\u7A0BID");
+		lblid_courseID.setFont(new Font("楷体", Font.PLAIN, 20));
 		lblid_courseID.setBounds(52, 28, 81, 21);
 		contentPane.add(lblid_courseID);
 		
 		JLabel label_coursename = new JLabel("\u8BFE\u7A0B\u540D\u79F0");
+		label_coursename.setFont(new Font("楷体", Font.PLAIN, 20));
 		label_coursename.setBounds(52, 80, 81, 21);
 		contentPane.add(label_coursename);
 		
 		JLabel label_courseteacher = new JLabel("\u4EFB\u8BFE\u6559\u5E08");
+		label_courseteacher.setFont(new Font("楷体", Font.PLAIN, 20));
 		label_courseteacher.setBounds(52, 128, 81, 21);
 		contentPane.add(label_courseteacher);
 		
 		JLabel label_coursetime = new JLabel("\u4E0A\u8BFE\u65F6\u95F4");
+		label_coursetime.setFont(new Font("楷体", Font.PLAIN, 20));
 		label_coursetime.setBounds(52, 183, 81, 21);
 		contentPane.add(label_coursetime);
 		
@@ -105,6 +109,7 @@ public courseTADD(User user) {
 		textField_coursetime.setColumns(10);
 		
 		JButton button_addcourse = new JButton("\u6DFB\u52A0\u8BFE\u7A0B");
+		button_addcourse.setFont(new Font("楷体", Font.PLAIN, 20));
 		button_addcourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Course mycourse = new Course();
@@ -123,16 +128,17 @@ public courseTADD(User user) {
 				//JOptionPane.showMessageDialog(contentPane, "添加成功.", "添加结果",JOptionPane.PLAIN_MESSAGE); 
 			}
 		});
-		button_addcourse.setBounds(301, 286, 123, 29);
+		button_addcourse.setBounds(208, 286, 123, 29);
 		contentPane.add(button_addcourse);
 		
 		JButton button_quit = new JButton("\u9000\u51FA");
+		button_quit.setFont(new Font("楷体", Font.PLAIN, 20));
 		button_quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		button_quit.setBounds(439, 286, 123, 29);
+		button_quit.setBounds(381, 286, 123, 29);
 		contentPane.add(button_quit);
 	}
 

@@ -13,7 +13,7 @@ public interface StudentDao {
 	
 	List<Student> getAllStudents();//返回所有学生
 	
-	boolean InsertStudent(Student student);//添加学生学籍信息
+	int InsertStudent(Student student);//添加学生学籍信息
 	boolean DeleteStudent(Student student);//删除学生学籍信息
 	
 	boolean UpdateStudentName(Student student);//修改学生姓名

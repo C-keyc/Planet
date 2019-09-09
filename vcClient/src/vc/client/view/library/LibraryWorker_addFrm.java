@@ -42,6 +42,7 @@ public class LibraryWorker_addFrm extends JFrame {
 
 	public LibraryWorker_addFrm(User u) {
 		this.owner = u;
+		LibraryWorkerAddMgr.add(owner.getUserID(), this);
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryWorker_addFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,15 +98,11 @@ public class LibraryWorker_addFrm extends JFrame {
 				String num = booknumber.getText().trim();
 				Book bk = new Book(id,name,writer,pub,num);
 				LibraryWorker_manageFrm libraryWorker_manageFrm = LibraryWorkerMgr.get(owner.getUserID());
-				libraryWorker_manageFrm.getBklist().add(bk);
-				libraryWorker_manageFrm.refresh();
 				usrv.addBook(owner,bk);
-				if(true) {
-					JOptionPane.showMessageDialog(contentPane, "添加成功.", "添加结果",JOptionPane.PLAIN_MESSAGE); 
-					dispose();
-				}else {
-					JOptionPane.showMessageDialog(contentPane, "添加失败！", "添加结果",JOptionPane.YES_OPTION); 
-				}
+				//usrv.checkAllBook(owner);
+				dispose();
+				
+				
 			}
 		});
 		btnNewButton.setBackground(new Color(245, 255, 250));

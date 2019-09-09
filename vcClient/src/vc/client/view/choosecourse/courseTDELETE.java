@@ -1,7 +1,7 @@
 package vc.client.view.choosecourse;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -64,8 +64,9 @@ private void initialize() {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setFont(new Font("·ÂËÎ", Font.PLAIN, 18));
 		JLabel lblid_courseID = new JLabel("\u8BFE\u7A0BID");
+		lblid_courseID.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		lblid_courseID.setBounds(38, 53, 81, 21);
 		contentPane.add(lblid_courseID);
 		
@@ -75,6 +76,7 @@ private void initialize() {
 		textField_courseID.setColumns(10);
 		
 		JButton button_deletecourse = new JButton("\u53D6\u6D88\u6388\u8BFE");
+		button_deletecourse.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		button_deletecourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String  deletecourseID = textField_courseID .getText().trim();
@@ -92,6 +94,7 @@ private void initialize() {
 		contentPane.add(button_deletecourse);
 		
 		JButton button_quit = new JButton("\u9000\u51FA");
+		button_quit.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		button_quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

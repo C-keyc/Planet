@@ -14,12 +14,11 @@ import vc.server.db.AccessUtil;
 public class CourseDao_lmp implements CourseDao {
 
 	private static final String SQL_Course_QUERYID ="SELECT * FROM Course WHERE courseID=?";
-	private static final String SQL_Course_QUERYTEACHER ="SELECT * FROM Course WHERE courseTeacher=?";
 	private static final String SQL_Course_INSERT = "INSERT INTO Course VALUES(?,?,?,?)";
 	private static final String SQL_Course_DELETE = "DELETE FROM Course WHERE courseID=?";
 	private static final String SQL_Course_GETALLCOURSE = "SELECT * FROM Course";
-	private static final String SQL_CourseOwner_INSERT = "INSERT INTO CourseOwner VALUES(ID,?,?)";
-	private static final String SQL_CourseOwner_DELETE = "DELETE FROM CourseOwner WHERE ownerID=?";
+	private static final String SQL_CourseOwner_INSERT = "INSERT INTO CourseOwner(ownerID,courseID) VALUES(?,?)";
+	private static final String SQL_CourseOwner_DELETE = "DELETE FROM CourseOwner WHERE ownerID=? AND courseID=?";
 	private static final String SQL_CourseOwner_QUERY_COURSEID="SELECT courseID FROM CourseOwner WHERE ownerID=?";
 	private static final String SQL_Course_QUERY_COURSENAME="SELECT * FROM Course WHERE courseTeacher=?";
 	
@@ -49,30 +48,6 @@ public class CourseDao_lmp implements CourseDao {
 		return null;
 	}
 
-	public Course QueryTeacher(String str) {
-		Connection conn = AccessUtil.getConnection();
-
-		PreparedStatement prepareStatement = null;
-		ResultSet result = null;
-		try {
-
-			prepareStatement = conn.prepareStatement(SQL_Course_QUERYTEACHER);
-			prepareStatement.setString(3, str);
-			result = prepareStatement.executeQuery();
-			while (result.next()) {
-				String id = result.getString("courseID");
-				String name = result.getString("courseName");
-				String teacher = result.getString("courseTeacher");
-				String time = result.getString("courseTime");
-				return new Course(id, name, teacher,time);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			AccessUtil.Close(conn, prepareStatement, result);
-		}
-		return null;
-	}
 	
 	@Override
 	public List<Course> getAllCourse() {
@@ -129,11 +104,12 @@ public class CourseDao_lmp implements CourseDao {
 		try {
 
 			prepareStatement = conn.prepareStatement(SQL_Course_QUERY_COURSENAME);
-			prepareStatement.setString(3, name);
+			prepareStatement.setString(1, name);
 			result = prepareStatement.executeQuery();
+			
 			while(result.next()){
-				String teacher=result.getString("courseTeacher");
-				course.add(QueryTeacher(teacher));
+				String IDDDD=result.getString("courseID");
+				course.add(QueryID(IDDDD));
 			}
 			return course;
 		} catch (Exception e) {
@@ -198,9 +174,8 @@ public class CourseDao_lmp implements CourseDao {
 		try {
 
 			prepareStatement = conn.prepareStatement(SQL_CourseOwner_DELETE);
-			// 执行sql语句 Query8 /，得到结果用result记录
 			prepareStatement.setString(1, courseowner.getOwnerID());
-			// 执行语句
+			prepareStatement.setString(2, courseowner.getCourseID());
 			result = prepareStatement.executeUpdate();
 			return result>0?true:false;
 			}

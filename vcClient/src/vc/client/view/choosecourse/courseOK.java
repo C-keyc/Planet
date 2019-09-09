@@ -2,6 +2,7 @@ package vc.client.view.choosecourse;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -45,9 +46,11 @@ public class courseOK extends JFrame {
 		
 		JLabel label = new JLabel("\u606D\u559C\u60A8\u64CD\u4F5C\u6210\u529F");
 		label.setBounds(126, 70, 274, 21);
+		label.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		contentPane.add(label);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

@@ -13,8 +13,10 @@ import vc.list.common.MessageType;
 import vc.list.common.User;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -24,7 +26,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
-public class ShopComsumer_depositFrm extends JFrame {
+public class ShopConsumer_depositFrm extends JFrame {
 	private JTextField depositmoney;
 
 
@@ -40,7 +42,7 @@ public class ShopComsumer_depositFrm extends JFrame {
 			public void run() {
 				try {
 					User u = new User();
-					ShopComsumer_depositFrm frame = new ShopComsumer_depositFrm(u);
+					ShopConsumer_depositFrm frame = new ShopConsumer_depositFrm(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +54,7 @@ public class ShopComsumer_depositFrm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShopComsumer_depositFrm(User user) {
+	public ShopConsumer_depositFrm(User user) {
 		setResizable(false);
 		this.owner = user;
 		
@@ -108,8 +110,16 @@ public class ShopComsumer_depositFrm extends JFrame {
 		JButton Deps = new JButton("\u5145\u503C");
 		Deps.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				String add = depositmoney.getText().trim();
+				if(add.length()<1)
+					JOptionPane.showMessageDialog(null, "请输入充值金额", "充值",JOptionPane.ERROR_MESSAGE);
+				else {
 				double Add = Double.parseDouble(add);
+				if(Add<=0)
+					JOptionPane.showMessageDialog(null, "请输入合法充值金额", "充值",JOptionPane.ERROR_MESSAGE);
+				else {
 				double account = Add + owner.getAccount();
 				owner.setAccount(account);
 				
@@ -123,6 +133,7 @@ public class ShopComsumer_depositFrm extends JFrame {
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}    }
 				}
 			}
 		});
@@ -133,11 +144,14 @@ public class ShopComsumer_depositFrm extends JFrame {
 		Deps.setBounds(127, 243, 105, 45);
 		getContentPane().add(Deps);
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopComsumer_depositFrm.class.getResource("/image/logo.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopConsumer_depositFrm.class.getResource("/image/logo.jpg")));
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 390, 342);
 		
-		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 }

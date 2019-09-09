@@ -9,7 +9,8 @@ public class Goods implements java.io.Serializable{
 	private String GoodsID;//key 货号（加入新货物时会自动升序排序
 	private String GoodsName;//货物名称
 	private double GoodsPrice;//货物价格
-	
+	private int consumerNum;
+	private int repertory;
 	
 	
 
@@ -19,11 +20,13 @@ public class Goods implements java.io.Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Goods(String goodsID, String goodsName, int goodsPrice) {
+	public Goods(String goodsID, String goodsName, double goodsPrice, int repe ,int num) {
 		super();
 		GoodsID = goodsID;
 		GoodsName = goodsName;
 		GoodsPrice = goodsPrice;
+		repertory = repe;
+		consumerNum = num;
 	}
 
 	public String getGoodsID() {
@@ -53,6 +56,22 @@ public class Goods implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Goods [GoodsID=" + GoodsID + ", GoodsName=" + GoodsName + ", GoodsPrice=" + GoodsPrice + "]";
+	}
+
+	public int getConsumerNum() {
+		return consumerNum;
+	}
+
+	public void setConsumerNum(int consumerNum) {
+		this.consumerNum = consumerNum;
+	}
+
+	public int getRepertory() {
+		return repertory;
+	}
+
+	public void setRepertory(int repertory) {
+		this.repertory = repertory;
 	}
 	
 	

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -63,6 +64,11 @@ public class LibraryReader_searchNotresultFrm extends JFrame {
 				dispose();
 			}
 		});
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 
 	}

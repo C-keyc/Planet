@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import vc.client.bz.impl.UserSrvImpl;
-
+import vc.client.view.library.LibraryReader_checkrecordFrm;
 import vc.client.view.library.LibraryReader_mainFrm;
 
 
@@ -41,7 +41,7 @@ public class Menu extends JFrame {
 	 * Launch the application.
 	 */
 	private User owner; // 该界面的用户
-	private UserSrvImpl us; // 用户服务对象
+	private UserSrvImpl us=new UserSrvImpl(); // 用户服务对象
 	
 	
 
@@ -91,17 +91,29 @@ public class Menu extends JFrame {
 		JButton btnChangePassword = new JButton("\u4FEE\u6539\u5BC6\u7801");
 		btnChangePassword.setBounds(560, 25, 97, 23);
 		contentPane.add(btnChangePassword);
+		btnChangePassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Changepassword changepassword = new Changepassword(owner);
+				changepassword.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				changepassword.setVisible(true);
+			}
+		});
 		
 		JButton btnExit = new JButton("\u9000\u51FA\u767B\u5F55");
 		btnExit.setBounds(676, 25, 97, 23);
 		contentPane.add(btnExit);
-		
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				us.logout(owner);
+				dispose();
+			}
+		});
 		JButton btnMessageRoll = new JButton("\u5B66\u7C4D\u7BA1\u7406");
 		btnMessageRoll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnMessageRoll.setBounds(46, 125, 108, 30);
+		btnMessageRoll.setBounds(56, 125, 90, 30);
 		contentPane.add(btnMessageRoll);
 		btnMessageRoll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,7 +125,7 @@ public class Menu extends JFrame {
 		
 		
 		JButton btnChooseCourse = new JButton("\u9009\u8BFE\u7CFB\u7EDF");
-		btnChooseCourse.setBounds(607, 153, 108, 30);
+		btnChooseCourse.setBounds(615, 153, 90, 30);
 		contentPane.add(btnChooseCourse);
 		btnChooseCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,19 +144,18 @@ public class Menu extends JFrame {
 		btnLibrary.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(owner.getType()==1|owner.getType()==2) {
-				LibraryReader_mainFrm LibraryReader_mainFrm=new LibraryReader_mainFrm(owner);
-				LibraryReader_mainFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				LibraryReader_mainFrm.setVisible(true);
+				if(owner.getType()==1||owner.getType()==2) {
+						LibraryReader_checkrecordFrm windowc=new LibraryReader_checkrecordFrm(owner);
+						windowc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 				}else {
 					LibraryWorker_manageFrm libraryWorker = new LibraryWorker_manageFrm(owner);
 					libraryWorker.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					libraryWorker.setVisible(true);
+					
 				}
-			
 			}
 		});
-		btnLibrary.setBounds(105, 414, 108, 30);
+		btnLibrary.setBounds(116, 413, 90, 30);
 		contentPane.add(btnLibrary);
 		
 		
@@ -152,22 +163,18 @@ public class Menu extends JFrame {
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(owner.getType()==1|owner.getType()==2) {
-					ShopComsumer_welcomeFrm Consumer = new ShopComsumer_welcomeFrm(owner);
+					ShopConsumer_welcomeFrm Consumer = new ShopConsumer_welcomeFrm(owner);
 					Consumer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					Consumer.setVisible(true);
 				}else {
-					if(WkManageMgr.get(owner.getUserID())!=null) {
-						WkManageMgr.get(owner.getUserID()).frame.setVisible(true);
-					}else {
-				WkManage wk_manage = new WkManage(owner);				
-				wk_manage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				wk_manage.frame.setVisible(true);
-					}
+					ShopWorker_mainFrm manager = new ShopWorker_mainFrm(owner);
+					manager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					manager.frame.setVisible(true);
 				}
 
 			}
 		});
-		btnShop.setBounds(547, 473, 108, 30);
+		btnShop.setBounds(555, 473, 90, 30);
 		contentPane.add(btnShop);
 		
 		JLabel lblBackground = new JLabel("New label");

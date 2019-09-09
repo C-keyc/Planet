@@ -19,10 +19,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import vc.client.view.ShopComsumer_welcomeFrm;
+import vc.client.view.ShopConsumer_welcomeFrm;
 import vc.list.common.User;
 
-public class ShopComsumer_checkremainingFrm extends JFrame {
+public class ShopConsumer_checkremainingFrm extends JFrame {
 
 	/**
 	 * 
@@ -38,7 +38,7 @@ public class ShopComsumer_checkremainingFrm extends JFrame {
 	 */
 	
 	private User owner ; 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -50,18 +50,18 @@ public class ShopComsumer_checkremainingFrm extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ShopComsumer_checkremainingFrm(User user) {
+	public ShopConsumer_checkremainingFrm(User user) {
 		setResizable(false);
 		this.owner = user;
 		
 		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopComsumer_checkremainingFrm.class.getResource("/image/logo.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopConsumer_checkremainingFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 594, 428);
 		contentPane = new JPanel();
@@ -88,14 +88,11 @@ public class ShopComsumer_checkremainingFrm extends JFrame {
 		table.setRowHeight(30);
 		JTableHeader tableHeader = table.getTableHeader();
 		tableHeader.setPreferredSize(new Dimension(tableHeader.getWidth(),(30)));
-		/*
-		 * ok = new JButton("\u786E  \u5B9A"); ok.addActionListener(new ActionListener()
-		 * { public void actionPerformed(ActionEvent e) {
-		 * 
-		 * } }); ok.setForeground(new Color(0, 0, 139)); ok.setBackground(new Color(176,
-		 * 196, 222)); ok.setFont(new Font("宋体", Font.PLAIN, 28)); ok.setBounds(208,
-		 * 261, 161, 59); contentPane.add(ok);
-		 */
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 
 }

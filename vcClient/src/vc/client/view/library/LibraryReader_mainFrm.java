@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 
-import vc.client.view.WkManageMgr;
+import vc.client.view.ShopWorker_manageMgr;
 
 
 import vc.list.common.User;
@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -113,6 +115,11 @@ public class LibraryReader_mainFrm extends JFrame {
 		tosearch.setFont(new Font("宋体", Font.PLAIN, 18));
 		tosearch.setBounds(499, 382, 170, 70);
 		contentPane.add(tosearch);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 
 }

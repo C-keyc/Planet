@@ -15,9 +15,7 @@ import vc.client.bz.impl.UserSrvImpl;
 import vc.client.bz.thread.ClientThreadSrvMgr;
 import vc.list.common.MessageType;
 import vc.list.common.User;
-import vc.client.view.WkCheckRpd;
 import vc.client.view.*;
-import vc.client.view.WkManageMgr;
 import vc.client.view.choosecourse.courseNOT;
 import vc.client.view.choosecourse.courseOK;
 import vc.client.view.choosecourse.courseSCheck;
@@ -81,22 +79,32 @@ public class ClientThreadSrv extends Thread {
 		String msgType = msg.getType();
 		User sender = msg.getSender();
 		
+
+		
 		if (msgType.equals(MessageType.CMD_CHECK_GOODS)) {
-			
-			Goods gd = msg.getGd();
-			WkCheckRpd CheckRpd=new WkCheckRpd(gd);
-			CheckRpd.setVisible(true);
-			System.out.println("从服务端得到的信息:"+gd.getGoodsName()+gd.getGoodsPrice());
+			if(msg.isOpState()) {
+			ShopWorker_searchresultFrm CheckRpd=new ShopWorker_searchresultFrm(msg.getGd());
+			CheckRpd.setVisible(true);}
+			else
+				JOptionPane.showMessageDialog(null, "找不到货物", "查询",JOptionPane.ERROR_MESSAGE);
 		
 		}else if(msgType.equals(MessageType.CMD_QUERY_GOODS)) {
-			WkManage wk = WkManageMgr.get(sender.getUserID());			
-			wk.setGdlist(msg.getGdlist());			
+			ShopWorker_manageFrm wk = ShopWorker_manageMgr.get(sender.getUserID());			
+			wk.setGdlist(msg.getGdlist());
+			wk.refresh();
 		}else if(msgType.equals(MessageType.CMD_CHECK_ACCOUNT)){
-			ShopComsumer_checkremainingFrm consumerCheck= new ShopComsumer_checkremainingFrm(sender);
+			ShopConsumer_checkremainingFrm consumerCheck= new ShopConsumer_checkremainingFrm(sender);
 			consumerCheck.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			consumerCheck.setVisible(true);
 		}else if(msgType.equals(MessageType.CMD_ADD_GOODS)) {
-			WkManage wk = WkManageMgr.get(sender.getUserID());
+			/*
+			 * ShopWorker_manageFrm wk = ShopWorker_manageMgr.get(sender.getUserID());
+			 * if(msg.isIDsuc()==false) { JOptionPane.showMessageDialog(null, "商品货号重复", "",
+			 * JOptionPane.WARNING_MESSAGE); } else if(msg.getCMDsuc()==false) {
+			 * JOptionPane.showMessageDialog(null, "添加失败", "", JOptionPane.WARNING_MESSAGE);
+			 * }else { wk.setGdlist(msg.getGdlist()); wk.refresh();}
+			 */
+			ShopWorker_manageFrm wk = ShopWorker_manageMgr.get(sender.getUserID());
 			wk.setGdlist(msg.getGdlist());
 			wk.refresh();
 		}else if(msgType.equals(MessageType.CMD_DEPOSIT)) {
@@ -106,21 +114,39 @@ public class ClientThreadSrv extends Thread {
 				JOptionPane.showMessageDialog(null, "充值失败", "充值",JOptionPane.ERROR_MESSAGE);
 		}else if(msgType.equals(MessageType.CMD_DELETE_GOODS)) {
 			if(msg.isOpState()) {
-				WkManage wk = WkManageMgr.get(sender.getUserID());
+				ShopWorker_manageFrm wk = ShopWorker_manageMgr.get(sender.getUserID());
 				wk.setGdlist(msg.getGdlist());
 				wk.refresh();
 				JOptionPane.showMessageDialog(null, "删除成功", "删除商品",JOptionPane.PLAIN_MESSAGE);  
 			}
 			else
 				JOptionPane.showMessageDialog(null, "删除失败", "删除商品",JOptionPane.ERROR_MESSAGE);
-		} else if (msgType.equals(MessageType.DAT_LOGOUT)) {
-			
+		}else if(msgType.equals(MessageType.CMD_SCAN_GOODS)) {
+            Goods gd = msg.getGd();
+			ShopWorker_deductFrm deduct = ShopWorker_deductMgr.get(sender.getUserID());
+			deduct.addGdlist(gd);
+			deduct.refresh();
+		} else if(msgType.equals(MessageType.CMD_DEDUCT)) {
+			if(msg.getCMDsuc()) {
+			if(msg.isOpState()) {
+				ShopWorker_deductFrm deduct = ShopWorker_deductMgr.get(sender.getUserID());
+				deduct.setRemain(msg.getConsumer().getAccount());
+				JOptionPane.showMessageDialog(null, "消费成功", "消费",JOptionPane.PLAIN_MESSAGE);
+				deduct.clear();
+				ShopWorker_manageFrm wk = ShopWorker_manageMgr.get(sender.getUserID());
+				if(wk!=null) {
+				wk.setGdlist(msg.getGdlist());//
+				wk.refresh();}
+			}else {JOptionPane.showMessageDialog(null, "账户余额不足，请先充值！", "消费",JOptionPane.ERROR_MESSAGE);}}
+			else
+				JOptionPane.showMessageDialog(null, "消费密码错误！", "消费",JOptionPane.ERROR_MESSAGE);
+            
+		}else if (msgType.equals(MessageType.CMD_LOGOUT)) {			
 				isOffline = true;					
-				// 从管理池中移除
 				ClientThreadSrvMgr.remove(this.owner.getUserID());
-				// 释放Socket资源
 				socket.close();
 		}
+		
 		
 		else  if(msgType.equals(MessageType.CMD_QUERY_COURSEID)){
 			Course course=msg.getCourse();
@@ -207,14 +233,20 @@ public class ClientThreadSrv extends Thread {
 				ok.setVisible(true);
 	}
 		
+//		else  if(msgType.equals(MessageType.CMD_SHOW_COURSE))
+//		{
+//          List<Course> cslist=msg.getCslist();
+//          courseStudent student = courseStudentMgr.get(sender.getUserID());
+//	     student.passcslist(cslist);
+//	     student.refresh();
+//	     //student.initialize();
+//	     //student.repaint();
+//	}
+		
 		else  if(msgType.equals(MessageType.CMD_SHOW_COURSE))
 		{
           List<Course> cslist=msg.getCslist();
-          courseStudent student = courseStudentMgr.get(sender.getUserID());
-	     student.passcslist(cslist);
-	     student.refresh();
-	     //student.initialize();
-	     //student.repaint();
+	     courseStudent.passcslist(cslist);
 	}
 		
 		else  if(msgType.equals(MessageType.CMD_SHOWSTUDENT_COURSE))
@@ -235,8 +267,11 @@ public class ClientThreadSrv extends Thread {
 	}
 		
 		else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
-			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());			
-			lbr.setBkrlist(msg.getBkrlist());			
+			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
+			lbr.setBkrlist(msg.getBkrlist());
+			lbr.initialize();
+			if(!lbr.isVisible())
+				lbr.setVisible(true);
 		}		
 		else if(msgType.equals(MessageType.CMD_GETALLSTUDENT)) {
 			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
@@ -259,14 +294,24 @@ public class ClientThreadSrv extends Thread {
 		}
 		else if(msgType.equals(MessageType.CMD_INSERT_STUDENT)) {
 			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
-			if(msg.getCMDsuc())
-				JOptionPane.showMessageDialog(MR_mF.getPanel(), "添加成功", "", JOptionPane.INFORMATION_MESSAGE);
-			else 
-				JOptionPane.showMessageDialog(MR_mF.getPanel(), "添加失败", "", JOptionPane.WARNING_MESSAGE);
+			if(msg.isIDsuc()==false)
+				{JOptionPane.showMessageDialog(MR_mF.getPanel(), "一卡通号重复", "", JOptionPane.WARNING_MESSAGE);}
+				//JOptionPane.showMessageDialog(MR_mF.getPanel(), "添加成功", "", JOptionPane.INFORMATION_MESSAGE);
+			else if(msg.getCMDsuc()==false)
+				{JOptionPane.showMessageDialog(MR_mF.getPanel(), "添加失败", "", JOptionPane.WARNING_MESSAGE);}
+			else {
 			MR_mF.setStList(msg.getStudentList());
 			MR_mF.initialize();
 			if(!MR_mF.isVisible())
-				MR_mF.setVisible(true);
+				MR_mF.setVisible(true);}
+			/*
+			 * MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
+			 * if(msg.getCMDsuc()) JOptionPane.showMessageDialog(MR_mF.getPanel(), "添加成功",
+			 * "", JOptionPane.INFORMATION_MESSAGE); else
+			 * JOptionPane.showMessageDialog(MR_mF.getPanel(), "添加失败", "",
+			 * JOptionPane.WARNING_MESSAGE); MR_mF.setStList(msg.getStudentList());
+			 * MR_mF.initialize(); if(!MR_mF.isVisible()) MR_mF.setVisible(true);
+			 */
 		}
 		else if(msgType.equals(MessageType.CMD_DELETE_STUDENT)) {
 			MessageRoll_mainFrm MR_mF = MessageRoll_mainMgr.get(sender.getUserID());
@@ -296,10 +341,6 @@ public class ClientThreadSrv extends Thread {
 					if(!MR_mF.isVisible())
 				MR_mF.setVisible(true);}
 			
-		}else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
-			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
-			lbr.setBkrlist(msg.getBkrlist());
-			
 		}else if(msgType.equals(MessageType.CMD_QUERY_BOOKID)) {
 			
 			Book bk = msg.getBk();
@@ -310,9 +351,9 @@ public class ClientThreadSrv extends Thread {
 
 		}else if(msgType.equals(MessageType.CMD_QUERY_BOOKNAME)) {
 			
-			Book bk = msg.getBk();
+			List<Book> bklist = msg.getBklist();
 			
-			LibraryReader_searchresultFrm windowsr = new LibraryReader_searchresultFrm(owner,bk);
+			LibraryReader_searchbywriterFrm windowsr = new LibraryReader_searchbywriterFrm(owner,bklist);
 			windowsr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			windowsr.setVisible(true);
 			
@@ -324,14 +365,37 @@ public class ClientThreadSrv extends Thread {
 		}else if(msgType.equals(MessageType.CMD_CHECK_ALLBOOK)) {
 			LibraryWorker_manageFrm libraryWorker_manageFrm = LibraryWorkerMgr.get(sender.getUserID());
 			libraryWorker_manageFrm.setBklist(msg.getBklist());
+			libraryWorker_manageFrm.initialize();
+			libraryWorker_manageFrm.setVisible(true);
 		}else if(msgType.equals(MessageType.CMD_NOTFIND_BOOK)) {
-			LibraryReader_searchNotresultFrm libraryReader_searchNotresultFrm = new LibraryReader_searchNotresultFrm(owner);
-			libraryReader_searchNotresultFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			libraryReader_searchNotresultFrm.setVisible(true);
+			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
+			JOptionPane.showMessageDialog(lbr, "抱歉，未找到搜索结果", "", JOptionPane.WARNING_MESSAGE);
 		}else if(msgType.equals(MessageType.CMD_QUERY_SEAT)) {
 			LibraryReader_reservationFrm libraryReader_reservationFrm = LibraryReaderReservationMgr.get(sender.getUserID());
 			String num = msg.getSeat().getSeatNum();
 			libraryReader_reservationFrm.setNum(num);
+			libraryReader_reservationFrm.updatetext();
+		}else if(msgType.equals(MessageType.CMD_ADD_BOOK)) {
+			LibraryWorker_addFrm libraryWorker_addFrm = LibraryWorkerAddMgr.get(sender.getUserID());
+			if(msg.isIDsuc()==false) {
+				JOptionPane.showMessageDialog(libraryWorker_addFrm, "书籍编号重复", "", JOptionPane.WARNING_MESSAGE);
+			}
+			else if(msg.getCMDsuc()==false) {
+				JOptionPane.showMessageDialog(libraryWorker_addFrm, "添加失败", "", JOptionPane.WARNING_MESSAGE);
+			}else {
+				JOptionPane.showMessageDialog(libraryWorker_addFrm, "添加成功", "", JOptionPane.INFORMATION_MESSAGE);
+				
+				LibraryWorker_manageFrm libraryWorker_manageFrm = LibraryWorkerMgr.get(sender.getUserID());
+				libraryWorker_manageFrm.setBklist(msg.getBklist());
+				libraryWorker_manageFrm.refresh();
+				
+			}
+					
+		}else if(msgType.equals(MessageType.CMD_CHANGE_PASSWORD)) {
+			
+			JOptionPane.showMessageDialog(null, "修改成功！", "", JOptionPane.INFORMATION_MESSAGE);
+		}else if(msgType.equals(MessageType.CMD_CHANGE_PASSWORDFAILED)) {
+			JOptionPane.showMessageDialog(null, "修改失败！", "", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		else {

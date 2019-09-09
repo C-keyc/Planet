@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JPasswordField;
 
 public class Login extends JFrame implements ActionListener{
 
@@ -34,7 +35,7 @@ public class Login extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1062638932603106181L;
 	private JPanel contentPane;
 	private JTextField textId;
-	private JTextField textPassword;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -68,13 +69,15 @@ public class Login extends JFrame implements ActionListener{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblId = new JLabel("\u7528\u6237\u540D\uFF1A");
-		lblId.setBounds(62, 100, 70, 20);
+		JLabel lblId = new JLabel("");
+		lblId.setIcon(new ImageIcon("C:\\Users\\Key\\Desktop\\\u7528\u6237\u540D1.png"));
+		lblId.setBounds(100, 100, 20, 20);
 		lblId.setFont(new Font("свт╡", Font.BOLD, 16));
 		contentPane.add(lblId);
 		
-		JLabel lblPassword = new JLabel("\u5BC6\u7801\uFF1A");
-		lblPassword.setBounds(77, 139, 60, 20);
+		JLabel lblPassword = new JLabel("");
+		lblPassword.setIcon(new ImageIcon("C:\\Users\\Key\\Desktop\\\u5BC6\u78011.png"));
+		lblPassword.setBounds(100, 140, 20, 20);
 		lblPassword.setFont(new Font("свт╡", Font.BOLD, 16));
 		contentPane.add(lblPassword);
 		
@@ -82,11 +85,6 @@ public class Login extends JFrame implements ActionListener{
 		textId.setBounds(130, 100, 180, 20);
 		contentPane.add(textId);
 		textId.setColumns(10);
-		
-		textPassword = new JTextField();
-		textPassword.setBounds(130, 140, 180, 20);
-		contentPane.add(textPassword);
-		textPassword.setColumns(10);
 		
 		JButton btnLogin = new JButton("\u767B\u5F55");
 		btnLogin.addActionListener(this);
@@ -103,6 +101,10 @@ public class Login extends JFrame implements ActionListener{
 			}
 		});
 		contentPane.add(btnForget);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(130, 140, 180, 20);
+		contentPane.add(passwordField);
 		
 		JLabel lblBackground = new JLabel("picture");
 		lblBackground.setIcon(new ImageIcon(Login.class.getResource("/image/LoginBG.jpg")));
@@ -121,7 +123,7 @@ public class Login extends JFrame implements ActionListener{
 
 		
 		String UserID = textId.getText().trim();
-		String UserPass =textPassword.getText().trim();
+		String UserPass =passwordField.getText().trim();
 		User user = new User(UserID,UserPass);
 		User retUser = null;
 		try {

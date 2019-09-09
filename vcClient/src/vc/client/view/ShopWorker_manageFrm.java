@@ -30,7 +30,7 @@ import vc.list.common.User;
 
 import javax.swing.JScrollPane;
 
-public class WkManage extends JFrame{
+public class ShopWorker_manageFrm extends JFrame{
 
 	/**
 	 * 
@@ -53,7 +53,7 @@ public class WkManage extends JFrame{
 	  Runnable() { public void run() { 
 		  try { 
 			  User u = new User();
-			  WkManage window = new WkManage(u);
+			  ShopWorker_manageFrm window = new ShopWorker_manageFrm(u);
 	  window.frame.setVisible(true);
 	  } catch (Exception e) { e.printStackTrace(); }
 	  } }); }
@@ -62,22 +62,20 @@ public class WkManage extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public WkManage(User user) {
+	public ShopWorker_manageFrm(User user) {
 		setResizable(false);
-		this.owner=user;
-		
-		WkManageMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
-		
-		queryGoods();
-		
+		this.owner=user;		
+		ShopWorker_manageMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
 		initialize();
+		queryGoods();
 
-		
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
 	private void initialize() {
 		
 	
@@ -85,15 +83,15 @@ public class WkManage extends JFrame{
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(240, 255, 240));
 		frame.setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		//frame.setIconImage(Toolkit.getDefaultToolkit().getImage(WkManage.class.getResource("/image/logo.jpg")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(ShopWorker_manageFrm.class.getResource("/image/logo.jpg")));
 		frame.setBounds(100, 100, 800, 600);		
 		
 		JButton btnManage = new JButton("\u67E5\u8BE2\u5546\u54C1");
-		btnManage.setBounds(80, 400, 160, 50);
+		btnManage.setBounds(87, 400, 160, 50);
 		btnManage.setFont(new Font("宋体", Font.PLAIN, 26));
 		btnManage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WkCheck wk_Check = new WkCheck(owner);
+				ShopWorker_searchFrm wk_Check = new ShopWorker_searchFrm(owner);
 				wk_Check .setVisible(true);
 			}
 		});
@@ -101,7 +99,7 @@ public class WkManage extends JFrame{
 		frame.getContentPane().add(btnManage);
 		
 		JButton btnAdd = new JButton("\u589E\u52A0\u5546\u54C1");
-		btnAdd.setBounds(320, 400, 160, 50);
+		btnAdd.setBounds(322, 400, 160, 50);
 		btnAdd.setFont(new Font("宋体", Font.PLAIN, 26));
 		frame.getContentPane().add(btnAdd);
 		btnAdd.addActionListener(new ActionListener() {
@@ -109,7 +107,7 @@ public class WkManage extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				WkAdd wk_Add = new WkAdd(owner);
+				ShopWorker_addFrm wk_Add = new ShopWorker_addFrm(owner,gdlist);
 				wk_Add.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				wk_Add.setVisible(true);
 			}
@@ -127,8 +125,9 @@ public class WkManage extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 
 				int row = table.getSelectedRow();
-				String id = data[row][0].toString();				
+			
 				if (row != -1) {
+					String id = data[row][0].toString();	
 					Goods gd = new Goods();
 					gd.setGoodsID(id);
 					Message m = new Message();
@@ -160,28 +159,26 @@ public class WkManage extends JFrame{
 		
 		
 		//初始化列表里的二维数组
-		data = getTableData(gdlist);
 		table.setModel(new DefaultTableModel(
-			data,
+			new Object[][] {
+				{null, null, null, null},
+			},
 			new String[] {
-				"\u5546\u54C1\u7801", "\u5546\u54C1", "\u4EF7\u683C"
+				"\u5546\u54C1\u7801", "\u5546\u54C1", "\u4EF7\u683C", "\u5E93\u5B58"
 			}
-			
 		)	);
 		table.setRowHeight(30);
 		JTableHeader tableHeader = table.getTableHeader();
 		tableHeader.setPreferredSize(new Dimension(tableHeader.getWidth(),(30)));
-
-
 		
 	}
 	
 	public Object[][] getTableData(List<Goods> gdlist){
 		int GdNum = gdlist.size();
-		Object[][] data= new Object[GdNum][3];
+		Object[][] data= new Object[GdNum][4];
 		for(int i =0;i<GdNum;i++) 
 		{
-			for(int j=0;j<3;j++ ) 
+			for(int j=0;j<4;j++ ) 
 			{
 				switch(j)
 				{
@@ -194,6 +191,9 @@ public class WkManage extends JFrame{
 					case 2:
 						data[i][j]=gdlist.get(i).getGoodsPrice();
 						break;
+					case 3:
+						data[i][j]=gdlist.get(i).getRepertory();
+						break;
 				}
 			}
 		}
@@ -205,7 +205,7 @@ public class WkManage extends JFrame{
 		table.setModel(new DefaultTableModel(
 				data,
 				new String[] {
-					"\u5546\u54C1\u7801", "\u5546\u54C1", "\u4EF7\u683C"
+						"\u5546\u54C1\u7801", "\u5546\u54C1", "\u4EF7\u683C", "\u5E93\u5B58"
 				}
 			));
 	}
@@ -235,7 +235,4 @@ public class WkManage extends JFrame{
 	public void setGdlist(List<Goods> gdlist) {
 		this.gdlist = gdlist;
 	}
-	
-	
-	
 }

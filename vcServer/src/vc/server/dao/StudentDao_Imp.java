@@ -287,15 +287,13 @@ public class StudentDao_Imp implements StudentDao {
 	}
 
 	@Override
-	public boolean InsertStudent(Student student) {
+	public int InsertStudent(Student student) {
 		Connection conn = AccessUtil.getConnection();
-
 		PreparedStatement prepareStatement = null;
 		int result = -1;
-		try {
-
+		if(QueryID(student.getStudentID())==null)
+		{try {
 			prepareStatement = conn.prepareStatement(SQL_STUDENT_INSERT);
-			// 执行SQL语句，得到结果用result记录
 			prepareStatement.setString(10, student.getStudentName());
 			prepareStatement.setString(1, student.getStudentID());
 			prepareStatement.setString(2, student.getStudentNum());
@@ -306,16 +304,15 @@ public class StudentDao_Imp implements StudentDao {
 			prepareStatement.setString(7, student.getStudentLength());
 			prepareStatement.setString(8, student.getStudentRe());
 			prepareStatement.setString(9, student.getStudentinSchool());
-			// 执行语句
 			result = prepareStatement.executeUpdate();
-			return result>0?true:false;
+			return result;
 			}
 		    catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			AccessUtil.Close(conn, prepareStatement);
-		}
-		return false;
+		}}
+		return -2;
 	}
 
 	@Override

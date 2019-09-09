@@ -14,6 +14,8 @@ import vc.list.common.User;
 
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -24,11 +26,11 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
-public class ShopComsumer_welcomeFrm extends JFrame {
+public class ShopConsumer_welcomeFrm extends JFrame {
 
 	private JPanel contentPane;
-	public static ShopComsumer_checkremainingFrm windowc;
-	public static ShopComsumer_depositFrm windowd;
+	public static ShopConsumer_checkremainingFrm windowc;
+	public static ShopConsumer_depositFrm windowd;
 
 	/**
 	 * Launch the application.
@@ -42,7 +44,7 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 			public void run() {
 				try {
 					User u = new User();
-					ShopComsumer_welcomeFrm frame = new ShopComsumer_welcomeFrm(u);
+					ShopConsumer_welcomeFrm frame = new ShopConsumer_welcomeFrm(u);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,13 +56,13 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShopComsumer_welcomeFrm( User user) {
+	public ShopConsumer_welcomeFrm( User user) {
 		setResizable(false);
 		this.owner = user;
 		
 		setBackground(SystemColor.activeCaption);
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopComsumer_welcomeFrm.class.getResource("/image/logo.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopConsumer_welcomeFrm.class.getResource("/image/logo.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -102,7 +104,7 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 		JButton toDeposit = new JButton("\u5145   \u503C");
 		toDeposit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				windowd=new ShopComsumer_depositFrm(owner);
+				windowd=new ShopConsumer_depositFrm(owner);
 				windowd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				windowd.setVisible(true);
 			}
@@ -112,5 +114,10 @@ public class ShopComsumer_welcomeFrm extends JFrame {
 		toDeposit.setFont(new Font("宋体", Font.PLAIN, 28));
 		toDeposit.setBounds(493, 384, 156, 79);
 		contentPane.add(toDeposit);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 获取当前屏幕大小
+		Dimension frameSize = this.getSize();// 获取当前窗口大小
+		this.setLocation((screenSize.width - frameSize.width) / 2,
+				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 	}
 }

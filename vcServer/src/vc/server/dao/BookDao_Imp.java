@@ -3,6 +3,7 @@ package vc.server.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import vc.list.common.Book;
@@ -46,11 +47,12 @@ public class BookDao_Imp implements BookDao {
 	}
 
 	@Override
-	public Book QueryBookName(String name) {
+	public List<Book> QueryBookName(String name) {
 		Connection conn = AccessUtil.getConnection();
 
 		PreparedStatement prepareStatement = null;
 		ResultSet result = null;
+		List<Book> bk= new ArrayList<Book>();
 		try {
 
 			prepareStatement = conn.prepareStatement(SQL_BOOK_QUERYNAME);
@@ -64,8 +66,9 @@ public class BookDao_Imp implements BookDao {
 				String writer = result.getString("BookWriter");
 				String publish = result.getString("BookPublish");
 				String num = result.getString("BookNum");
-				return new Book(id,namee,writer,publish,num);
+				bk.add(new Book(id,namee,writer,publish,num));
 			}
+			return bk;
 	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,31 +151,31 @@ public class BookDao_Imp implements BookDao {
 		return null;
 	}
 
-	public boolean AddBook(Book bk) {
+	public int AddBook(Book bk) {
 		Connection conn = AccessUtil.getConnection();
 
 		PreparedStatement prepareStatement = null;
+		Book findedbook = QueryBookID(bk.getBookID());
+		if(findedbook==null) {
 		int result = -1;
 		try {
-
 			prepareStatement = conn.prepareStatement(SQL_BOOK_INSERT);
-			// 执行sql语句 Query8 /，得到结果用result记录
 			prepareStatement.setString(1, bk.getBookID());
 			prepareStatement.setString(2, bk.getBookName());
 			prepareStatement.setString(3, bk.getBookWriter());
 			prepareStatement.setString(4, bk.getBookPublish());
 			prepareStatement.setString(5, bk.getBookNum());
-			// 执行语句
 			result = prepareStatement.executeUpdate();
-			return result>0?true:false;
+			return result;
 			}
 		    catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			AccessUtil.Close(conn, prepareStatement);
 		}
-		return false;
-
+		}
+		return -2;
+		
 		
 	}
 

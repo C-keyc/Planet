@@ -17,6 +17,7 @@ public class User implements Serializable{
 	private int UserType;
 	private String UserName;
 	private double account;
+	private double consumer;
 	public double getAccount() {
 		return account;
 	}
@@ -41,6 +42,15 @@ public class User implements Serializable{
 		this.UserPassword = upass;
 		this.UserType = type;
 	}
+	
+	public User(String id, String password, int type, String name) {
+		super();
+		this.UserID = id;
+		this.UserPassword = password;
+		this.UserType = type;
+		this.UserName=name;
+	}
+
 	
 	public User(String uid, String upass,String uname, int type,double uaccount) {
 		super();
@@ -86,6 +96,14 @@ public class User implements Serializable{
 
 	public String toString() {
 		return "User [uname=" + UserID + ", upass=" + UserPassword + ", type=" + UserType + "]";
+	}
+
+	public double getConsumer() {
+		return consumer;
+	}
+
+	public void setConsumer(double consumer) {
+		this.consumer = consumer;
 	}
 	
 	

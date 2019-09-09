@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import vc.client.bz.impl.UserSrvImpl;
@@ -97,7 +98,7 @@ public class courseSCheck extends JFrame {
 	public void initialize() {
 		frame=new JFrame();
 		frame.setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u67E5\u770B\u6211\u7684\u8BFE\u8868");
-		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);;
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, 727, 478);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -117,18 +118,6 @@ public class courseSCheck extends JFrame {
 		tabledata=setTabledata( ccsListt);
 		table_checkstudentcourse.setRowHeight(30);
 		table_checkstudentcourse.setModel(new DefaultTableModel(
-			//new Object[][] {
-				/*{cslist.get(0).getCourseID(), cslist.get(0).getCourseName(), cslist.get(0).getCourseTeacher(),cslist.get(0).getCourseTime()},
-				{cslist.get(1).getCourseID(), cslist.get(1).getCourseName(), cslist.get(1).getCourseTeacher(),cslist.get(1).getCourseTime()},
-				{cslist.get(2).getCourseID(), cslist.get(2).getCourseName(), cslist.get(2).getCourseTeacher(),cslist.get(2).getCourseTime()},
-				{cslist.get(3).getCourseID(), cslist.get(3).getCourseName(), cslist.get(3).getCourseTeacher(),cslist.get(3).getCourseTime()},
-				{cslist.get(4).getCourseID(), cslist.get(4).getCourseName(), cslist.get(4).getCourseTeacher(),cslist.get(4).getCourseTime()},
-				{cslist.get(5).getCourseID(), cslist.get(5).getCourseName(), cslist.get(5).getCourseTeacher(),cslist.get(5).getCourseTime()},
-				{cslist.get(6).getCourseID(), cslist.get(6).getCourseName(), cslist.get(6).getCourseTeacher(),cslist.get(6).getCourseTime()},
-				{cslist.get(7).getCourseID(), cslist.get(7).getCourseName(), cslist.get(7).getCourseTeacher(),cslist.get(7).getCourseTime()},
-				{cslist.get(8).getCourseID(), cslist.get(8).getCourseName(), cslist.get(8).getCourseTeacher(),cslist.get(8).getCourseTime()},
-			*/
-			//},
 				tabledata,
 			new String[] {
 				"\u8BFE\u7A0BID", "\u8BFE\u7A0B\u540D\u79F0", "\u4EFB\u8BFE\u6559\u5E08", "\u4E0A\u8BFE\u65F6\u95F4"
@@ -136,6 +125,7 @@ public class courseSCheck extends JFrame {
 		));
 		
 		button = new JButton("\u9000\u51FA");
+		button.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();

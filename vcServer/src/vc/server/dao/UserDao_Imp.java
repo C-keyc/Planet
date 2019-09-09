@@ -11,7 +11,7 @@ import vc.server.db.AccessUtil;
 public class UserDao_Imp implements UserDao {
 	public static final String SQL_USER_LOGIN = "SELECT * FROM User WHERE UserID=? AND UserPassword=?";
 	private static final String SQL_ACCOUNT_UPDATE = "UPDATE User SET UserAccount=? WHERE UserID=?" ;
-
+	private static final String SQL_REVISE_PASSWORD = "UPDATE User SET UserPassWord=? WHERE UserID=?";
 	@Override
 	public User Login(User user) {
 		Connection conn = AccessUtil.getConnection();
@@ -56,6 +56,25 @@ public class UserDao_Imp implements UserDao {
 			prepareStatement.setString(2, user.getUserID());
 			// Ö´ÐÐÓï¾ä
 			result = prepareStatement.executeUpdate();
+			return result>0?true:false;
+			}
+		    catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			AccessUtil.Close(conn, prepareStatement);
+		}
+		return false;
+	}
+	
+	public boolean RevisePassWord(User user) {
+		Connection conn = AccessUtil.getConnection();
+		PreparedStatement prepareStatement = null;
+		try {
+
+			prepareStatement = conn.prepareStatement(SQL_REVISE_PASSWORD);
+			prepareStatement.setString(1, user.getUpass());
+			prepareStatement.setString(2, user.getUserID());
+			int result = prepareStatement.executeUpdate();
 			return result>0?true:false;
 			}
 		    catch (Exception e) {

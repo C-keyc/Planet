@@ -18,12 +18,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
-public class WkCheck extends JFrame {
+public class ShopWorker_searchFrm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textItemId;
@@ -35,22 +37,24 @@ public class WkCheck extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { WkCheck frame = new WkCheck();
-	 * frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
-	 * }
-	 */
+	
+	  public static void main(String[] args) { EventQueue.invokeLater(new
+	  Runnable() { public void run() { try { 
+		  User u = new User();
+		  ShopWorker_searchFrm frame = new ShopWorker_searchFrm(u);
+	  frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
+	  }
+	 
 
 	/**
 	 * Create the frame.
 	 */
-	public WkCheck(User user) {
+	public ShopWorker_searchFrm(User user) {
 		setResizable(false);
 		this.owner=user;
 		
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5546\u5E97");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(WkCheck.class.getResource("/image/logo.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopWorker_searchFrm.class.getResource("/image/logo.jpg")));
 		
 		setBounds(100, 100, 390, 264);
 		contentPane = new JPanel();
@@ -85,6 +89,9 @@ public class WkCheck extends JFrame {
 				// TODO Auto-generated method stub
 				String id = textItemId.getText().trim();
                 gd.setGoodsID(id);
+                if(id.length()<1)
+                	JOptionPane.showMessageDialog(null, "请输入商品码！", "查询商品",JOptionPane.ERROR_MESSAGE);
+                else {
                 try {
 					usrv.ShopCheck(owner, gd);
 				} catch (IOException e) {
@@ -92,7 +99,7 @@ public class WkCheck extends JFrame {
 					e.printStackTrace();
 				}
                 dispose();
-			}
+			}}
 			
 		});
 	}

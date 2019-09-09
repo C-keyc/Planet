@@ -2,6 +2,7 @@ package vc.client.view.choosecourse;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -44,11 +45,13 @@ public class courseNOT extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblid = new JLabel("\u4E0D\u597D\u610F\u601D\uFF0C\u60A8\u8F93\u5165\u7684\u8BFE\u7A0BID\u6709\u8BEF\uFF0C\u8BF7\u91CD\u65B0\u8F93\u5165");
-		lblid.setBounds(37, 58, 360, 21);
+		JLabel lblid = new JLabel("\u60A8\u8F93\u5165\u7684\u8BFE\u7A0BID\u6709\u8BEF\uFF0C\u8BF7\u91CD\u65B0\u8F93\u5165");
+		lblid.setBounds(37, 74, 376, 29);
+		lblid.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		contentPane.add(lblid);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.setFont(new Font("¿¬Ìå", Font.PLAIN, 20));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

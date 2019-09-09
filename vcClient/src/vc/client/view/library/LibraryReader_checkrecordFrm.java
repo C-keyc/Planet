@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 
 
 import vc.client.bz.impl.UserSrvImpl;
-import vc.client.view.WkManageMgr;
 import vc.list.common.Book;
 import vc.list.common.BookRecord;
 import vc.list.common.Goods;
@@ -22,13 +21,18 @@ import vc.list.common.Message;
 import vc.list.common.User;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 public class LibraryReader_checkrecordFrm extends JFrame {
 
@@ -40,8 +44,10 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 	private JTable recordtable;
 	private UserSrvImpl usrv = new UserSrvImpl();
 	private User owner;
-	private List<BookRecord> bkrlist;
+	private List<BookRecord> bkrlist = new ArrayList<BookRecord>();
+	private JTextField textField;
 
+	private JComboBox<String> combobox= new JComboBox<>(); 
 
 
 	/**
@@ -59,18 +65,18 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		this.owner=user;		
 		LibraryReaderMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
 		CheckBook();
-		initialize();
+		//initialize();
 	}
 	
-	private void initialize() {
+	public void initialize() {
 
-		
+		setVisible(false);
 
 		setBackground(new Color(240, 255, 255));
 		setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u56FE\u4E66\u9986");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LibraryReader_checkrecordFrm.class.getResource("/image/logo.jpg")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 594, 428);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,7 +84,7 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		contentPane.setLayout(null);
 		
         JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(55, 70, 465, 209);
+		scrollPane.setBounds(60, 94, 650, 275);
 		contentPane.add(scrollPane);
 		
 		JTable recordtable = new JTable();
@@ -95,26 +101,71 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("\u4E00\u5361\u901A\u53F7\uFF1A");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
-		lblNewLabel.setBounds(14, 13, 106, 44);
+		lblNewLabel.setBounds(30, 20, 100, 30);
 		contentPane.add(lblNewLabel);
 		
 		JLabel eID = new JLabel(owner.getUserID());
 		eID.setFont(new Font("宋体", Font.PLAIN, 18));
-		eID.setBounds(108, 21, 177, 33);
+		eID.setBounds(115, 20, 160, 30);
 		contentPane.add(eID);
 		
-		JButton OK = new JButton("\u786E\u5B9A");
-		OK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(LibraryReader_mainFrm.windowc.isVisible())
-					LibraryReader_mainFrm.windowc.setVisible(false);
+		JButton btnReserve = new JButton("\u9884\u7EA6\u5EA7\u4F4D");
+		btnReserve.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LibraryReader_reservationFrm windowr = new LibraryReader_reservationFrm(owner);
+				windowr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				windowr.setVisible(true);
 			}
 		});
-		OK.setBackground(new Color(255, 255, 240));
-		OK.setFont(new Font("宋体", Font.PLAIN, 28));
-		OK.setBounds(217, 305, 113, 49);
-		contentPane.add(OK);
+		btnReserve.setFont(new Font("宋体", Font.PLAIN, 18));
+		btnReserve.setBounds(626, 17, 122, 37);
+		contentPane.add(btnReserve);
 		
+		
+		combobox.setBounds(60, 452, 113, 30);
+		combobox.insertItemAt("按书籍编号", 0);
+		combobox.insertItemAt("按书籍名称",1);
+		combobox.insertItemAt("按作者", 2);
+		combobox.setSelectedIndex(0);
+		contentPane.add(combobox);
+		
+		textField = new JTextField();
+		textField.setBounds(171, 452, 430, 30);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnSearch = new JButton("\u641C\u7D22");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+						String str = textField.getText().trim();
+						int selectedIndex = combobox.getSelectedIndex();
+						if(textField.getText().length()==0||textField.getText().equals("")) {
+							JOptionPane.showMessageDialog(contentPane, "请输入搜索内容！","提示",JOptionPane.WARNING_MESSAGE);
+						}else {
+						if(selectedIndex==0) {			
+							usrv.queryBookID(owner,str);
+							textField.setText("");
+						}
+						if(selectedIndex==1) {
+							usrv.queryBookName(owner,str);
+							textField.setText("");
+						}
+						 if(selectedIndex==2) {
+							usrv.queryBookWriter(owner,str);
+							textField.setText("");
+						}
+						}
+					}
+				});
+		btnSearch.setFont(new Font("黑体", Font.PLAIN, 16));
+		btnSearch.setBounds(630, 452, 80,30);
+		contentPane.add(btnSearch);
+		
+		JLabel lblNewLabel_1 = new JLabel("\u67E5\u8BE2\u4E66\u7C4D\uFF1A");
+		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(60, 410, 106, 18);
+		contentPane.add(lblNewLabel_1);
+		repaint();
 
 	}
 	public Object[][] getTableData(List<BookRecord> bkrlist)
@@ -175,6 +226,4 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 	public void setBkrlist(List<BookRecord> bkrlist) {
 		this.bkrlist = bkrlist;
 	}
-
-
 }

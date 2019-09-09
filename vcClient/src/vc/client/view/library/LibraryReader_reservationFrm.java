@@ -58,7 +58,7 @@ public class LibraryReader_reservationFrm extends JFrame {
 	public void setNum(String num) {
 		this.num = num;
 	}
-	private void updatetext() {
+	public void updatetext() {
 		//Num.getText();
 		Num.setText(num);
 	}
@@ -146,47 +146,14 @@ public class LibraryReader_reservationFrm extends JFrame {
 		group.add(today);
 		group.add(tomorrow);
 		group.add(thedayaftertomorrow);
-		
-		
-		JButton reserve = new JButton("\u9884  \u7EA6");
-		reserve.setBackground(new Color(245, 245, 245));
-		reserve.setForeground(new Color(176, 196, 222));
-		reserve.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DefaultButtonModel todaymodel=(DefaultButtonModel)today.getModel();
-				DefaultButtonModel tomorrowmodel=(DefaultButtonModel)tomorrow.getModel();
-				DefaultButtonModel htmodel=(DefaultButtonModel)thedayaftertomorrow.getModel();
-				
-				if(todaymodel.getGroup().isSelected(todaymodel)||tomorrowmodel.getGroup().isSelected(tomorrowmodel)
-						||htmodel.getGroup().isSelected(htmodel)) {
-					//已选择日期
-					if(true){
-						
-					JOptionPane.showMessageDialog(contentPane, "预约成功！","预约结果",JOptionPane.PLAIN_MESSAGE);
-					dispose();
-					
-				}else {
-					JOptionPane.showMessageDialog(contentPane, "预约失败！","预约结果",JOptionPane.YES_OPTION);
-				}
-					}
-				else {
-					JOptionPane.showMessageDialog(contentPane, "请选择日期","提示",JOptionPane.WARNING_MESSAGE );
-				}
-							
-			}
-		});
-		reserve.setFont(new Font("宋体", Font.PLAIN, 28));
-		reserve.setBounds(347, 285, 127, 54);
-		contentPane.add(reserve);
-		
 		JButton check = new JButton("\u67E5 \u8BE2");
-		check.setForeground(new Color(176, 196, 222));
+		//check.setForeground(new Color(176, 196, 222));
 		check.setFont(new Font("宋体", Font.PLAIN, 28));
-		check.setBackground(new Color(245, 245, 245));
+		//check.setBackground(new Color(245, 245, 245));
 		check.setBounds(101, 285, 127, 54);
 		contentPane.add(check);
 		check.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent d) {
 				DefaultButtonModel todaymodel=(DefaultButtonModel)today.getModel();
 				DefaultButtonModel tomorrowmodel=(DefaultButtonModel)tomorrow.getModel();
 				DefaultButtonModel htmodel=(DefaultButtonModel)thedayaftertomorrow.getModel();
@@ -224,6 +191,40 @@ public class LibraryReader_reservationFrm extends JFrame {
 			}
 			
 		});
+		
+		
+		JButton reserve = new JButton("\u9884  \u7EA6");
+		//reserve.setBackground(new Color(245, 245, 245));
+		//reserve.setForeground(new Color(176, 196, 222));
+		reserve.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultButtonModel todaymodel=(DefaultButtonModel)today.getModel();
+				DefaultButtonModel tomorrowmodel=(DefaultButtonModel)tomorrow.getModel();
+				DefaultButtonModel htmodel=(DefaultButtonModel)thedayaftertomorrow.getModel();
+				
+				if(todaymodel.getGroup().isSelected(todaymodel)||tomorrowmodel.getGroup().isSelected(tomorrowmodel)
+						||htmodel.getGroup().isSelected(htmodel)) {
+					//已选择日期
+					if(true){
+						
+					JOptionPane.showMessageDialog(contentPane, "预约成功！","预约结果",JOptionPane.PLAIN_MESSAGE);
+					dispose();
+					
+				}else {
+					JOptionPane.showMessageDialog(contentPane, "预约失败！","预约结果",JOptionPane.YES_OPTION);
+				}
+					}
+				else {
+					JOptionPane.showMessageDialog(contentPane, "请选择日期","提示",JOptionPane.WARNING_MESSAGE );
+				}
+							
+			}
+		});
+		reserve.setFont(new Font("宋体", Font.PLAIN, 28));
+		reserve.setBounds(347, 285, 127, 54);
+		contentPane.add(reserve);
+		
+		
 
 
 	}
