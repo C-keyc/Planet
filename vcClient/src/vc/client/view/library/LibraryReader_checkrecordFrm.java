@@ -66,9 +66,9 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		LibraryReaderMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
 		CheckBook();
 		//initialize();
-	/*}
+	}
 	
-	public void initialize() {*/
+	public void initialize() {
 
 		setVisible(false);
 
