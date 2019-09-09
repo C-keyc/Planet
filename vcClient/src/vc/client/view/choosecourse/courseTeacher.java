@@ -32,11 +32,11 @@ public class courseTeacher extends JFrame {
 
 	private JPanel contentPane;
 	private  User owner;
-	public static JFrame frame;
+	public  JFrame frame;
 
 	private Course course=new Course();
 	private UserSrvImpl usrv = new UserSrvImpl();
-	private static List<Course> ccsList;
+	private  List<Course> ccsList;
 	private JTable table_allstudentcourse;
 	boolean tableEditable = false;
 	private Object[][] tabledata;
@@ -62,7 +62,7 @@ public class courseTeacher extends JFrame {
 
 
 
-	public static  void passcslist(List <Course> ccsslist)
+	public void passcslist(List <Course> ccsslist)
 	{
 	  ccsList=ccsslist;	
 	}
@@ -73,7 +73,7 @@ public class courseTeacher extends JFrame {
 		if(csNum>0) {
 		Object[][] data = new Object[csNum][4];
 		for(int i = 0;i<csNum;i++)
-			for(int j = 0;j<10;j++)
+			for(int j = 0;j<4;j++)
 			{
 				switch(j) {
 				case 0:
@@ -101,10 +101,10 @@ public class courseTeacher extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		initialize();
+		//initialize();
 	}
 	
-	private void initialize() {
+	public void initialize() {
 		setTitle("\u6B22\u8FCE\u6765\u5230\u8BFE\u7A0B\u7BA1\u7406\u7CFB\u7EDF");
 		setBounds(100, 100, 699, 485);
 
@@ -203,6 +203,8 @@ public class courseTeacher extends JFrame {
 			}
 		));
 		table_allstudentcourse.setRowHeight(30);
+		
+		repaint();
 	}
 	
 	public List<Course> getCslist() {

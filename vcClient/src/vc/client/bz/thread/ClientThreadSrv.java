@@ -249,9 +249,16 @@ public class ClientThreadSrv extends Thread {
 		{
           List<Course> cslist=msg.getCslist();
 	     courseStudent test=courseStudentMgr.get(sender.getUserID());
-	     test.passcslist(cslist);
+	     if(test!=null) {
+	    	 test.passcslist(cslist);
+	    	 test.initialize();
+
+	     }
 	     courseTeacher test1=courseTeacherMgr.get(sender.getUserID());
+	     if(test1!=null) {
 	     test1.passcslist(cslist);
+	     test1.initialize();
+	     }
 	}
 		
 		else  if(msgType.equals(MessageType.CMD_SHOWSTUDENT_COURSE))
