@@ -10,6 +10,7 @@ public class courseSCheckMgr {
 		return courseSCheckPool.get(userID);
 	}
 
+	
 	public static void add(String userID, courseSCheck mainFrm) {
 		courseSCheckPool.put(userID, mainFrm);
 	}

@@ -34,6 +34,7 @@ public class ShopWorker_searchFrm extends JFrame {
 	private Goods gd = new Goods();
 	private User owner;
 	
+	
 	/**
 	 * Launch the application.
 	 */

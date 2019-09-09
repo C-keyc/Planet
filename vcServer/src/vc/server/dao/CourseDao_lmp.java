@@ -22,6 +22,7 @@ public class CourseDao_lmp implements CourseDao {
 	private static final String SQL_CourseOwner_QUERY_COURSEID="SELECT courseID FROM CourseOwner WHERE ownerID=?";
 	private static final String SQL_Course_QUERY_COURSENAME="SELECT * FROM Course WHERE courseTeacher=?";
 	
+	
 	@Override
 	public Course QueryID(String str) {
 		Connection conn = AccessUtil.getConnection();

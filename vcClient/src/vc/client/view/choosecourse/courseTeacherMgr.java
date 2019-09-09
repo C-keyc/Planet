@@ -14,6 +14,7 @@ public class courseTeacherMgr {
 		courseTeacherPool.put(userID, mainFrm);
 	}
 
+	
 	public static Map<String, courseTeacher> getPool() {
 		return courseTeacherPool;
 	}

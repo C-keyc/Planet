@@ -14,6 +14,7 @@ public class courseTCheckMgr {
 		courseTCheckPool.put(userID, mainFrm);
 	}
 
+	
 	public static Map<String, courseTCheck> getPool() {
 		return courseTCheckPool;
 	}

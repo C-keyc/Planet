@@ -11,6 +11,7 @@ public class ShopWorker_deductMgr {
 		return WkDeductPool.get(userID);
 	}
 
+	
 	public static void add(String userID, ShopWorker_deductFrm mainFrm) {
 		if (WkDeductPool.get(userID)!=null) {
 			

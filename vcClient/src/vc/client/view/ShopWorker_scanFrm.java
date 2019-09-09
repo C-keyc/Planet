@@ -26,6 +26,7 @@ public class ShopWorker_scanFrm extends JFrame {
 	private JPanel contentPane;
 	private JTextField textItemId;
 
+	
 	private UserSrvImpl usrv = new UserSrvImpl();
 	private Goods gd = new Goods();
 	private User owner;

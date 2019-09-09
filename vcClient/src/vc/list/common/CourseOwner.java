@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class CourseOwner implements Serializable  {
 	
+	
 	private String courseID;
 	private String ownerID;
 	

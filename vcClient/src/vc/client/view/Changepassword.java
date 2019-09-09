@@ -41,6 +41,7 @@ public class Changepassword extends JFrame {
 		this.setLocation((screenSize.width - frameSize.width) / 2,
 				(screenSize.height - frameSize.height) / 2);// 保持窗口弹出位置居中
 		
+		
 	}
 	private void initialize(){	
 

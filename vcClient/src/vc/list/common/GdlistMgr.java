@@ -8,6 +8,7 @@ public class GdlistMgr {
 
 	private static Map<String, Goods> GdlistPool = new HashMap<String, Goods>();
 
+	
 	public static Goods get(String userID) {
 		return GdlistPool.get(userID);
 	}
