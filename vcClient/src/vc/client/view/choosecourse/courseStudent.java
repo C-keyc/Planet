@@ -106,7 +106,7 @@ public class courseStudent extends JFrame {
 		}
 	}
 	
-private void initialize() {
+public void initialize() {
 	setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u751F\u9009\u8BFE\u7CFB\u7EDF");
 	getContentPane().setLayout(null);
 	setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);;

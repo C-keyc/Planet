@@ -24,6 +24,8 @@ import vc.client.view.choosecourse.courseStudent;
 import vc.client.view.choosecourse.courseStudentMgr;
 import vc.client.view.choosecourse.courseTCheck;
 import vc.client.view.choosecourse.courseTCheckMgr;
+import vc.client.view.choosecourse.courseTeacher;
+import vc.client.view.choosecourse.courseTeacherMgr;
 import vc.client.view.library.*;
 import vc.client.view.message.*;
 import vc.list.common.*;
@@ -246,7 +248,10 @@ public class ClientThreadSrv extends Thread {
 		else  if(msgType.equals(MessageType.CMD_SHOW_COURSE))
 		{
           List<Course> cslist=msg.getCslist();
-	     courseStudent.passcslist(cslist);
+	     courseStudent test=courseStudentMgr.get(sender.getUserID());
+	     test.passcslist(cslist);
+	     courseTeacher test1=courseTeacherMgr.get(sender.getUserID());
+	     test1.passcslist(cslist);
 	}
 		
 		else  if(msgType.equals(MessageType.CMD_SHOWSTUDENT_COURSE))
