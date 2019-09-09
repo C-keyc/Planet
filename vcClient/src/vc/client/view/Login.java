@@ -70,13 +70,13 @@ public class Login extends JFrame implements ActionListener{
 		contentPane.setLayout(null);
 		
 		JLabel lblId = new JLabel("");
-		lblId.setIcon(new ImageIcon("C:\\Users\\Key\\Desktop\\\u7528\u6237\u540D1.png"));
+		lblId.setIcon(new ImageIcon(Login.class.getResource("/image/ID.png")));
 		lblId.setBounds(100, 100, 20, 20);
 		lblId.setFont(new Font("свт╡", Font.BOLD, 16));
 		contentPane.add(lblId);
 		
 		JLabel lblPassword = new JLabel("");
-		lblPassword.setIcon(new ImageIcon("C:\\Users\\Key\\Desktop\\\u5BC6\u78011.png"));
+		lblPassword.setIcon(new ImageIcon(Login.class.getResource("/image/Password.png")));
 		lblPassword.setBounds(100, 140, 20, 20);
 		lblPassword.setFont(new Font("свт╡", Font.BOLD, 16));
 		contentPane.add(lblPassword);
