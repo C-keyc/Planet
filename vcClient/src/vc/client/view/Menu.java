@@ -131,10 +131,10 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(owner.getType()==1) {
 					courseStudent courseS = new courseStudent(owner);
-					courseS.setVisible(true);
+					//courseS.setVisible(true);
 				}else {
 					courseTeacher frame = new courseTeacher(owner);
-					frame.setVisible(true);
+					//frame.setVisible(true);
 				}
 
 			}

@@ -132,10 +132,10 @@ public class AccessUtil {
 				while(result.next())
 				{
 			    Course g = new Course();
-				g.setCourseID(result.getString(1));
-				g.setCourseName(result.getString(2));
-				g.setCourseTeacher(result.getString(3));
-				g.setCourseTime(result.getString(4));
+				g.setCourseID(result.getString("courseID"));
+				g.setCourseName(result.getString("courseName"));
+				g.setCourseTeacher(result.getString("courseTeacher"));
+				g.setCourseTime(result.getString("courseTime"));
                 course.add(g);
 				}
 			} catch (SQLException e) {

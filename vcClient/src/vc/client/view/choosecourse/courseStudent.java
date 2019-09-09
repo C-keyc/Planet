@@ -34,10 +34,10 @@ public class courseStudent extends JFrame {
 	private JTextField textField_quitcourseID;
 	private JTable table_allstudentcourse;
 	private User owner;
-	public static JFrame frame;
+	public  JFrame frame;
 	private Course course=new Course();
 	private UserSrvImpl usrv = new UserSrvImpl();
-	private static List<Course> ccsList;
+	private  List<Course> ccsList;
 	
 	boolean tableEditable = false;
 	private Object[][] tabledata;
@@ -63,7 +63,7 @@ public class courseStudent extends JFrame {
 	}
 
 
-	public static  void passcslist(List <Course> ccsslist)
+	public  void passcslist(List <Course> ccsslist)
 	{
 	  ccsList=ccsslist;	
 	}
@@ -76,7 +76,7 @@ public class courseStudent extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		initialize();
+		//initialize();
 	}
 
 
@@ -86,7 +86,7 @@ public class courseStudent extends JFrame {
 		if(csNum>0) {
 		Object[][] data = new Object[csNum][4];
 		for(int i = 0;i<csNum;i++)
-			for(int j = 0;j<10;j++)
+			for(int j = 0;j<4;j++)
 			{
 				switch(j) {
 				case 0:
@@ -109,6 +109,7 @@ public class courseStudent extends JFrame {
 public void initialize() {
 	setTitle("\u5FEB\u4E50\u661F\u7403\u865A\u62DF\u6821\u56ED\u5B66\u751F\u9009\u8BFE\u7CFB\u7EDF");
 	getContentPane().setLayout(null);
+
 	setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);;
 	setBounds(100, 100, 770, 566);
 	contentPane = new JPanel();
@@ -239,6 +240,8 @@ public void initialize() {
 	});
 	button.setBounds(562, 466, 123, 29);
 	contentPane.add(button);
+	
+	repaint();
 }
 
 
