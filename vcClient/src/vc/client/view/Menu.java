@@ -8,14 +8,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import vc.client.bz.impl.UserSrvImpl;
-import vc.client.view.library.LibraryReader_checkrecordFrm;
 import vc.client.view.library.LibraryReader_mainFrm;
-
 
 import vc.client.view.message.MessageRoll_mainFrm;
 import vc.client.view.choosecourse.courseStudent;
 import vc.client.view.choosecourse.courseTeacher;
-import vc.client.view.library.LibraryReader_mainFrm;
+
 import vc.client.view.library.LibraryWorker_manageFrm;
 //github.com/C-keyc/Planet.git
 
@@ -145,7 +143,7 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(owner.getType()==1||owner.getType()==2) {
-						LibraryReader_checkrecordFrm windowc=new LibraryReader_checkrecordFrm(owner);
+						LibraryReader_mainFrm windowc=new LibraryReader_mainFrm(owner);
 						windowc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 				}else {

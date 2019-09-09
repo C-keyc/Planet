@@ -102,7 +102,7 @@ public class LibraryReader_reservationFrm extends JFrame {
 		
 		JLabel label_2 = new JLabel("\u7A7A\u4F59\u5EA7\u4F4D\uFF1A");
 		label_2.setFont(new Font("ËÎÌו", Font.PLAIN, 18));
-		label_2.setBounds(42, 207, 115, 54);
+		label_2.setBounds(40, 220, 115, 30);
 		contentPane.add(label_2);
 		
 			
@@ -120,22 +120,23 @@ public class LibraryReader_reservationFrm extends JFrame {
 		
 		
 		Num = new JTextField();
-		Num.setBounds(160, 224, 157, 24);
+		Num.setBackground(new Color(255, 255, 240));
+		Num.setBounds(160, 220, 160, 30);
 		contentPane.add(Num);
 		Num.setColumns(10);
 		
 
 		
 		JRadioButton time1 = new JRadioButton("08:00-11:00");
-		time1.setBounds(34, 154, 157, 27);
+		time1.setBounds(34, 162, 157, 27);
 		contentPane.add(time1);
 		
 		JRadioButton time2 = new JRadioButton("14:00-17:00");
-		time2.setBounds(216, 154, 157, 27);
+		time2.setBounds(216, 162, 157, 27);
 		contentPane.add(time2);
 		
 		JRadioButton time3 = new JRadioButton("18:00-21:00");
-		time3.setBounds(394, 154, 157, 27);
+		time3.setBounds(394, 162, 157, 27);
 		contentPane.add(time3);
 		
 		ButtonGroup group2=new ButtonGroup();

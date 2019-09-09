@@ -25,6 +25,9 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class LibraryWorker_manageFrm extends JFrame {
 
@@ -41,6 +44,8 @@ public class LibraryWorker_manageFrm extends JFrame {
 	private List<Book> bklist;
 	private Object[][] data;
 	private User owner;
+	private JTextField textField;
+	JComboBox<String> comboBox;
 
 	public LibraryWorker_manageFrm(User user) {
 
@@ -66,7 +71,7 @@ public class LibraryWorker_manageFrm extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(73, 97, 619, 298);
+		scrollPane.setBounds(60, 40, 680, 300);
 		contentPane.add(scrollPane);
 
 		bookmanage = new JTable();
@@ -88,7 +93,7 @@ public class LibraryWorker_manageFrm extends JFrame {
 		});
 		toadd.setBackground(new Color(245, 255, 250));
 		toadd.setFont(new Font("宋体", Font.PLAIN, 28));
-		toadd.setBounds(42, 446, 179, 68);
+		toadd.setBounds(186, 491, 157, 41);
 		contentPane.add(toadd);
 
 		todelete = new JButton("\u5220\u9664\u4E66\u7C4D");
@@ -112,23 +117,53 @@ public class LibraryWorker_manageFrm extends JFrame {
 		});
 		todelete.setBackground(new Color(245, 255, 250));
 		todelete.setFont(new Font("宋体", Font.PLAIN, 28));
-		todelete.setBounds(294, 446, 179, 68);
+		todelete.setBounds(449, 491, 151, 41);
 		contentPane.add(todelete);
-
-		JButton btnSearch = new JButton("\u67E5\u8BE2\u4E66\u7C4D");
 		
-		 btnSearch.addActionListener(new ActionListener() { 
-			 public void actionPerformed(ActionEvent e) { 
-				 LibraryReader_searchFrm windows=new LibraryReader_searchFrm(owner);
-				 windows.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				 windows.setVisible(true); 
-				}
-		});
-		 
-		btnSearch.setFont(new Font("宋体", Font.PLAIN, 28));
-		btnSearch.setBackground(new Color(245, 255, 250));
-		btnSearch.setBounds(547, 446, 179, 68);
+		comboBox = new JComboBox<String>();
+		comboBox.insertItemAt("按书籍编号", 0);
+		comboBox.insertItemAt("按书籍名称",1);
+		comboBox.insertItemAt("按作者", 2);
+		comboBox.setSelectedIndex(0);
+		comboBox.setBounds(60, 405, 113, 30);
+		contentPane.add(comboBox);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(206, 406, 418, 30);
+		contentPane.add(textField);
+		
+		JButton btnSearch = new JButton("\u641C\u7D22");
+		btnSearch.setFont(new Font("黑体", Font.PLAIN, 16));
+		btnSearch.setBounds(660, 404, 80, 30);
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+						String str = textField.getText().trim();
+						int selectedIndex = comboBox.getSelectedIndex();
+						if(textField.getText().length()==0||textField.getText().equals("")) {
+							JOptionPane.showMessageDialog(contentPane, "请输入搜索内容！","提示",JOptionPane.WARNING_MESSAGE);
+						}else {
+						if(selectedIndex==0) {			
+							usrv.queryBookID(owner,str);
+							textField.setText("");
+						}
+						if(selectedIndex==1) {
+							usrv.queryBookName(owner,str);
+							textField.setText("");
+						}
+						 if(selectedIndex==2) {
+							usrv.queryBookWriter(owner,str);
+							textField.setText("");
+						}
+						}
+					}
+				});
 		contentPane.add(btnSearch);
+		
+		JLabel label = new JLabel("\u67E5\u8BE2\u4E66\u7C4D\uFF1A");
+		label.setFont(new Font("宋体", Font.PLAIN, 18));
+		label.setBounds(60, 363, 106, 32);
+		contentPane.add(label);
 		repaint();
 	}
 

@@ -283,7 +283,7 @@ public class ClientThreadSrv extends Thread {
 	}
 		
 		else if(msgType.equals(MessageType.CMD_CHECK_BOOK)){
-			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
+			LibraryReader_mainFrm lbr = LibraryReaderMgr.get(sender.getUserID());
 			lbr.setBkrlist(msg.getBkrlist());
 			lbr.initialize();
 			if(!lbr.isVisible())
@@ -384,7 +384,7 @@ public class ClientThreadSrv extends Thread {
 			libraryWorker_manageFrm.initialize();
 			libraryWorker_manageFrm.setVisible(true);
 		}else if(msgType.equals(MessageType.CMD_NOTFIND_BOOK)) {
-			LibraryReader_checkrecordFrm lbr = LibraryReaderMgr.get(sender.getUserID());
+			LibraryReader_mainFrm lbr = LibraryReaderMgr.get(sender.getUserID());
 			JOptionPane.showMessageDialog(lbr, "±§Ç¸£¬Î´ÕÒµ½ËÑË÷½á¹û", "", JOptionPane.WARNING_MESSAGE);
 		}else if(msgType.equals(MessageType.CMD_QUERY_SEAT)) {
 			LibraryReader_reservationFrm libraryReader_reservationFrm = LibraryReaderReservationMgr.get(sender.getUserID());
