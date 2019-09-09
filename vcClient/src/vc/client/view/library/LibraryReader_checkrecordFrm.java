@@ -66,9 +66,9 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		LibraryReaderMgr.add(user.getUserID(), this);  //放入这个gui的表集合里，相应消息时拿出来
 		CheckBook();
 		//initialize();
-	}
+	/*}
 	
-	public void initialize() {
+	public void initialize() {*/
 
 		setVisible(false);
 
@@ -130,7 +130,7 @@ public class LibraryReader_checkrecordFrm extends JFrame {
 		contentPane.add(combobox);
 		
 		textField = new JTextField();
-		textField.setBounds(171, 452, 430, 30);
+		textField.setBounds(205, 452, 396, 30);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		

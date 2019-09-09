@@ -71,14 +71,14 @@ public class LibraryReader_searchresultFrm extends JFrame {
 		button.setBounds(121, 222, 137, 46);
 		contentPane.add(button);
 		
-		JLabel lblNewLabel_2 = new JLabel("\u4F5C    \u8005\uFF1A");
+		JLabel lblNewLabel_2 = new JLabel("\u4F5C\u8005\uFF1A");
 		lblNewLabel_2.setFont(new Font("ËÎÌו", Font.PLAIN, 18));
 		lblNewLabel_2.setBounds(50, 121, 90, 34);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel writer = new JLabel(bk.getBookWriter());
 		writer.setFont(new Font("ËÎÌו", Font.PLAIN, 18));
-		writer.setBounds(161, 114, 197, 34);
+		writer.setBounds(161, 121, 197, 34);
 		contentPane.add(writer);
 		
 		JLabel bookID = new JLabel(bk.getBookID());

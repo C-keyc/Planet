@@ -225,7 +225,7 @@ public class MessageRoll_mainFrm extends JFrame {
 			type="老师";
 		if(owner.getType()==3)
 			type="管理员";
-		String welcome ="欢迎您，"+owner.getUname()+"  "+type+"!";
+		String welcome ="欢迎您，"+owner.getUname()+" "+type+"!";
 		JLabel lbWelcome = new JLabel(welcome);
 		lbWelcome.setFont(new Font("楷体", Font.PLAIN, 20));
 		lbWelcome.setBounds(36, 25, 277, 30);

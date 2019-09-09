@@ -92,12 +92,12 @@ public class LibraryReader_reservationFrm extends JFrame {
 		
 		JLabel label = new JLabel("\u9884\u7EA6\u65F6\u95F4\u6BB5\uFF1A");
 		label.setFont(new Font("ËÎÌו", Font.PLAIN, 18));
-		label.setBounds(42, 127, 127, 46);
+		label.setBounds(38, 110, 127, 46);
 		contentPane.add(label);
 		
 		JLabel label_1 = new JLabel("\u9009\u62E9\u65E5\u671F\uFF1A");
 		label_1.setFont(new Font("ËÎÌו", Font.PLAIN, 18));
-		label_1.setBounds(42, 51, 115, 39);
+		label_1.setBounds(38, 25, 115, 39);
 		contentPane.add(label_1);
 		
 		JLabel label_2 = new JLabel("\u7A7A\u4F59\u5EA7\u4F4D\uFF1A");
@@ -107,15 +107,15 @@ public class LibraryReader_reservationFrm extends JFrame {
 		
 			
 		JRadioButton today = new JRadioButton(date1);
-		today.setBounds(38, 91, 157, 27);
+		today.setBounds(34, 74, 157, 27);
 		contentPane.add(today);
 		
 		JRadioButton tomorrow = new JRadioButton(date2);
-		tomorrow.setBounds(220, 91, 157, 27);
+		tomorrow.setBounds(216, 74, 157, 27);
 		contentPane.add(tomorrow);
 		
 		JRadioButton thedayaftertomorrow = new JRadioButton(date3);
-		thedayaftertomorrow.setBounds(398, 91, 157, 27);
+		thedayaftertomorrow.setBounds(394, 74, 157, 27);
 		contentPane.add(thedayaftertomorrow);
 		
 		
@@ -127,15 +127,15 @@ public class LibraryReader_reservationFrm extends JFrame {
 
 		
 		JRadioButton time1 = new JRadioButton("08:00-11:00");
-		time1.setBounds(38, 171, 157, 27);
+		time1.setBounds(34, 154, 157, 27);
 		contentPane.add(time1);
 		
 		JRadioButton time2 = new JRadioButton("14:00-17:00");
-		time2.setBounds(220, 171, 157, 27);
+		time2.setBounds(216, 154, 157, 27);
 		contentPane.add(time2);
 		
 		JRadioButton time3 = new JRadioButton("18:00-21:00");
-		time3.setBounds(398, 171, 157, 27);
+		time3.setBounds(394, 154, 157, 27);
 		contentPane.add(time3);
 		
 		ButtonGroup group2=new ButtonGroup();
