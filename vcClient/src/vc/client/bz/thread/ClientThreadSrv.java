@@ -252,12 +252,16 @@ public class ClientThreadSrv extends Thread {
 	     if(test!=null) {
 	    	 test.passcslist(cslist);
 	    	 test.initialize();
-
-	     }
+	    	 if(!test.isVisible())
+		    	 test.setVisible(true);
+		     }
+	     
 	     courseTeacher test1=courseTeacherMgr.get(sender.getUserID());
 	     if(test1!=null) {
-	     test1.passcslist(cslist);
-	     test1.initialize();
+	    	 test1.passcslist(cslist);
+	    	 test1.initialize();
+	     if(!test1.isVisible())
+	    	 test1.setVisible(true);
 	     }
 	}
 		

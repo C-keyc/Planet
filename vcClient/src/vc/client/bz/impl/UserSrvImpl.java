@@ -134,7 +134,7 @@ public void CourseAllShow(User sender ,List<Course> ccsList) throws IOException 
 	Message m = new Message();
 	m.setSender(sender);
 	m.setType(MessageType.CMD_SHOW_COURSE);
-	//m.setCslist(ccsList); //更新消息
+	m.setCslist(ccsList); //更新消息
 	this.sendMessage(m); // 调用发送方法，把消息发送即可
 }
 
